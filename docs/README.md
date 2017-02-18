@@ -1,6 +1,6 @@
 # TexAlea
 
-Après avoir créé un modèle, le professeur de mathématiques pourra obtenir différentes versions de ses exercices avec des données différentes et les corrigés
+Après avoir créé un modèle, le professeur de mathématiques pourra obtenir différentes versions de ses exercices avec des données différentes et les corrigés.
 
 ## Prérequis
 
@@ -14,7 +14,7 @@ Après avoir créé un modèle, le professeur de mathématiques pourra obtenir d
 ### Sous Mac Os
 
 * [Python 3](https://www.python.org/downloads/) (à installer)
-* Installer Jinja2 : dans un terminal taper `(sudo) pip3 install Jinja2` (FACULTATIF : lorsque Python2 est installé sur l'ordinateur, vous pouvez saisir `pip install Jinja2` pour rendre jinja disponible dans cet environnement)
+* Installer Jinja2 : dans un terminal taper `(sudo) pip3 install Jinja2` 
 
 ## Création du modèle
 
