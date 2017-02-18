@@ -6,8 +6,8 @@
 %% set titre='Les durées' 
 \section{<<titre>>}
 \begin{itemize}
-  \item Combien y-a-t-il de minutes dans $<<h[1]>>~\text{h}~<<min[1]>>~\text{min}$ ?
-  \item Combien y-a-t-il de secondes dans $<<h[2]>>~\text{h}~<<min[2]>>~\text{min}~<<s[2]>>~\text{s}$ ?
+  \item Combien y-a-t-il de minutes dans <<HMS(h[1],min[1],0)>> ?
+  \item Combien y-a-t-il de secondes dans <<HMS(h[2],min[2],s[2])>> ?
   \item Écris au format HMS \nombre{<<h[3]*60+min[3]>>} min.
   \item Écris au format HMS \nombre{<<h[4]*3600+min[3]*60+s[3]>>} s.
 \end{itemize}

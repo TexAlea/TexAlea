@@ -1,4 +1,4 @@
-# DocAléa JinjaPyLaTeX
+# TexAlea
 
 Après avoir créé un modèle, le professeur de mathématiques pourra obtenir différentes versions de ses exercices avec des données différentes et les corrigés
 
@@ -6,8 +6,8 @@ Après avoir créé un modèle, le professeur de mathématiques pourra obtenir d
 
 ### Sous Windows
 
-* [Python 3](https://www.python.org/downloads/) (à installer "pour tous les utilisateurs")
-* Ouvrir "l'invite de commande" en tant qu'administrateur (avec cortana, chercher "cmd" puis cliquer droit sur "Invite de commandes" puis "Exécuter en tant qu'administrateur".
+* [Python 3](https://www.python.org/downloads/) (à installer _pour tous les utilisateurs_)
+* Ouvrir _l'invite de commande_ en tant qu'administrateur (avec Cortana, chercher _cmd_ puis cliquer droit sur _Invite de commandes_ puis _Exécuter en tant qu'administrateur_.
 * Installer Jinja2 : dans l'invite de commande taper `"C:\Program Files (x86)\Python36-32\pip3 install Jinja2`. <!--(chemin approximatif à préciser)
 -->
 
@@ -28,7 +28,7 @@ Le fichier *.tex* peut contenir du code qui sera interprété par Jinja2
 
 ### En-tête
 
-Il ne faut pas écrire `\begin{document}` (ni `\end{document}`), le script va chercher un fichier `preambule-perso.tex`, s'il le trouve il sera inséré au début du document sinon il insèrera :
+Il ne faut pas écrire `\begin{document}` (ni `\end{document}`), le script va automatiquement insérer : 
 
 ```
 \documentclass[a4paper,11pt,fleqn]{article}
@@ -36,6 +36,8 @@ Il ne faut pas écrire `\begin{document}` (ni `\end{document}`), le script va ch
 \begin{document}
 \pagestyle{empty}
 ```
+
+Lorsqu'on souhaite personnaliser le fichier LaTeX, on peut écrire un fichier `preambule-perso.tex` qui sera inséré au début du document.
 
 ### Question
 Pour générer des questions aléatoires, on peut commencer par utiliser des variables prédéfinies n et m (voir ci-dessous) dans le document exemple.tex :
@@ -101,9 +103,14 @@ Il s'agit systématiquement de tableaux de 100 nombres (indice de 0 à 99) qui d
 * m : entier entre 2 et 9
 * nZ : entier relatif dont la valeur absolue est entre 2 et 9
 * mZ : entier relatif dont la valeur absolue est entre 2 et 9
+* N2 : 1 ou 2
 * N3 : 1, 2 ou 3
+* N4 : 1, 2, 3 ou 4
+* N5 : 1, 2, 3, 4 ou 5
 * N6 : 1, 2, 3, 4, 5 ou 6
-* NE : entier entre 1 et 9
+* N7 : 1 à 7
+* N8 : 1 à 8
+* N9 : 1 à 9
 * Z : relatif entre -10 et 10
 * Z2 : relatif entre -10 et 10
 * ZE : relatif non nul entre -10 et 10
@@ -120,7 +127,9 @@ Il s'agit systématiquement de tableaux de 100 nombres (indice de 0 à 99) qui d
 * min : entier entre 1 et 60
 * s : entier entre 1 et 60
 * L1, L2, L3 et L4 : 4 lettres majuscules différentes
-* prenom : un prénom au hasard (on n'a pas encore distingué les prénoms masculins et féminins)
+* prenom : un prénom au hasard
+* garcon : un prénom de garçon au hasard
+* fille : un prénom de fille au hasard
 
 ## Utilisation d'un modèle pour générer des sujets aléatoires
 
@@ -180,3 +189,9 @@ Attention, le résultat est de type string
 
 * `prix(54)`=> 54
 * `prix(54.3)` => 54,30
+
+### HMS(h,m,s)
+
+Affiche la durée en mode mathématique au format HMS.
+
+`HMS(2,31,15)` => `$2~\text{h}~31~\text{min}~15~\text{s}$`

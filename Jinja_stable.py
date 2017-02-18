@@ -18,14 +18,19 @@ def variables(version) :
         - les variables locales à cette fonction comme version (utile pour numéroter les fiches) et toutes les listes de nombres aléatoires ci-dessous).
     """
     N = [randint(1,9) for i in range(100)]
-    M = [randint(1,9) for i in range(100)] 
+    M = [randint(1,9) for i in range(100)]
     n = [randint(2,9) for i in range(100)]
     m = [randint(2,9) for i in range(100)]
     nZ = [choice([-1,1])*randint(2,9) for i in range(100)]
     mZ = [choice([-1,1])*randint(2,9) for i in range(100)]
+    N2 = [randint(1,2) for i in range(100)]
     N3 = [randint(1,3) for i in range(100)]
+    N4 = [randint(1,4) for i in range(100)]
+    N5 = [randint(1,3) for i in range(100)]
     N6 = [randint(1,6) for i in range(100)]
-    NE = [randint(1,9) for i in range(100)]
+    N7 = [randint(1,7) for i in range(100)]
+    N8 = [randint(1,8) for i in range(100)]
+    N9 = [randint(1,9) for i in range(100)]
     Z = [randint(-10,10) for i in range(100)]
     Z2 = [randint(-10,10) for i in range(100)]
     ZE = [choice([-1,1])*randint(1,9) for i in range(100)]
@@ -47,7 +52,7 @@ def variables(version) :
     L4=[]
     L = [choice(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']) for i in range(100)]
     for i in range(100):
-        Quatrelettres=sample(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],4)   
+        Quatrelettres=sample(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],4)
         L1.append(Quatrelettres[0])
         L2.append(Quatrelettres[1])
         L3.append(Quatrelettres[2])
@@ -57,9 +62,16 @@ def variables(version) :
     NvNN = [round(randint(1,999)/100,2) for i in range(100)]
     NvNO = [round(randint(1,99)/10,2) for i in range(100)]
     prenom=[]
-    ListePrenom=['Léo','Alicia','Christophe','Aude','Thibaut','Manon','Yazid','Théo']
-    for i in range(100):
+    garcon=[]
+    fille=[]
+    ListeGarcon=['Olivier','Rémi','Christophe','Thibault','Yazid','Nathan','Lucas','Enzo','Léo','Louis','Benjamin','Mathias','Abdel','Karim','Younès','Mehdi','Ethan','Jules','Julien','Pierre']
+    ListeFille=['Léa','Emma','Chloé','Inès','Manon','Lola','Jade','Camille','Sarah','Louise','Yasmine','Margot','Maelle','Alicia']
+    ListePrenom=ListeGarcon+ListeFille
+    for i in range(10):
         prenom.append(choice(ListePrenom))
+        garcon.append(choice(ListeGarcon))
+        fille.append(choice(ListeFille))
+
 
     # Pour spécifier les bornes du nombre aléatoire dans le modèle .tex
     mem=['']*100
@@ -121,11 +133,25 @@ def pint(a) :
     Raison de la création de cette fonction : jinja ne connaît pas int(...)
     """
     return int(a)
-    
+
+def HMS(h,m,s) :
+    """ Formatage d'une durée au format HMS
+    """
+    retour='$'
+    if h!=0 :
+        retour+=str(h)+'~\\text{h}~'
+    if m!=0 :
+        retour+=str(m)+'~\\text{min}~'
+    if s!=0 :
+        retour+=str(s)+'~\\text{s}'
+    retour+='$'
+    return retour
+
+
 
 # fin fonctions de formatage des résultats.
 
-# fonctions python utiles à ce présent script 
+# fonctions python utiles à ce présent script
 def finDeVersion(fichier, version, nombre_de_versions) :
     """Ecriture dans le fichier LaTeX généré des fins de versions"""
     if version!=nombre_de_versions :
@@ -177,7 +203,7 @@ def choixFichier(dossier) :
                 ReposeLaQuestion = True
                 print("Ce fichier n'existe pas !")
     return nom_fichier_modele
-    
+
 # fin des fonctions utiles à ce présent script
 
 def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
@@ -211,7 +237,7 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
         retour = "Prise en compte du preambule-perso.tex. "
         file = open(chemin + nom_fichier_preambule, "r",encoding="utf8")
         preambule_personnalise = file.read()
-        file.close()    
+        file.close()
     else :
         preambule_personnalise = '\\documentclass[a4paper,11pt,fleqn]{article}\n\\input{preambule}\n\\begin{document}\n\\pagestyle{empty}\n\n\n'
     f.write(preambule_personnalise)
@@ -224,7 +250,7 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
         templatecor = env.get_template(nom_fichier_corrige)
         fcor = open(os.path.join(chemin, nomFichierCorrige), "w",encoding="utf8")
         fcor.write(preambule_personnalise)
-    # RENDU DES VERSIONS DEMANDEES 
+    # RENDU DES VERSIONS DEMANDEES
     for version in range(1,nombre_de_versions+1) :
         # rendu
         dictVariables = variables(version)
@@ -244,7 +270,7 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
 # version non GUI :
 if __name__ == "__main__":
     # Demande le modele en proposant les noms de fichiers valides du dossier courant :
-    nomFichierModele = choixFichier(".") # pour l'instant, on ne propose que le dossier courant 
+    nomFichierModele = choixFichier(".") # pour l'instant, on ne propose que le dossier courant
     nombreVersions=int(input("Nombre d'exemplaires souhaités :"))
     (filepath, filename) = os.path.split(nomFichierModele)
     print(traiter(filename, filepath, nombreVersions))
