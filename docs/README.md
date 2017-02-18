@@ -1,6 +1,6 @@
 # DocAléa JinjaPyLaTeX
 
-Après avoir créé un modèle, le professeur de mathématiques pourra obtenir différentes versions de ses exercices avec des données différentes et les corrigés 
+Après avoir créé un modèle, le professeur de mathématiques pourra obtenir différentes versions de ses exercices avec des données différentes et les corrigés
 
 ## Prérequis
 
@@ -37,7 +37,7 @@ Il ne faut pas écrire `\begin{document}` (ni `\end{document}`), le script va ch
 \pagestyle{empty}
 ```
 
-### Question 
+### Question
 Pour générer des questions aléatoires, on peut commencer par utiliser des variables prédéfinies n et m (voir ci-dessous) dans le document exemple.tex :
 
 `Calculer : $<<n[0]>> \times <<m[0]>> = \ldots$`
@@ -74,7 +74,7 @@ Le corrigé est alors adapté en conséquence :
 
 ```
 %% if i==1
-	blabla	
+	blabla
 %% elif i==2
 	blibli
 %% else
@@ -99,17 +99,17 @@ Il s'agit systématiquement de tableaux de 100 nombres (indice de 0 à 99) qui d
 * M : entier entre 1 et 9
 * n : entier entre 2 et 9
 * m : entier entre 2 et 9
-* nZ : entier relatif dont la valeur absolue est entre 2 et 9 
-* mZ : entier relatif dont la valeur absolue est entre 2 et 9 
+* nZ : entier relatif dont la valeur absolue est entre 2 et 9
+* mZ : entier relatif dont la valeur absolue est entre 2 et 9
 * N3 : 1, 2 ou 3
-* N6 : 1, 2, 3, 4, 5 ou 6 
+* N6 : 1, 2, 3, 4, 5 ou 6
 * NE : entier entre 1 et 9
 * Z : relatif entre -10 et 10
 * Z2 : relatif entre -10 et 10
 * ZE : relatif non nul entre -10 et 10
 * ZE2 : relatif non nul entre -10 et 10
 * DCM : 10, 100 ou 1 000
-* DCM2 : 10, 100 ou 1 000 
+* DCM2 : 10, 100 ou 1 000
 * D : 10, 20, 30...90
 * S : -1 ou 1
 * NN : entier entre 1 et 99
@@ -124,7 +124,7 @@ Il s'agit systématiquement de tableaux de 100 nombres (indice de 0 à 99) qui d
 
 ## Utilisation d'un modèle pour générer des sujets aléatoires
 
-L'utilisation de la version graphique du script python est recommandée. 
+L'utilisation de la version graphique du script python est recommandée.
 
 * Exécuter Jinja-GUI_stable.py (F5 dans l'éditeur IDLE)
 * Cliquer sur "sélectionner" :
@@ -135,7 +135,7 @@ L'utilisation de la version graphique du script python est recommandée.
 ![](3eme-choix-nbre-versions.png)
 * Le fichier aléatoire créé est placé dans le même dossier que le document d'origine. Il portera le même nom avec "_aleatoirise" à la fin. Il restera à effectuer la compilation LaTeX avec votre éditeur préféré.
 
-    
+
 ## Fonctions
 
 ### terme(a)
@@ -180,6 +180,3 @@ Attention, le résultat est de type string
 
 * `prix(54)`=> 54
 * `prix(54.3)` => 54,30
-
-
-
