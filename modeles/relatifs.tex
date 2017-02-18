@@ -1,0 +1,54 @@
+%% set titre='Somme algébrique' 
+\section{<<titre>>}
+\begin{itemize}
+
+%% for i in range(0,10)
+<<[1,2,3]|random()>>
+%% endfor
+
+%% for i in range(0,3)
+%% if m[i]>0
+  \item $<<n[i]>>+<<m[i]>>=\ldots$
+%% else
+  \item $<<n[i]>><<m[i]>>=\ldots$	
+%% endif
+%% endfor
+\end{itemize}
+
+\section{Correction -- <<titre>>}
+\begin{itemize}
+
+%% for i in range(0,3)
+%% if m[i]>0
+  \item $<<n[i]>>+<<m[i]>>=<<n[i]+m[i]>>$
+%% else
+  \item $<<n[i]>><<m[i]>>=<<n[i]+m[i]>>$	
+%% endif
+%% endfor
+\end{itemize}
+
+%% set titre='Produits de nombres relatifs'
+
+\section{<<titre>>}
+\begin{itemize}
+
+%% for i in range(4,8)
+%% if m[i]>0
+  \item $<<n[i]>>\times<<m[i]>>=\ldots$
+%% else
+  \item $<<n[i]>>\times(<<m[i]>>)=\ldots$	
+%% endif
+%% endfor
+\end{itemize}
+
+\section{Correction -- <<titre>>}
+\begin{itemize}
+
+%% for i in range(4,8)
+%% if m[i]>0
+  \item $<<n[i]>>\times<<m[i]>>=<<n[i]*m[i]>>$
+%% else
+  \item $<<n[i]>>\times(<<m[i]>>)=<<n[i]*m[i]>>$	
+%% endif
+%% endfor
+\end{itemize}

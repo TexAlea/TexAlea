@@ -1,0 +1,70 @@
+\documentclass[a4paper,11pt,fleqn]{article}
+\input{preambule}
+\setlength{\columnsep}{1.5cm}
+\begin{document}
+\pagestyle{empty}
+
+\exo{}
+\begin{multicols}{2}\noindent
+\begin{spacing}{2}
+%% for i in range(0,6)
+%% if N3[i]==1
+$<<n[i]*DCM[i]>>\times<<m[i]>>=\dotfill$
+
+%% elif N3[i]==2
+$<<m[i]>>\times<<n[i]*DCM[i]>>=\dotfill$
+
+%% elif N3[i]==3
+$<<n[i]*DCM[i]>>\times<<m[i]*DCM[i]>>=\dotfill$
+
+%% endif
+
+%% endfor
+\end{spacing}
+\end{multicols}
+
+\exo{}
+\begin{multicols}{2}\noindent
+\begin{spacing}{2}
+%% for i in range(6,12)
+%% if N6[i]==1
+$<<NNN[i]>>~\text{dam}=\dotfill~\text{m}$
+
+%% elif N6[i]==2
+$<<NNN[i]>>~\text{hL}=\dotfill~\text{L}$
+
+%% elif N6[i]==3
+$<<NNN[i]>>~\text{ko}=\dotfill~\text{octets}$
+
+%% elif N6[i]==4
+$<<NNN[i]>>~\text{Mo}=\dotfill~\text{octets}$
+
+%% elif N6[i]==5
+$<<NNN[i]>>~\text{Go}=\dotfill~\text{octets}$
+
+%% elif N6[i]==6
+$<<NNN[i]>>~\text{To}=\dotfill~\text{octets}$
+
+%% endif
+
+%% endfor
+\end{spacing}
+\end{multicols}
+
+\exo{-- Sans utiliser le nombre 1 !}
+
+\begin{multicols}{2}\noindent
+\begin{spacing}{2}
+%% for i in range(12,18)
+$<<n[i]*DCM[i]>>\times\dotfill=\nombre{<<n[i]*m[i]*DCM[i]*DCM2[i]>>}$
+
+
+%% endfor
+\end{spacing}
+\end{multicols}
+
+
+
+\end{document}
+
+

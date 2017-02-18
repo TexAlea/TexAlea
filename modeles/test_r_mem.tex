@@ -1,0 +1,14 @@
+
+%% for i in range(1,10)
+Nombre choisi : <<r(13,16,i)>> \\
+Nombre mémorisé : $<<mem[i]>>\times10=<<mem[i]*10>>$ \\
+
+\bigskip
+
+Numérateur : <<alea(1,6,'num'+'i')>>\\
+Dénominateur inférieur au numérateur : <<alea(var['num'+'i']+1,10,'den'+'i')>>
+
+\bigskip
+Fraction inférieure à 1 : $\dfrac{<<var['num'+'i']>>}{<<var['den'+'i']>>}$\\
+
+%% endfor

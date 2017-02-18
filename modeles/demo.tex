@@ -1,0 +1,167 @@
+\documentclass[a4paper,11pt,fleqn]{article}
+\input{preambule}
+\setlength{\columnsep}{1.5cm}
+\begin{document}
+\pagestyle{empty}
+
+
+\subsection*{Problème de Prix}
+\begin{itemize}
+%% for i in range (0,2)
+\item <<prenom[i]>> a acheté <<N[i]>> kg de carottes à \nombre{<<NvNN[i]>>} €/kg.\\
+Combien doit payer <<prenom[i]>> ?
+
+%% endfor
+\end{itemize}
+
+
+\subsection*{Correction -- Problème de prix}
+\begin{itemize}
+%% for i in range (0,2)
+	\item $<<N[i]>>\times\nombre{<<NvNN[i]>>}=\nombre{<<"{:,.2f}".format(N[i]*NvNN[i])>>}$~€.\\
+<<prenom[i]>> va payer \nombre{<<"{:,.2f}".format(N[i]*NvNN[i])>>}~€.
+
+%% endfor
+\end{itemize}
+
+%% set titre='Somme algébrique' 
+\subsection*{<<titre>>}
+\begin{description}
+
+%% for i in range(0,3)
+%% if ZE2[i]>0
+  \item $<<ZE[i]>>+<<ZE2[i]>>=\ldots$
+%% else
+  \item $<<ZE[i]>><<ZE2[i]>>=\ldots$	
+%% endif
+%% endfor
+\end{description}
+
+\subsection*{Correction -- <<titre>>}
+\begin{description}
+
+%% for i in range(0,3)
+%% if ZE2[i]>0
+  \item $<<ZE[i]>>+<<ZE2[i]>>=<<ZE[i]+ZE2[i]>>$
+%% else
+  \item $<<ZE[i]>><<ZE2[i]>>=<<ZE[i]+ZE2[i]>>$	
+%% endif
+%% endfor
+\end{description}
+
+%% set titre='Produits de nombres relatifs'
+
+\subsection*{<<titre>>}
+\begin{description}
+
+%% for i in range(4,8)
+%% if ZE2[i]>0
+  \item $<<ZE[i]>>\times<<ZE2[i]>>=\ldots$
+%% else
+  \item $<<ZE[i]>>\times(<<ZE2[i]>>)=\ldots$	
+%% endif
+%% endfor
+\end{description}
+
+\subsection{Correction -- <<titre>>}
+\begin{description}
+
+%% for i in range(4,8)
+%% if ZE2[i]>0
+  \item $<<ZE[i]>>\times<<ZE2[i]>>=<<ZE[i]*ZE2[i]>>$
+%% else
+  \item $<<ZE[i]>>\times(<<ZE2[i]>>)=<<ZE[i]*ZE2[i]>>$	
+%% endif
+%% endfor
+\end{description}
+
+\subsection*{Conversions n°1}
+
+\begin{multicols}{4}
+
+%% for i in range(0,16)
+
+%% if N3[i]==1
+$<<NN[i]>>~\text{dam}=\dotfill~\text{m}$
+%% elif N3[i]==2
+$<<NN[i]>>~\text{hm}=\dotfill~\text{m}$
+%% elif N3[i]==3
+$<<NN[i]>>~\text{km}=\dotfill~\text{m}$
+%% endif
+
+%% endfor	
+\end{multicols}
+
+\subsection*{Conversions n°2}
+
+\begin{multicols}{4}
+
+%% for i in range(16,32)
+
+%% if N6[i]==1
+$<<NN[i]>>~\text{dam}=\dotfill~\text{m}$
+%% elif N6[i]==2
+$<<NN[i]>>~\text{hm}=\dotfill~\text{m}$
+%% elif N6[i]==3
+$<<NN[i]>>~\text{km}=\dotfill~\text{m}$
+%% elif N6[i]==4
+$<<NN[i]>>~\text{dm}=\dotfill~\text{m}$
+%% elif N6[i]==5
+$<<NN[i]>>~\text{cm}=\dotfill~\text{m}$
+%% elif N6[i]==6
+$<<NN[i]>>~\text{mm}=\dotfill~\text{m}$
+%% endif
+
+%% endfor
+	
+\end{multicols}
+
+
+\subsection*{Corrections -- Conversions n°1}
+
+\begin{multicols}{4}
+
+%% for i in range(0,16)
+
+%% if N3[i]==1
+$<<NN[i]>>~\text{dam}=<<NN[i]*10>>~\text{m}$
+%% elif N3[i]==2
+$<<NN[i]>>~\text{hm}=\nombre{<<NN[i]*100>>}~\text{m}$
+%% elif N3[i]==3
+$<<NN[i]>>~\text{km}=\nombre{<<NN[i]*1000>>}~\text{m}$
+%% endif
+
+%% endfor
+	
+\end{multicols}
+
+
+
+\subsection*{Corrections -- Conversions n°2}
+
+\begin{multicols}{4}
+
+%% for i in range(16,32)
+
+%% if N6[i]==1
+$<<NN[i]>>~\text{dam}=<<NN[i]*10>>~\text{m}$
+%% elif N6[i]==2
+$<<NN[i]>>~\text{hm}=\nombre{<<NN[i]*100>>}~\text{m}$
+%% elif N6[i]==3
+$<<NN[i]>>~\text{km}=\nombre{<<NN[i]*1000>>}~\text{m}$
+%% elif N6[i]==4
+$<<NN[i]>>~\text{dm}=\nombre{<<NN[i]/10>>}~\text{m}$
+%% elif N6[i]==5
+$<<NN[i]>>~\text{cm}=\nombre{<<NN[i]/100>>}~\text{m}$
+%% elif N6[i]==6
+$<<NN[i]>>~\text{mm}=\nombre{<<NN[i]/1000>>}~\text{m}$
+%% endif
+
+%% endfor
+	
+\end{multicols}
+
+
+\end{document}
+
+

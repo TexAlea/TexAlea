@@ -1,0 +1,98 @@
+\documentclass[a4paper,11pt,fleqn]{article}
+\input{preambule}
+\setlength{\columnsep}{1.5cm}
+\begin{document}
+\pagestyle{empty}
+
+
+\subsection*{Conversions n°1}
+
+\begin{multicols}{4}
+
+%% for i in range(0,16)
+
+%% if N3[i]==1
+$<<NN[i]>>~\text{dam}=\dotfill~\text{m}$
+%% elif N3[i]==2
+$<<NN[i]>>~\text{hm}=\dotfill~\text{m}$
+%% elif N3[i]==3
+$<<NN[i]>>~\text{km}=\dotfill~\text{m}$
+%% endif
+
+%% endfor	
+\end{multicols}
+
+\subsection*{Conversions n°2}
+
+\begin{multicols}{4}
+
+%% for i in range(16,32)
+
+%% if N6[i]==1
+$<<NN[i]>>~\text{dam}=\dotfill~\text{m}$
+%% elif N6[i]==2
+$<<NN[i]>>~\text{hm}=\dotfill~\text{m}$
+%% elif N6[i]==3
+$<<NN[i]>>~\text{km}=\dotfill~\text{m}$
+%% elif N6[i]==4
+$<<NN[i]>>~\text{dm}=\dotfill~\text{m}$
+%% elif N6[i]==5
+$<<NN[i]>>~\text{cm}=\dotfill~\text{m}$
+%% elif N6[i]==6
+$<<NN[i]>>~\text{mm}=\dotfill~\text{m}$
+%% endif
+
+%% endfor
+	
+\end{multicols}
+
+
+\subsection*{Corrections -- Conversions n°1}
+
+\begin{multicols}{4}
+
+%% for i in range(0,16)
+
+%% if N3[i]==1
+$<<NN[i]>>~\text{dam}=<<NN[i]*10>>~\text{m}$
+%% elif N3[i]==2
+$<<NN[i]>>~\text{hm}=\nombre{<<NN[i]*100>>}~\text{m}$
+%% elif N3[i]==3
+$<<NN[i]>>~\text{km}=\nombre{<<NN[i]*1000>>}~\text{m}$
+%% endif
+
+%% endfor
+	
+\end{multicols}
+
+
+
+\subsection*{Corrections -- Conversions n°2}
+
+\begin{multicols}{4}
+
+%% for i in range(16,32)
+
+%% if N6[i]==1
+$<<NN[i]>>~\text{dam}=<<NN[i]*10>>~\text{m}$
+%% elif N6[i]==2
+$<<NN[i]>>~\text{hm}=\nombre{<<NN[i]*100>>}~\text{m}$
+%% elif N6[i]==3
+$<<NN[i]>>~\text{km}=\nombre{<<NN[i]*1000>>}~\text{m}$
+%% elif N6[i]==4
+$<<NN[i]>>~\text{dm}=\nombre{<<NN[i]/10>>}~\text{m}$
+%% elif N6[i]==5
+$<<NN[i]>>~\text{cm}=\nombre{<<NN[i]/100>>}~\text{m}$
+%% elif N6[i]==6
+$<<NN[i]>>~\text{mm}=\nombre{<<NN[i]/1000>>}~\text{m}$
+%% endif
+
+%% endfor
+	
+\end{multicols}
+
+
+
+\end{document}
+
+

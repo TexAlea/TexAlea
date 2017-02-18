@@ -1,0 +1,26 @@
+\documentclass{article}
+\input{preambule}
+\begin{document}
+\section{Exemple}
+Un exemple utilisant \LaTeX, Python et Jinja.
+
+
+%% set titre='Prix soldés' 
+\subsection{<<titre>>}
+\begin{itemize}
+
+%% for i in range(0,9)
+  \item Un article coûte <<DU[i]>>~€ et est soldé à $-<<D[i]>>~\%$. Quel est son nouveau prix ?
+%% endfor
+\end{itemize}
+
+\subsection{Correction -- <<titre>>}
+\begin{itemize}
+
+%% for i in range(0,9)
+  \item Réduction : $<<DU[i]>>\times<<D[i]>>\div100=\nombre{<<"{:,.2f}".format(DU[i]*D[i]/100)>>}$~€\\
+  Nouveau prix : $<<DU[i]>>-\nombre{<<DU[i]*D[i]/100>>}=\nombre{<<"{:,.2f}".format(DU[i]-DU[i]*D[i]/100)>>}$~€
+%% endfor
+\end{itemize}
+
+\end{document}
