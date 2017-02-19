@@ -7,9 +7,8 @@ Après avoir créé un modèle, le professeur de mathématiques pourra obtenir d
 ### Sous Windows
 
 * [Python 3](https://www.python.org/downloads/) (à installer _pour tous les utilisateurs_)
-* Ouvrir _l'invite de commande_ en tant qu'administrateur (avec Cortana, chercher _cmd_ puis cliquer droit sur _Invite de commandes_ puis _Exécuter en tant qu'administrateur_.
-* Installer Jinja2 : dans l'invite de commande taper `"C:\Program Files (x86)\Python36-32\pip3 install Jinja2`. <!--(chemin approximatif à préciser)
--->
+* Ouvrir _l'invite de commande_ en tant qu'administrateur (avec Cortana, chercher _cmd_ puis cliquer droit sur _Invite de commandes_ puis _Exécuter en tant qu'administrateur_).
+* Installer Jinja2 : dans l'invite de commande taper `cd "C:\Program Files (x86)\Python36-32"` puis `pip3 install Jinja2`.
 
 ### Sous Mac Os
 
