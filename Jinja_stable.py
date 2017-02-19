@@ -285,13 +285,21 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
     for version in range(1,nombre_de_versions+1) :
         # récupération des variables standards
         dictVariables = variables(version)
-        # ajout des variables personnalisées
+        # ajout des variables personnalisées d'un fichier général
         dictGlobals = {}
         dictLocals = {}
         if os.path.exists("variables_perso.py") :
             # script python perso pour envoyer des données comme la classe, les noms des élèves.
             exec(open("variables_perso.py",encoding="utf8").read(), dictGlobals, dictLocals)
+            if version == 1 :
+                print("Prise en compte du fichier variables_perso.py")
+        # ajout de variables d'un fichier python .py de même nom que le fichier .tex
+        if os.path.exists(os.path.join(chemin,nom_fichier_modele+".py")) :
+            exec(open(os.path.join(chemin,nom_fichier_modele+".py"),encoding="utf8").read(), dictGlobals, dictLocals)
+            if version == 1 :
+                print("Prise en compte du fichier ",os.path.join(chemin,nom_fichier_modele+".py"))
             #print("dictLocals:",dictLocals)
+        # mise à jour du dictionnaire de variables afin de disposer de tout.
         dictVariables.update(dictLocals)
         # création du rendu
         f.write(template.render(**dictVariables))
