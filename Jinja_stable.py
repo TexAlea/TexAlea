@@ -19,6 +19,9 @@ def variables(version) :
     """crée toutes les variables aléatoires utiles et retourne un dictionnaire contenant :
         - les variables globales (autres fonctions de ce module, utiles dans jinja, comme terme(), facteur()...),
         - les variables locales à cette fonction comme version (utile pour numéroter les fiches) et toutes les listes de nombres aléatoires ci-dessous).
+
+        Arguments : un entier (version) correspondant à la version du document créé.
+                    un dictionnaire des variables locales définies dans les fichiers personnalisés.
     """
     N = [randint(1,9) for i in range(100)]
     M = [randint(1,9) for i in range(100)]
@@ -94,10 +97,6 @@ def variables(version) :
     retour.update(globals())
     return retour
 
-# include de code python
-def include(filename):
-    if os.path.exists(filename): 
-        exec(open(filename,encoding="utf8").read())
 
 # Fonctions de formatage des résultats
 def terme(a):
@@ -154,10 +153,32 @@ def HMS(h,m,s) :
         retour+=str(s)+'~\\text{s}'
     retour+='$'
     return retour
-
-
-
 # fin fonctions de formatage des résultats.
+
+# fonctions python de personnalisation : un sujet par élève d'une classe  
+def eleve(classe, version):
+    """Pré requis : la variable "classe" doit être définie quelque part :
+        - dans le document LaTeX sous la forme
+            %% set classe="6ème 3"
+        - dans un des scripts personnalisés : variables_perso.py sous la forme :
+            classe = "6ème 3"
+        Retourne le nom de l'élève correspondant au numéro de version fourni pour la classe fournie.
+        Si la classe n'existe pas ou si la liste est plus courte que "version", retourne "".
+    """
+    global classes
+    #print("FUSION" , locals())
+    if classe in classes :
+        listeEleves = classes[classe]
+        #print(classe, version, listeEleves)
+        if version <= len(listeEleves) :
+            retour = listeEleves[version-1]
+        else :
+            retour = ""
+    else :
+        retour = ""
+    return retour
+# FIN des fonctions python de personnalisation : un sujet par élève d'une classe
+
 
 # fonctions python utiles à ce présent script
 def finDeVersion(fichier, version, nombre_de_versions) :
@@ -226,6 +247,44 @@ def choixFichier(dossier) :
                 print("Ce fichier n'existe pas !")
     return nom_fichier_modele
 
+def choixNbreVersions() :
+    """ retourne un entier correspondant au nombre de versions choisies :
+        1. soit par saisie d'un entier par l'utilisateur
+        2. soit par recherche du nom de la classe dans la liste des classes présentes. Retourne automatiquement le nombre d'élèves.
+    """
+    global classes, dictLocals
+    # lecture des variables personnalisées d'un fichier général variables_perso.py
+    dictGlobals = {}
+    dictLocals = {}
+    if os.path.exists("variables_perso.py") :
+        exec(open("variables_perso.py",encoding="utf8").read(), dictGlobals, dictLocals)
+        print("Prise en compte du fichier variables_perso.py")
+        globals().update(dictLocals)
+    # choix utilisateur
+    ReposeLaQuestion = True
+    while ReposeLaQuestion :
+        # affiche les classes disponibles
+        for niemeClasse in classes.keys() :
+            print(" - " , str(niemeClasse)) 
+        nombre=input("Nombre d'exemplaires souhaités (laisser vide pour automatique si classe définie) :")
+        try :
+            # teste si un entier correct est fourni :
+            numero = int(nombre)
+            if numero >=0 :
+                retour = numero
+                dictLocals["classe"] = "" # pour éviter des erreurs si la variable classe est absente du document LaTeX et que l'on demande .
+                ReposeLaQuestion = False
+            else :
+                print("Ce nombre n'est pas valide car négatif !")
+        except :
+            if nombre in classes :
+                dictLocals["classe"] = nombre
+                retour = len(classes[nombre])
+                ReposeLaQuestion = False
+            else :
+                print("La 'classe' n'existe pas : saisir un nombre entier ou un nom de classe valide.")
+    return retour
+
 # fin des fonctions utiles à ce présent script
 
 def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
@@ -234,6 +293,7 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
     - présence ou non du préambule personnalisé,
     - présence ou non du corrigé correspondant.
     """
+    global classes, dictLocals
     retour = ""
     # paramètres Jinja
     env = jinja2.Environment(
@@ -281,26 +341,21 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
         else :
             fcor = open(os.path.join(chemin, nomFichierCorrige), "w",encoding="utf8")
         fcor.write(preambule_personnalise)
+    # lecture de variables d'un fichier python .py de même nom que le fichier .tex
+    dictGlobals = {}
+    if os.path.exists(os.path.join(chemin,nom_fichier_modele+".py")) :
+        exec(open(os.path.join(chemin,nom_fichier_modele+".py"),encoding="utf8").read(), dictGlobals, dictLocals)
+        print("Prise en compte du fichier ",os.path.join(chemin,nom_fichier_modele+".py"))
+
     # RENDU DES VERSIONS DEMANDEES
     for version in range(1,nombre_de_versions+1) :
         # récupération des variables standards
         dictVariables = variables(version)
-        # ajout des variables personnalisées d'un fichier général
-        dictGlobals = {}
-        dictLocals = {}
-        if os.path.exists("variables_perso.py") :
-            # script python perso pour envoyer des données comme la classe, les noms des élèves.
-            exec(open("variables_perso.py",encoding="utf8").read(), dictGlobals, dictLocals)
-            if version == 1 :
-                print("Prise en compte du fichier variables_perso.py")
-        # ajout de variables d'un fichier python .py de même nom que le fichier .tex
-        if os.path.exists(os.path.join(chemin,nom_fichier_modele+".py")) :
-            exec(open(os.path.join(chemin,nom_fichier_modele+".py"),encoding="utf8").read(), dictGlobals, dictLocals)
-            if version == 1 :
-                print("Prise en compte du fichier ",os.path.join(chemin,nom_fichier_modele+".py"))
-            #print("dictLocals:",dictLocals)
         # mise à jour du dictionnaire de variables afin de disposer de tout.
         dictVariables.update(dictLocals)
+        # cas spécifique de la variable classes
+        classes = dictLocals["classes"]
+        #print(dictVariables)
         # création du rendu
         f.write(template.render(**dictVariables))
         finDeVersion(f, version, nombre_de_versions)
@@ -317,10 +372,13 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
 
 # version non GUI :
 if __name__ == "__main__":
+    classes = {}# variable globale juste intialisée.
+    dictLocals = {}# variable globale juste intialisée.
     # Demande le modele en proposant les noms de fichiers valides du dossier courant :
     nomFichierModele = choixFichier(dossierModeles) # pour l'instant, on ne propose que le dossier courant
     print("Fichier choisi : ",nomFichierModele)
-    nombreVersions=int(input("Nombre d'exemplaires souhaités :"))
+    nombreVersions=choixNbreVersions()
+    print("Nombre de versions choisies :",nombreVersions)
     (filepath, filename) = os.path.split(nomFichierModele)
     #print(filename, "/", filepath, "/" , nombreVersions)
     print(traiter(filename, filepath, nombreVersions))
