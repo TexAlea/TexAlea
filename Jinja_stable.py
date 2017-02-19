@@ -266,7 +266,7 @@ def choixNbreVersions() :
         # affiche les classes disponibles
         for niemeClasse in classes.keys() :
             print(" - " , str(niemeClasse)) 
-        nombre=input("Nombre d'exemplaires souhaités (laisser vide pour automatique si classe définie) :")
+        nombre=input("Nombre d'exemplaires souhaités ou classe choisie (parmi ci-dessus) :")
         try :
             # teste si un entier correct est fourni :
             numero = int(nombre)
