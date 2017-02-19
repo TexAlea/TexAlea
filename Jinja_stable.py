@@ -261,10 +261,10 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
     # fin prise en compte du préambule personnalisé.
     # prise en compte optionnelle du corrigé personnalisé.
     nom_fichier_corrige = nom_fichier_modele + "-cor.tex"
-    presenceDuCorrige = os.path.exists(nom_fichier_corrige)
+    presenceDuCorrige = os.path.exists(os.path.join(chemin, nom_fichier_corrige))
     if presenceDuCorrige :
         nomFichierCorrige=nom_fichier_modele+"_aleatoirise-cor.tex"
-        templatecor = env.get_template(nom_fichier_corrige)
+        templatecor = env.get_template(os.path.join(chemin, nom_fichier_corrige))
         fcor = open(os.path.join(chemin, nomFichierCorrige), "w",encoding="utf8")
         fcor.write(preambule_personnalise)
     # RENDU DES VERSIONS DEMANDEES
