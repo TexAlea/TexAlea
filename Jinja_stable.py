@@ -173,12 +173,12 @@ def listeFichierTexProposes(dossier, indiceInitial) :
             - les fichiers dont le nom se termine par "cor"
             - les fichiers dont le nom se termine par "aleatoirise"
     """
-    fichList = [ f for f in os.listdir(dossier) if os.path.isfile(os.path.join(dossier, f)) and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[0][0] != "." and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[0][-3:] != "cor" and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[0][-11:] != "aleatoirise" and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[1] == ".tex"]
+    fichList = [ os.path.join(dossier,f) for f in os.listdir(dossier) if os.path.isfile(os.path.join(dossier, f)) and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[0][0] != "." and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[0][-3:] != "cor" and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[0][-11:] != "aleatoirise" and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[1] == ".tex"]
     dirList = [ d for d in os.listdir(dossier) if os.path.isdir(os.path.join(dossier,d)) and d != ".git" ]
     #print(fichList, dirList)
     j = indiceInitial
     for fichier in fichList :
-        print(str(j) + " - " + os.path.join(dossier,fichier))
+        print(str(j) + " - " + fichier)
         j = j + 1
     for sousDossier in dirList :
         #print("appel de : listeFichierTexProposes(", os.path.join(dossier,sousDossier) , "," ,j)
@@ -201,6 +201,7 @@ def choixFichier(dossier) :
     ReposeLaQuestion = True
     while ReposeLaQuestion :
         listeProposee = listeFichierTexProposes(dossier,0)
+        #print(listeProposee)
         nom_fichier_modele=input("Nom du fichier modèle (sans extension) ou numéro de celui-ci :")
         try :
             # teste si un entier correct est fourni :
@@ -244,14 +245,14 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
         loader=jinja2.FileSystemLoader(".")
     )
     nomfichier=nom_fichier_modele+"_aleatoirise.tex"
-    #print(nom_fichier_modele+".tex"," parent= ", chemin)
-    template = env.get_template(nom_fichier_modele+".tex", parent=chemin)
+    #print(os.path.join(chemin,nom_fichier_modele+".tex")," parent= ", chemin)
+    template = env.get_template(os.path.join(chemin,nom_fichier_modele+".tex"), parent=chemin)
     f = open(os.path.join(chemin,nomfichier), "w",encoding="utf8")
     # prise en compte d'un éventuel préambule personnalisé dans le dossier.
     nom_fichier_preambule = "preambule-perso.tex"
     if os.path.exists(os.path.join(chemin, nom_fichier_preambule)) :
         retour = "Prise en compte du preambule-perso.tex. "
-        file = open(chemin + nom_fichier_preambule, "r",encoding="utf8")
+        file = open(os.path.join(chemin , nom_fichier_preambule), "r",encoding="utf8")
         preambule_personnalise = file.read()
         file.close()
     else :
@@ -287,6 +288,8 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
 if __name__ == "__main__":
     # Demande le modele en proposant les noms de fichiers valides du dossier courant :
     nomFichierModele = choixFichier(dossierModeles) # pour l'instant, on ne propose que le dossier courant
+    print("Fichier choisi : ",nomFichierModele)
     nombreVersions=int(input("Nombre d'exemplaires souhaités :"))
     (filepath, filename) = os.path.split(nomFichierModele)
+    #print(filename, "/", filepath, "/" , nombreVersions)
     print(traiter(filename, filepath, nombreVersions))
