@@ -88,11 +88,16 @@ def variables(version) :
         return var[i]
 
     # Pour envoyer toutes les variables au modèle
+    # regroupement dans un seul dictionnaire retour de toutes les fonctions et variables définies ici.
+    # => utilisables dans la fonction traiter(...)
     retour = locals()
     retour.update(globals())
     return retour
 
-
+# include de code python
+def include(filename):
+    if os.path.exists(filename): 
+        exec(open(filename,encoding="utf8").read())
 
 # Fonctions de formatage des résultats
 def terme(a):
@@ -278,8 +283,17 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
         fcor.write(preambule_personnalise)
     # RENDU DES VERSIONS DEMANDEES
     for version in range(1,nombre_de_versions+1) :
-        # rendu
+        # récupération des variables standards
         dictVariables = variables(version)
+        # ajout des variables personnalisées
+        dictGlobals = {}
+        dictLocals = {}
+        if os.path.exists("variables_perso.py") :
+            # script python perso pour envoyer des données comme la classe, les noms des élèves.
+            exec(open("variables_perso.py",encoding="utf8").read(), dictGlobals, dictLocals)
+            #print("dictLocals:",dictLocals)
+        dictVariables.update(dictLocals)
+        # création du rendu
         f.write(template.render(**dictVariables))
         finDeVersion(f, version, nombre_de_versions)
         if presenceDuCorrige :
