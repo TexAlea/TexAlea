@@ -244,10 +244,16 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
         autoescape = False,
         loader=jinja2.FileSystemLoader(".")
     )
+    dossierDestination = "fichiers-aleatoirises"
+    if not os.path.exists(dossierDestination) :
+        os.mkdir(dossierDestination)
     nomfichier=nom_fichier_modele+"_aleatoirise.tex"
     #print(os.path.join(chemin,nom_fichier_modele+".tex")," parent= ", chemin)
     template = env.get_template(os.path.join(chemin,nom_fichier_modele+".tex"), parent=chemin)
-    f = open(os.path.join(chemin,nomfichier), "w",encoding="utf8")
+    if __name__ == "__main__":
+        f = open(os.path.join(dossierDestination, nomfichier), "w",encoding="utf8")
+    else :
+        f = open(os.path.join(chemin,nomfichier), "w",encoding="utf8")
     # prise en compte d'un éventuel préambule personnalisé dans le dossier.
     nom_fichier_preambule = "preambule-perso.tex"
     if os.path.exists(os.path.join(chemin, nom_fichier_preambule)) :
@@ -265,7 +271,10 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
     if presenceDuCorrige :
         nomFichierCorrige=nom_fichier_modele+"_aleatoirise-cor.tex"
         templatecor = env.get_template(os.path.join(chemin, nom_fichier_corrige))
-        fcor = open(os.path.join(chemin, nomFichierCorrige), "w",encoding="utf8")
+        if __name__ == "__main__":
+            fcor = open(os.path.join(dossierDestination, nomFichierCorrige), "w",encoding="utf8")
+        else :
+            fcor = open(os.path.join(chemin, nomFichierCorrige), "w",encoding="utf8")
         fcor.write(preambule_personnalise)
     # RENDU DES VERSIONS DEMANDEES
     for version in range(1,nombre_de_versions+1) :

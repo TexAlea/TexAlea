@@ -137,7 +137,7 @@ L'utilisation de la version non graphique Jinja_stable.py est recommandée pour 
 
 ![](jinja_non-GUI.png)
 
-Le fichier aléatoire créé est placé dans le même dossier que le document d'origine. Il portera le même nom avec "_aleatoirise" à la fin. Il restera à effectuer la compilation LaTeX avec votre éditeur préféré.
+Le fichier aléatoire créé est placé dans le dossier "fichiers-aleatoirises", sous-dossier de celui contenant Jinja_stable.py. Il portera le même nom que le modèle d'origine avec "_aleatoirise" à la fin. Il restera à effectuer la compilation LaTeX avec votre éditeur préféré.
 
 ### Jinja-GUI_stable.py
 L'utilisation de la version graphique du script python est recommandée pour utiliser des modèles discéminés sur votre ordinateur.
@@ -149,7 +149,7 @@ L'utilisation de la version graphique du script python est recommandée pour uti
 ![](2eme-choix-fichier-tex.png)
 * Choix du nombre de versions aléatoirisées souhaitées :
 ![](3eme-choix-nbre-versions.png)
-* Le fichier aléatoire créé est placé dans le même dossier que le document d'origine. Il portera le même nom avec "_aleatoirise" à la fin. Il restera à effectuer la compilation LaTeX avec votre éditeur préféré.
+* Le fichier aléatoire créé est placé dans le même dossier que le modèle d'origine. Il portera le même nom que le modèle d'origine avec "_aleatoirise" à la fin. Il restera à effectuer la compilation LaTeX avec votre éditeur préféré.
 
 
 ## Fonctions
