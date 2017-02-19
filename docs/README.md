@@ -133,7 +133,15 @@ Il s'agit systématiquement de tableaux de 100 nombres (indice de 0 à 99) qui d
 
 ## Utilisation d'un modèle pour générer des sujets aléatoires
 
-L'utilisation de la version graphique du script python est recommandée.
+### Jinja_stable.py
+L'utilisation de la version non graphique Jinja_stable.py est recommandée pour des tests. ATTENTION : elle n'utilise des modèles que s'ils sont présents dans un sous-dossier "modeles" de l'arborescence.
+
+![](jinja_non-GUI.png)
+
+Le fichier aléatoire créé est placé dans le même dossier que le document d'origine. Il portera le même nom avec "_aleatoirise" à la fin. Il restera à effectuer la compilation LaTeX avec votre éditeur préféré.
+
+### Jinja-GUI_stable.py
+L'utilisation de la version graphique du script python est recommandée pour utiliser des modèles discéminés sur votre ordinateur.
 
 * Exécuter Jinja-GUI_stable.py (F5 dans l'éditeur IDLE)
 * Cliquer sur "sélectionner" :
