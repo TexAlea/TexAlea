@@ -204,7 +204,7 @@ def listeFichierTexProposes(dossier, indiceInitial) :
     #print(fichList, dirList)
     j = indiceInitial
     for fichier in fichList :
-        print(str(j) + " - " + fichier)
+        print(str(j) + " - " + fichier[8:])
         j = j + 1
     for sousDossier in dirList :
         #print("appel de : listeFichierTexProposes(", os.path.join(dossier,sousDossier) , "," ,j)
