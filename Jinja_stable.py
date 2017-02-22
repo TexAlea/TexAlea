@@ -153,6 +153,23 @@ def HMS(h,m,s) :
         retour+=str(s)+'~\\text{s}'
     retour+='$'
     return retour
+
+def ecriture_decimale(d,type=1):
+    d=str(d)
+    partie_decimale=Decimal(d)%1
+    partie_entiere=round(Decimal(d)-partie_decimale)
+    puissance=len(str(partie_decimale))-2
+    if type==1:
+       retour='\\nombre{'+d+'}'
+    if type==2:
+        retour='\\dfrac{\\nombre{'+d.replace('.','')+'}}{\\nombre{'+str(10**puissance)+'}}'
+    if type==3:
+        retour=str(partie_entiere)+'+\\dfrac{\\nombre{'+str(partie_decimale).replace('0.','')+'}}{\\nombre{'+str(10**puissance)+'}}'
+    return retour
+
+
+
+
 # fin fonctions de formatage des résultats.
 
 # fonctions python de personnalisation : un sujet par élève d'une classe  
