@@ -159,12 +159,12 @@ def ecriture_decimale(d,type=1):
     partie_decimale=Decimal(d)%1
     partie_entiere=round(Decimal(d)-partie_decimale)
     puissance=len(str(partie_decimale))-2
-    if type==1:
-       retour='\\nombre{'+d+'}'
     if type==2:
         retour='\\dfrac{\\nombre{'+d.replace('.','')+'}}{\\nombre{'+str(10**puissance)+'}}'
-    if type==3:
+    elif type==3:
         retour=str(partie_entiere)+'+\\dfrac{\\nombre{'+str(partie_decimale).replace('0.','')+'}}{\\nombre{'+str(10**puissance)+'}}'
+    else :
+        retour='\\nombre{'+d+'}'
     return retour
 
 
