@@ -375,10 +375,13 @@ if __name__ == "__main__":
     classes = {}# variable globale juste intialisée.
     dictLocals = {}# variable globale juste intialisée.
     # Demande le modele en proposant les noms de fichiers valides du dossier courant :
-    nomFichierModele = choixFichier(dossierModeles) # pour l'instant, on ne propose que le dossier courant
-    print("Fichier choisi : ",nomFichierModele)
-    nombreVersions=choixNbreVersions()
-    print("Nombre de versions choisies :",nombreVersions)
-    (filepath, filename) = os.path.split(nomFichierModele)
-    #print(filename, "/", filepath, "/" , nombreVersions)
-    print(traiter(filename, filepath, nombreVersions))
+    if os.path.exists(dossierModeles): 
+        nomFichierModele = choixFichier(dossierModeles) # pour l'instant, on ne propose que le dossier courant
+        print("Fichier choisi : ",nomFichierModele)
+        nombreVersions=choixNbreVersions()
+        print("Nombre de versions choisies :",nombreVersions)
+        (filepath, filename) = os.path.split(nomFichierModele)
+        #print(filename, "/", filepath, "/" , nombreVersions)
+        print(traiter(filename, filepath, nombreVersions))
+    else :
+        print("Pas de dossier 'modeles' dans le dossier courant du script.")
