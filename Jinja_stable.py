@@ -78,16 +78,17 @@ def variables(version) :
         fille.append(choice(ListeFille))
 
 
-    # Pour spécifier les bornes du nombre aléatoire dans le modèle .tex
-    mem=['']*100
-    def r(a,b,i) :
-        mem[i] = randint(a,b)
-        return mem[i]
+    # Pour créer des variables dans le modèle .tex
+  
 
     var={}
-    def alea(a,b,i) :
-        var[i] = randint(a,b)
-        return var[i]
+    def alea(a,b,nom) : # Avec <<var[nom]>> on pourra récupérer la valeur d'un entier aléatoire entre a et b
+        var[nom] = randint(a,b)
+        return var[nom]
+
+    def aleadecimal(nom) : # Un nombre décimal dont la partie entière a 1 à 3 chiffres et la partie décimale a 1 à 3 chiffres
+        var[nom] = Decimal(str(randint(1,10**randint(1,3)))+'.'+str(randint(1,10**randint(1,3))))
+        return var[nom]
 
     # Pour envoyer toutes les variables au modèle
     # regroupement dans un seul dictionnaire retour de toutes les fonctions et variables définies ici.
@@ -158,12 +159,16 @@ def ecriture_decimale(d,type=1):
     partie_decimale=Decimal(d)%1
     partie_entiere=round(Decimal(d)-partie_decimale)
     puissance=len(str(partie_decimale))-2
-    if type==2:
-        retour='\\dfrac{\\nombre{'+d.replace('.','')+'}}{\\nombre{'+str(10**puissance)+'}}'
-    elif type==3:
-        retour=str(partie_entiere)+'+\\dfrac{\\nombre{'+str(partie_decimale).replace('0.','')+'}}{\\nombre{'+str(10**puissance)+'}}'
+    print(partie_decimale)
+    if partie_decimale==0:
+        retour='\\nombre{'+d+'}'.replace('.0','')
     else :
-        retour='\\nombre{'+d+'}'
+        if type==2:
+            retour='\\dfrac{\\nombre{'+d.replace('.','')+'}}{\\nombre{'+str(10**puissance)+'}}'
+        elif type==3:
+            retour=str(partie_entiere)+'+\\dfrac{\\nombre{'+str(partie_decimale).replace('0.','')+'}}{\\nombre{'+str(10**puissance)+'}}'
+        else :
+            retour='\\nombre{'+d+'}'
     return retour
 
 
