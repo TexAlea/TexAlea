@@ -7,8 +7,7 @@ __status__ = "Production"
 
 import jinja2, math, os
 from random import *
-#from decimal import *
-#getcontext().prec = 2  # est ce bien utile désormais puisque l'on a un formatage des prix ?
+from decimal import *
 
 ## personnalisation
 dossierModeles = "modeles"
