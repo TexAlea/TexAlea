@@ -191,6 +191,18 @@ def melanger(l):
     retour=' '.join(l)
     return retour
 
+def melangeritemize(l):
+    retour='\n\\begin{itemize}\n    \\item '
+    l=sample(l,len(l))
+    retour+='\n    \\item '.join(l)
+    retour+='\n\\end{itemize} \n'   
+    return retour
+
+def melangernewline(l):
+    l=sample(l,len(l))
+    retour='\\\\\n'.join(l)   
+    return retour
+
 
 # fin fonctions de formatage des résultats.
 
