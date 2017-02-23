@@ -186,9 +186,10 @@ def rearrangement(l):
     liste = sample([i for i in range(1,l+1)],l)
     return liste
 
-    
-
-
+def melanger(l):
+    l=sample(l,len(l))
+    retour=' '.join(l)
+    return retour
 
 
 # fin fonctions de formatage des résultats.
