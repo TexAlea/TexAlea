@@ -198,6 +198,13 @@ def melangeritemize(l):
     retour+='\n\\end{itemize} \n'   
     return retour
 
+def melangerenumerate(l):
+    retour='\n\\begin{enumerate}\n    \\item '
+    l=sample(l,len(l))
+    retour+='\n    \\item '.join(l)
+    retour+='\n\\end{enumerate} \n'   
+    return retour
+
 def melangernewline(l):
     l=sample(l,len(l))
     retour='\\\\\n'.join(l)   
