@@ -203,6 +203,11 @@ def melangernewline(l):
     retour='\\\\\n'.join(l)   
     return retour
 
+def melangerhfill(l):
+    l=sample(l,len(l))
+    retour='\\hfill '.join(l)   
+    return retour
+
 
 # fin fonctions de formatage des résultats.
 
