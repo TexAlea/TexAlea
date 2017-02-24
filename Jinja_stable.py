@@ -22,6 +22,7 @@ def variables(version) :
         Arguments : un entier (version) correspondant à la version du document créé.
                     un dictionnaire des variables locales définies dans les fichiers personnalisés.
     """
+
     N = [randint(1,9) for i in range(100)]
     M = [randint(1,9) for i in range(100)]
     n = [randint(2,9) for i in range(100)]
@@ -186,9 +187,16 @@ def rearrangement(l):
     liste = sample([i for i in range(1,l+1)],l)
     return liste
 
-def melanger(l):
-    l=sample(l,len(l))
-    retour=' '.join(l)
+#memoiredesordres=[]
+#numerodumelange=1
+
+def melanger(liste):
+    ordre=rearrangement(len(liste))
+    #memoiredesordres[numerodumelange]=ordre
+    #numerodumelange+=1
+    listemelangee = [ liste[i-1] for i in ordre]
+    retour=' '.join(listemelangee)
+    
     return retour
 
 def melangeritemize(l):
