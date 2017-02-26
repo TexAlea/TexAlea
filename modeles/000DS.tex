@@ -1,0 +1,91 @@
+\stepcounter{sujet}
+\exo{ : Compléter (sans utiliser d'arrondis)}
+
+\begin{multicols}{4}
+\begin{spacing}{2}
+%% for i in range(8)
+
+$<<n[i]>>\times\ldots\ldots=<<m[i]>>$
+
+%% endfor	
+\end{spacing}
+\end{multicols}
+
+\exo{} % Il faudra aléatoiriser les longueurs
+
+	\begin{center}
+	\begin{tikzpicture}[scale=.8]
+		\NoAutoSpacing
+		\tkzDefPoints{.6/-.38/<<L1[0]>>,3.6/-.38/<<L2[0]>>,5.74/3/<<L3[0]>>}
+		\tkzDrawPolygon(<<L1[0]>>,<<L2[0]>>,<<L3[0]>>)
+		\tkzMarkAngle[mark=x](<<L2[0]>>,<<L1[0]>>,<<L3[0]>>)
+		\tkzMarkAngle[mark=o,size=.5](<<L3[0]>>,<<L2[0]>>,<<L1[0]>>)
+		\tkzLabelPoints[left](<<L1[0]>>)
+		\tkzLabelPoints[right](<<L2[0]>>)
+		\tkzLabelPoints[above](<<L3[0]>>)
+		\tkzLabelSegment[below](<<L1[0]>>,<<L2[0]>>){<<c1[version]>> cm}
+		\tkzLabelSegment[below,sloped](<<L2[0]>>,<<L3[0]>>){<<c2[version]>> cm}
+	\end{tikzpicture}
+	\hspace{3cm}	
+	\begin{tikzpicture}[scale=1.2]
+		\NoAutoSpacing
+		\tkzDefPoints{.6/-.38/<<L4[0]>>,3.6/-.38/<<L5[0]>>,5.74/3/<<L6[0]>>}
+		\tkzDrawPolygon(<<L4[0]>>,<<L5[0]>>,<<L6[0]>>)
+		\tkzMarkAngle[mark=x](<<L5[0]>>,<<L4[0]>>,<<L6[0]>>)
+		\tkzMarkAngle[mark=o,size=.5](<<L6[0]>>,<<L5[0]>>,<<L4[0]>>)
+		\tkzLabelPoints[left](<<L4[0]>>)
+		\tkzLabelPoints[right](<<L5[0]>>)
+		\tkzLabelPoints[above](<<L6[0]>>)
+		\tkzLabelSegment[below](<<L4[0]>>,<<L5[0]>>){\nombre{<<(c1[version]*k[version])|round(1)>>} cm}
+		\tkzLabelSegment[above,sloped](<<L4[0]>>,<<L6[0]>>){\nombre{<<(c3[version]*k[version])|round(1)>>} cm}
+	\end{tikzpicture}
+ 	
+\end{center}
+
+Calculer $<<L5[0]>><<L6[0]>>$ et $<<L1[0]>><<L3[0]>>$. Donner la valeur exacte ou un arrondi au millimètre près. \textit{Vous veillerez à bien détailler les différentes étapes de votre raisonnement.}
+
+\exo{}
+\begin{enumerate}
+	\item Un article à <<NNO[0]>>~€ est soldé à $-<<D[0]>>~\%$, quel est son nouveau prix ?
+	\item Un salaire de \nombre{<<NNN[0]*10>>}~€ augmente de <<n[0]>>~\%, quel est son nouveau montant ?
+	\item Une facture d'assurance était à <<NNN[1]>>~€ en 2015, elle a augmenté de <<n[1]>>~\% en 2016 et de <<n[2]>>~\% en 2017. Quel est son nouveau montant ?
+\end{enumerate}
+
+\exo{}
+Exprimer les variations de prix suivantes en pourcentage du prix de départ.
+
+\begin{multicols}{4}
+<<D[1]>>~€ $\longrightarrow$ <<prix(D[1]*(100+D[11])/100)>>~€
+
+<<D[2]>>~€ $\longrightarrow$ <<prix(D[2]*(100-D[12])/100)>>~€
+
+<<D[3]>>~€ $\longrightarrow$ <<prix(D[3]*(100+D[13])/100)>>~€
+
+<<prix(D[3]*(100+D[13])/100)>>~€ $\longrightarrow$ <<D[3]>>~€
+\end{multicols}
+
+\exo{}
+
+\begin{enumerate}
+	\item Lors du premier tour d'une élection il y a eu \nombre{<<alea(4000,6000,'exprimes')>>} votes exprimés. Un candidat a réalisé un score arrondi de \nombre{<<(alea(600,1000,'votes')/var['exprimes']*100)|round(2)>>}~\%.
+	
+	Combien de personnes ont voté pour lui lors de ce premier tour ? 
+	\item Voici les résultats du second tour d'une élection  : 
+	\qquad
+	\begin{tabular}{|l|c|}
+	\hline
+	Candidat 1 & \nombre{<<alea(15000,30000,'score1')>>}\\
+	\hline
+	Candidat 2 & \nombre{<<alea(15000,30000,'score2')>>}\\
+	\hline
+	Votes blancs et nuls & \nombre{<<alea(200,500,'nuls')>>}\\
+	\hline
+	Nombre de votants & \nombre{<<var['score1']+var['score2']+var['nuls']>>}\\
+	\hline
+	\end{tabular}
+	
+		\begin{enumerate}
+			\item Déterminer le nombre de votes exprimés.
+			\item Calculer le pourcentage de votes exprimés pour chacun des deux candidats. Donner un arrondi au centième près.
+		\end{enumerate}
+\end{enumerate}
