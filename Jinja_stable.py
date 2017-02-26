@@ -14,15 +14,15 @@ dossierModeles = "modeles"
 
 
 # Variables à regrouper ici quand cela fonctionnera : plus facile à modifier.
-def variables(version) :
+def variables(version,fichier) :
     """crée toutes les variables aléatoires utiles et retourne un dictionnaire contenant :
         - les variables globales (autres fonctions de ce module, utiles dans jinja, comme terme(), facteur()...),
         - les variables locales à cette fonction comme version (utile pour numéroter les fiches) et toutes les listes de nombres aléatoires ci-dessous).
 
         Arguments : un entier (version) correspondant à la version du document créé.
-                    un dictionnaire des variables locales définies dans les fichiers personnalisés.
+                    une chaine de caractère correspondant au nom d'un fichier texte (valide) dans lequel seront écrites à la fin les nouvelles variables générées ou lues les variables déjà générées avant.
     """
-
+    # on génère de nouvelles variables car aucune existante.
     N = [randint(1,9) for i in range(100)]
     M = [randint(1,9) for i in range(100)]
     n = [randint(2,9) for i in range(100)]
@@ -77,36 +77,39 @@ def variables(version) :
         prenom.append(choice(ListePrenom))
         garcon.append(choice(ListeGarcon))
         fille.append(choice(ListeFille))
-    
+
     # Pour créer des variables dans le modèle .tex
-  
-
     var={}
-    def alea(a,b,nom='nepasmemoriser') : # Avec <<var[nom]>> on pourra récupérer la valeur d'un entier aléatoire entre a et b
-        if nom=='nepasmemoriser':
-            return randint(a,b)
-        else:
-            var[nom] = randint(a,b)
-            return var[nom]
 
-    def aleadecimal(nom) : # Un nombre décimal dont la partie entière a 1 à 3 chiffres et la partie décimale a 1 à 3 chiffres
-        var[nom] = Decimal(str(randint(1,10**randint(1,3)))+'.'+str(randint(1,10**randint(1,3))))
-        return var[str(nom)]
-
-    def affectealeadecimal(nom):
-        aleadecimal(nom)
-        return ''
-
-    def affecte(valeur,nom) :
-        var[nom] = valeur
-        return ''
-
+    retour = locals()
+    # on enregistre les variables locals() créées dans le fichier fvar
+    enregistrerVariables(fichier, retour)
     # Pour envoyer toutes les variables au modèle
     # regroupement dans un seul dictionnaire retour de toutes les fonctions et variables définies ici.
     # => utilisables dans la fonction traiter(...)
-    retour = locals()
     retour.update(globals())
     return retour
+
+# Fonctions pour créer des variables dans le modèle tex
+def alea(a,b,nom='nepasmemoriser') : # Avec <<var[nom]>> on pourra récupérer la valeur d'un entier aléatoire entre a et b
+    if nom=='nepasmemoriser':
+        return randint(a,b)
+    else:
+        var[nom] = randint(a,b)
+        return var[nom]
+
+def aleadecimal(nom) : # Un nombre décimal dont la partie entière a 1 à 3 chiffres et la partie décimale a 1 à 3 chiffres
+    var[nom] = Decimal(str(randint(1,10**randint(1,3)))+'.'+str(randint(1,10**randint(1,3))))
+    return var[str(nom)]
+
+def affectealeadecimal(nom):
+    aleadecimal(nom)
+    return ''
+
+def affecte(valeur,nom) :
+    var[nom] = valeur
+    return ''
+# Fin des fonctions pour créer des varaibles dans le modèle tex
 
 
 # Fonctions de formatage des résultats
@@ -354,7 +357,35 @@ def choixNbreVersions() :
                 print("La 'classe' n'existe pas : saisir un nombre entier ou un nom de classe valide.")
     return retour
 
-# fin des fonctions utiles à ce présent script
+##def lireVariables(fvar) :
+##    """ retourne la liste des lignes du fichier fvar
+##        cela permet de récupérer les variables d'une version générée antérieurement.
+##    """
+##        print( fvar.readlines())
+##        print("lecture réussie")
+##    except :
+##        print("lecture en échec", )
+##        liste =[]
+##    return liste
+        
+def enregistrerVariables(fichier, dictionnaire) :
+    """ Filtre du dictionnaire toutes les listes (qui contiennent les variables aléatoires) + le dictionnaire var (spécifique) en excluant tous les autres dictionnaires (fonctions,...).
+        Enregistre dans fvar un dictionnaire contenant des listes de nombres aléatoires : permet de mémoriser les variables d'une version.
+    """
+    dictionnaireTraite = {}
+    for element in dictionnaire.keys() :
+        if type(dictionnaire.get(element)) == list or element == "var" :
+            dictionnaireTraite[element] = dictionnaire.get(element)
+    #print(dictionnaireTraite)
+##    try :
+##        fvar.read() # positionnement à la fin
+##    except :
+##        True
+    #fvar.seek(-1,2) # positionnement à la fin (surement inutile car on est déjà à la fin)
+    with open(fichier, "a",encoding="utf8") as fvar:
+        fvar.write(str(dictionnaireTraite)+"\n") # une ligne par version
+        fvar.close()
+    
 
 def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
     """ Traitement par Jinja du fichier modèle.
@@ -382,6 +413,7 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
     if not os.path.exists(dossierDestination) :
         os.mkdir(dossierDestination)
     nomfichier=nom_fichier_modele+"_aleatoirise.tex"
+    # génération du fichier aléatoirisé + affichage de ce qui est fait au fur et à mesure
     print("Fichier choisi : " , os.path.join(chemin,nom_fichier_modele+".tex").replace("\\","/"))
     template = env.get_template(os.path.join(chemin,nom_fichier_modele+".tex").replace("\\","/"), parent=chemin.replace("\\","/"))
     if __name__ == "__main__":
@@ -415,11 +447,27 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
     if os.path.exists(os.path.join(chemin,nom_fichier_modele+".py")) :
         exec(open(os.path.join(chemin,nom_fichier_modele+".py"),encoding="utf8").read(), dictGlobals, dictLocals)
         print("Prise en compte du fichier ",os.path.join(chemin,nom_fichier_modele+".py"))
-
+    # prise en compte d'un fichier pour enregistrer les variables générées antérieurement.
+    nomFichierVariables = os.path.join(dossierDestination, nom_fichier_modele+"_aleatoirise-var-memo.txt")
+    lignesVariables = []
+    if os.path.exists(nomFichierVariables) and os.stat(nomFichierVariables).st_size != 0 :
+        # ouverture du fichier de variables personnalisées qui existe et est non vide
+        with open(nomFichierVariables, "r",encoding="utf8") as fvar:
+            lignesVariables= fvar.read().splitlines()
+            print("Récupération du jeu de variables enregistré pour ", len(lignesVariables)," versions.")
+            #print(lignesVariables)
+            fvar.close() # fermeture du fichier contenant les variables (inutile avec le with)
     # RENDU DES VERSIONS DEMANDEES
     for version in range(1,nombre_de_versions+1) :
-        # récupération des variables standards
-        dictVariables = variables(version)
+        # utilisation des variables standards aléatoires si enregistrés dans un fichier txt du même nom
+        if len(lignesVariables) < version :
+            print("Génération d'un nouveau jeu de variables pour la version ",version)
+            dictVariables = variables(version, nomFichierVariables)
+        else :
+            print("Utilisation du jeu de variables n°", version)
+            #print(lignesVariables[version - 1])
+            dictVariables = eval(lignesVariables[version - 1])
+            dictVariables.update(globals())
         # mise à jour du dictionnaire de variables afin de disposer de tout.
         dictVariables.update(dictLocals)
         # cas spécifique de la variable classes
@@ -438,6 +486,7 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
         fcor.close()
     return retour
 
+# fin des fonctions utiles à ce présent script
 
 # version non GUI :
 if __name__ == "__main__":
