@@ -93,27 +93,6 @@ def variables(version,fichier) :
         garcon.append(choice(ListeGarcon))
         fille.append(choice(ListeFille))
 
-    # Pour créer des variables dans le modèle .tex
-    var={}
-    def alea(a,b,nom='nepasmemoriser') : # Avec <<var[nom]>> on pourra récupérer la valeur d'un entier aléatoire entre a et b
-        if nom=='nepasmemoriser':
-            return randint(a,b)
-        else:
-            var[nom] = randint(a,b)
-            return var[nom]
-
-    def aleadecimal(nom) : # Un nombre décimal dont la partie entière a 1 à 3 chiffres et la partie décimale a 1 à 3 chiffres
-        var[nom] = Decimal(str(randint(1,10**randint(1,3)))+'.'+str(randint(1,10**randint(1,3))))
-        return var[str(nom)]
-
-    def affectealeadecimal(nom):
-        aleadecimal(nom)
-        return ''
-
-    def affecte(valeur,nom) :
-        var[nom] = valeur
-        return ''
-
     # ajout des variables du script compagnon.py
     dictGlobals = {}
     if os.path.exists(fichier[:-13]+".py") :
@@ -126,9 +105,32 @@ def variables(version,fichier) :
     retour.update(globals())
 
     # on enregistre les variables locals() créées dans le fichier fvar
-    enregistrerVariables(fichier, retour)
+    # enregistrment déplacé après l'exécution de jinja pour récupérer les variables générés dans jinja.
+    #enregistrerVariables(fichier, retour)
     return retour
 
+def alea(a,b,nom='nepasmemoriser') : # Avec <<var[nom]>> on pourra récupérer la valeur d'un entier aléatoire entre a et b
+    global alea
+    if nom=='nepasmemoriser':
+        return randint(a,b)
+    else:
+        var[nom] = randint(a,b)
+        return var[nom]
+
+def aleadecimal(nom) : # Un nombre décimal dont la partie entière a 1 à 3 chiffres et la partie décimale a 1 à 3 chiffres
+    global alea
+    var[nom] = Decimal(str(randint(1,10**randint(1,3)))+'.'+str(randint(1,10**randint(1,3))))
+    return var[str(nom)]
+
+def affectealeadecimal(nom):
+    global alea
+    aleadecimal(nom)
+    return ''
+
+def affecte(valeur,nom) :
+    global alea
+    var[nom] = valeur
+    return ''
 
 # Fonctions de formatage des résultats
 def terme(a):
@@ -522,7 +524,9 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
             print("Utilisation du jeu de variables n°", version)
             dictVariables = eval(lignesVariables[version - 1])
             dictVariables.update(globals())
-        
+
+        # ajout de versions au dictionnaire transmis
+        dictVariables['version']=version
         # mise à jour du dictionnaire de variables afin de disposer de tout.
         dictVariables.update(dictLocals)
         # cas spécifique de la variable classes
@@ -530,6 +534,9 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
         #print(dictVariables)
         # création du rendu
         f.write(template.render(**dictVariables))
+        # enregistrement du jeu de variables générés dans python et jinja.
+        enregistrerVariables(nomFichierVariables, dictVariables)
+        # fin de version générée
         finDeVersion(f, version, nombre_de_versions)
         if presenceDuCorrige :
             fcor.write(templatecor.render(**dictVariables))
@@ -545,6 +552,7 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
 
 # version non GUI :
 if __name__ == "__main__":
+    var={} # Pour créer des variables dans le modèle .tex
     classes = {}# variable globale juste intialisée.
     dictLocals = {}# variable globale juste intialisée.
     # Demande le modele en proposant les noms de fichiers valides du dossier courant :
