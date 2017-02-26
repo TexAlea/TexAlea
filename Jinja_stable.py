@@ -11,6 +11,7 @@ from decimal import *
 
 ## personnalisation
 dossierModeles = "modeles"
+memoiredesordres=[]
 
 
 # Variables à regrouper ici quand cela fonctionnera : plus facile à modifier.
@@ -26,7 +27,12 @@ def variables(version,fichier) :
     N = [randint(1,9) for i in range(100)]
     M = [randint(1,9) for i in range(100)]
     n = [randint(2,9) for i in range(100)]
-    m = [randint(2,9) for i in range(100)]
+    #m = [randint(2,9) for i in range(100)]
+    m=['' for i in range(100)]
+    for i in range(100):
+        m[i]=randint(2,9)
+        while m[i]==n[i]:
+            m[i]=randint(2,9)   
     nZ = [choice([-1,1])*randint(2,9) for i in range(100)]
     mZ = [choice([-1,1])*randint(2,9) for i in range(100)]
     N2 = [randint(1,2) for i in range(100)]
@@ -56,13 +62,21 @@ def variables(version,fichier) :
     L2=[]
     L3=[]
     L4=[]
+    L5=[]
+    L6=[]
+    L7=[]
+    L8=[]
     L = [choice(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']) for i in range(100)]
     for i in range(100):
-        Quatrelettres=sample(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],4)
+        Quatrelettres=sample(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],8)
         L1.append(Quatrelettres[0])
         L2.append(Quatrelettres[1])
         L3.append(Quatrelettres[2])
         L4.append(Quatrelettres[3])
+        L5.append(Quatrelettres[4])
+        L6.append(Quatrelettres[5])
+        L7.append(Quatrelettres[6])
+        L8.append(Quatrelettres[7])
     NNvNN = [round(randint(1,9999)/100,2) for i in range(100)]
     NNvNO = [round(randint(1,999)/10,2) for i in range(100)]
     NvNN = [round(randint(1,999)/100,2) for i in range(100)]
@@ -144,7 +158,7 @@ def prix(a) :
     Exemple 2 : prix(
     """
     if int(a) == a :
-        retour = a
+        retour = str(a).replace('.0','')
     else :
         retour = '{0:.2f}'.format(a).replace(".",",")
     return retour
@@ -188,39 +202,72 @@ def rearrangement(l):
     liste = sample([i for i in range(1,l+1)],l)
     return liste
 
-#memoiredesordres=[]
-#numerodumelange=1
+
 
 def melanger(liste):
     ordre=rearrangement(len(liste))
-    #memoiredesordres[numerodumelange]=ordre
-    #numerodumelange+=1
+    memoiredesordres.append(ordre)
     listemelangee = [ liste[i-1] for i in ordre]
     retour=' '.join(listemelangee)
-    
+    print(memoiredesordres)
     return retour
 
-def melangeritemize(l):
+def melanger_corr(liste):
+    ordre=memoiredesordres[0]
+    del memoiredesordres[0]
+    listemelangee = [ liste[i-1] for i in ordre]
+    retour=' '.join(listemelangee)
+    print(memoiredesordres)
+    return retour
+
+
+def melangeritemize(liste):
+    ordre=rearrangement(len(liste))
+    memoiredesordres.append(ordre)
+    listemelangee = [ liste[i-1] for i in ordre]
     retour='\n\\begin{itemize}\n    \\item '
-    l=sample(l,len(l))
-    retour+='\n    \\item '.join(l)
+    retour+='\n    \\item '.join(listemelangee)
     retour+='\n\\end{itemize} \n'   
     return retour
 
-def melangerenumerate(l):
+def melangeritemize_corr(liste):
+    ordre=memoiredesordres[0]
+    del memoiredesordres[0]
+    listemelangee = [ liste[i-1] for i in ordre]
+    retour='\n\\begin{itemize}\n    \\item '
+    retour+='\n    \\item '.join(listemelangee)
+    retour+='\n\\end{itemize} \n'   
+    return retour
+
+def melangerenumerate(liste):
+    ordre=rearrangement(len(liste))
+    memoiredesordres.append(ordre)
+    listemelangee = [ liste[i-1] for i in ordre]
     retour='\n\\begin{enumerate}\n    \\item '
-    l=sample(l,len(l))
-    retour+='\n    \\item '.join(l)
+    retour+='\n    \\item '.join(listemelangee)
+    retour+='\n\\end{enumerate} \n'   
+    return retour
+
+def melangerenumerate_corr(liste):
+    ordre=memoiredesordres[0]
+    del memoiredesordres[0]
+    listemelangee = [ liste[i-1] for i in ordre]
+    retour='\n\\begin{enumerate}\n    \\item '
+    retour+='\n    \\item '.join(listemelangee)
     retour+='\n\\end{enumerate} \n'   
     return retour
 
 def melangernewline(l):
-    l=sample(l,len(l))
-    retour='\\\\\n'.join(l)   
+    ordre=memoiredesordres[0]
+    del memoiredesordres[0]
+    listemelangee = [ liste[i-1] for i in ordre]
+    retour='\\\\\n'.join(listemelangee)   
     return retour
 
 def melangerhfill(l):
-    l=sample(l,len(l))
+    ordre=memoiredesordres[0]
+    del memoiredesordres[0]
+    listemelangee = [ liste[i-1] for i in ordre]
     retour='\\hfill '.join(l)   
     return retour
 
@@ -259,7 +306,6 @@ def finDeVersion(fichier, version, nombre_de_versions) :
         fichier.write('\n')
         fichier.write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n')
         fichier.write('\\newpage\n')
-        fichier.write('\\setcounter{exo}{0}\n')
         fichier.write('\\setcounter{section}{0}\n')
     else :
         fichier.write('\n')
