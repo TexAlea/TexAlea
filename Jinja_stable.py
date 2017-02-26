@@ -7,6 +7,7 @@ __status__ = "Production"
 
 import jinja2, math, os
 from random import *
+from decimal import *
 
 ## personnalisation
 dossierModeles = "modeles"
@@ -76,10 +77,29 @@ def variables(version) :
         prenom.append(choice(ListePrenom))
         garcon.append(choice(ListeGarcon))
         fille.append(choice(ListeFille))
-
-
+    
+    # Pour créer des variables dans le modèle .tex
+  
 
     var={}
+    def alea(a,b,nom='nepasmemoriser') : # Avec <<var[nom]>> on pourra récupérer la valeur d'un entier aléatoire entre a et b
+        if nom=='nepasmemoriser':
+            return randint(a,b)
+        else:
+            var[nom] = randint(a,b)
+            return var[nom]
+
+    def aleadecimal(nom) : # Un nombre décimal dont la partie entière a 1 à 3 chiffres et la partie décimale a 1 à 3 chiffres
+        var[nom] = Decimal(str(randint(1,10**randint(1,3)))+'.'+str(randint(1,10**randint(1,3))))
+        return var[str(nom)]
+
+    def affectealeadecimal(nom):
+        aleadecimal(nom)
+        return ''
+
+    def affecte(valeur,nom) :
+        var[nom] = valeur
+        return ''
 
     # Pour envoyer toutes les variables au modèle
     # regroupement dans un seul dictionnaire retour de toutes les fonctions et variables définies ici.
@@ -144,6 +164,64 @@ def HMS(h,m,s) :
         retour+=str(s)+'~\\text{s}'
     retour+='$'
     return retour
+
+def ecriture_decimale(d,type=1):
+    d=str(d)
+    partie_decimale=Decimal(d)%1
+    partie_entiere=round(Decimal(d)-partie_decimale)
+    puissance=len(str(partie_decimale))-2
+    if partie_decimale==0:
+        retour=('\\nombre{'+d+'}').replace('.0','')
+    else :
+        if type==2:
+            retour='\\dfrac{\\nombre{'+d.replace('.','')+'}}{\\nombre{'+str(10**puissance)+'}}'
+        elif type==3:
+            retour=str(partie_entiere)+'+\\dfrac{\\nombre{'+str(partie_decimale).replace('0.','')+'}}{\\nombre{'+str(10**puissance)+'}}'
+        else :
+            retour='\\nombre{'+d+'}'
+    return retour
+
+def rearrangement(l):
+    liste = sample([i for i in range(1,l+1)],l)
+    return liste
+
+#memoiredesordres=[]
+#numerodumelange=1
+
+def melanger(liste):
+    ordre=rearrangement(len(liste))
+    #memoiredesordres[numerodumelange]=ordre
+    #numerodumelange+=1
+    listemelangee = [ liste[i-1] for i in ordre]
+    retour=' '.join(listemelangee)
+    
+    return retour
+
+def melangeritemize(l):
+    retour='\n\\begin{itemize}\n    \\item '
+    l=sample(l,len(l))
+    retour+='\n    \\item '.join(l)
+    retour+='\n\\end{itemize} \n'   
+    return retour
+
+def melangerenumerate(l):
+    retour='\n\\begin{enumerate}\n    \\item '
+    l=sample(l,len(l))
+    retour+='\n    \\item '.join(l)
+    retour+='\n\\end{enumerate} \n'   
+    return retour
+
+def melangernewline(l):
+    l=sample(l,len(l))
+    retour='\\\\\n'.join(l)   
+    return retour
+
+def melangerhfill(l):
+    l=sample(l,len(l))
+    retour='\\hfill '.join(l)   
+    return retour
+
+
 # fin fonctions de formatage des résultats.
 
 # fonctions python de personnalisation : un sujet par élève d'une classe  
