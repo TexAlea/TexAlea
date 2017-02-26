@@ -382,8 +382,8 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
     if not os.path.exists(dossierDestination) :
         os.mkdir(dossierDestination)
     nomfichier=nom_fichier_modele+"_aleatoirise.tex"
-    #print(os.path.join(chemin,nom_fichier_modele+".tex")," parent= ", chemin)
-    template = env.get_template(os.path.join(chemin,nom_fichier_modele+".tex"), parent=chemin)
+    print("Fichier choisi : " , os.path.join(chemin,nom_fichier_modele+".tex").replace("\\","/"))
+    template = env.get_template(os.path.join(chemin,nom_fichier_modele+".tex").replace("\\","/"), parent=chemin.replace("\\","/"))
     if __name__ == "__main__":
         f = open(os.path.join(dossierDestination, nomfichier), "w",encoding="utf8")
     else :
@@ -404,7 +404,7 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
     presenceDuCorrige = os.path.exists(os.path.join(chemin, nom_fichier_corrige))
     if presenceDuCorrige :
         nomFichierCorrige=nom_fichier_modele+"_aleatoirise-cor.tex"
-        templatecor = env.get_template(os.path.join(chemin, nom_fichier_corrige))
+        templatecor = env.get_template(os.path.join(chemin, nom_fichier_corrige).replace("\\","/"))
         if __name__ == "__main__":
             fcor = open(os.path.join(dossierDestination, nomFichierCorrige), "w",encoding="utf8")
         else :
