@@ -303,7 +303,6 @@ def finDeVersion(fichier, version, nombre_de_versions) :
         fichier.write('\n')
         fichier.write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n')
         fichier.write('\\newpage\n')
-        fichier.write('\\setcounter{exo}{0}\n')
         fichier.write('\\setcounter{section}{0}\n')
     else :
         fichier.write('\n')
