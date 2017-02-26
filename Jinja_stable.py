@@ -23,6 +23,7 @@ def variables(version,fichier) :
         Arguments : un entier (version) correspondant à la version du document créé.
                     une chaine de caractère correspondant au nom d'un fichier texte (valide) dans lequel seront écrites à la fin les nouvelles variables générées ou lues les variables déjà générées avant.
     """
+    global classes, dictLocals
     # on génère de nouvelles variables car aucune existante.
     N = [randint(1,9) for i in range(100)]
     M = [randint(1,9) for i in range(100)]
@@ -113,13 +114,19 @@ def variables(version,fichier) :
         var[nom] = valeur
         return ''
 
+    # ajout des variables du script compagnon.py
+    dictGlobals = {}
+    if os.path.exists(fichier[:-13]+".py") :
+        exec(open(os.path.join(chemin,nom_fichier_modele+".py"),encoding="utf8").read(), dictGlobals, dictLocals)
     retour = locals()
-    # on enregistre les variables locals() créées dans le fichier fvar
-    enregistrerVariables(fichier, retour)
+    retour.update(dictLocals)
     # Pour envoyer toutes les variables au modèle
     # regroupement dans un seul dictionnaire retour de toutes les fonctions et variables définies ici.
     # => utilisables dans la fonction traiter(...)
     retour.update(globals())
+
+    # on enregistre les variables locals() créées dans le fichier fvar
+    enregistrerVariables(fichier, retour)
     return retour
 
 
@@ -509,10 +516,10 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
     for version in range(1,nombre_de_versions+1) :
         # utilisation des variables standards aléatoires si enregistrés dans un fichier txt du même nom
         if len(lignesVariables) < version :
-            #print("Génération d'un nouveau jeu de variables pour la version ",version)
+            print("Génération d'un nouveau jeu de variables pour la version ",version)
             dictVariables = variables(version, nomFichierVariables)
         else :
-            #print("Utilisation du jeu de variables n°", version)
+            print("Utilisation du jeu de variables n°", version)
             dictVariables = eval(lignesVariables[version - 1])
             dictVariables.update(globals())
         
