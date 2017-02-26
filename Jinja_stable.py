@@ -7,8 +7,6 @@ __status__ = "Production"
 
 import jinja2, math, os
 from random import *
-#from decimal import *
-#getcontext().prec = 2  # est ce bien utile désormais puisque l'on a un formatage des prix ?
 
 ## personnalisation
 dossierModeles = "modeles"
@@ -23,6 +21,7 @@ def variables(version) :
         Arguments : un entier (version) correspondant à la version du document créé.
                     un dictionnaire des variables locales définies dans les fichiers personnalisés.
     """
+
     N = [randint(1,9) for i in range(100)]
     M = [randint(1,9) for i in range(100)]
     n = [randint(2,9) for i in range(100)]
@@ -79,16 +78,8 @@ def variables(version) :
         fille.append(choice(ListeFille))
 
 
-    # Pour spécifier les bornes du nombre aléatoire dans le modèle .tex
-    mem=['']*100
-    def r(a,b,i) :
-        mem[i] = randint(a,b)
-        return mem[i]
 
     var={}
-    def alea(a,b,i) :
-        var[i] = randint(a,b)
-        return var[i]
 
     # Pour envoyer toutes les variables au modèle
     # regroupement dans un seul dictionnaire retour de toutes les fonctions et variables définies ici.
