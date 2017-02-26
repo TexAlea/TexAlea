@@ -1,11 +1,18 @@
-\documentclass[a4paper,11pt,fleqn]{article}
+\documentclass[a4paper,11pt,fleqn]{article}		% Présentation générale et mise en page
+
+
 \input{preambule}
-\begin{document}
-\pagestyle{empty}
+\input{preambule-partages}
+\input{preambule-axes-gradues}
+
+
+%\input{preambule}
+\setlength{\columnsep}{1cm}
+\setlength{\columnseprule}{.5pt}
 
 
 \renewcommand{\headrulewidth}{1pt}
-\fancyhead[C]{\textbf{Entraînement -- Calcul littéral niveau 1 version \no 1}} 
+\fancyhead[C]{\textbf{Entraînement -- Calcul littéral niveau 1 version \no <<version>>}} 
 \fancyhead[L]{}
 \fancyhead[R]{Cycle 4}
 
@@ -15,7 +22,11 @@
 \fancyfoot[R]{Calcul littéral niveau 1}
 
 
+\usepackage{titlesec}
+\titlespacing*{\subsection}
+{1pt}{.1ex plus 0.1ex minus .1ex}{.1ex plus .1ex}
 
+\begin{document}
 
 \begin{multicols}{2}
 
@@ -190,7 +201,7 @@ $B=x\times (-7) \times x$\\
 $C=7\times x +9\times x$\\
 $D=7\times x\times 9\times x$\\
 $E=2 \times x-3\times (-9) +5 x$\\
-$F=7 \times ((-5)y -9)$\\
+$F=7 \times (-5y -9)$\\
 $G=2 a\times  a+a\times 2+a\times 1$\\
 $H= 3\times x -6x$
 \end{multicols}
@@ -204,7 +215,7 @@ $B=x\times 4 \times x$\\
 $C=6\times x +3\times x$\\
 $D=6\times x\times 3\times x$\\
 $E=3 \times x-3\times 9 +7 x$\\
-$F=-8 \times ((-3)y -2)$\\
+$F=-8 \times (-3y -2)$\\
 $G=2 a\times  a+a\times 1+a\times 1$\\
 $H= 2\times x -6x$
 \end{multicols}
@@ -239,14 +250,14 @@ $H= 8\times x +2x$
 %
 %\exo{}
 %
-%Calculer les expressions suivantes pour $x=4$.
+%Calculer les expressions suivantes pour $x=0$.
 %
 %\begin{tasks}[counter-format = {tsk[1].},label-format={\bfseries}](3)
-%	\task $-6 x$ 
+%	\task $0 x$ 
 %	\task $x^2$
-%	\task $9x -2 $
-%	\task $ -9 (-9 x -9)$
-%	\task $ -2  +9 x$
+%	\task $0x  $
+%	\task $ 0 (0 x )$
+%	\task $ 0   x$
 %	\task $x^3$
 %\end{tasks}
 
@@ -264,14 +275,14 @@ $D= 2  t(  -2 t -5)$
 %
 %\exo{}
 %
-%Calculer les expressions suivantes pour $x=4$.
+%Calculer les expressions suivantes pour $x=0$.
 %
 %\begin{tasks}[counter-format = {tsk[1].},label-format={\bfseries}](3)
-%	\task $-6 x$ 
+%	\task $0 x$ 
 %	\task $x^2$
-%	\task $9x -2 $
-%	\task $ -9 (-9 x -9)$
-%	\task $ -2  +9 x$
+%	\task $0x  $
+%	\task $ 0 (0 x )$
+%	\task $ 0   x$
 %	\task $x^3$
 %\end{tasks}
 
@@ -289,14 +300,14 @@ $D= 2  t(  3 t -7)$
 %
 %\exo{}
 %
-%Calculer les expressions suivantes pour $x=4$.
+%Calculer les expressions suivantes pour $x=0$.
 %
 %\begin{tasks}[counter-format = {tsk[1].},label-format={\bfseries}](3)
-%	\task $-6 x$ 
+%	\task $0 x$ 
 %	\task $x^2$
-%	\task $9x -2 $
-%	\task $ -9 (-9 x -9)$
-%	\task $ -2  +9 x$
+%	\task $0x  $
+%	\task $ 0 (0 x )$
+%	\task $ 0   x$
 %	\task $x^3$
 %\end{tasks}
 
@@ -314,14 +325,14 @@ $D= 2  t(  -3 t -2)$
 %
 %\exo{}
 %
-%Calculer les expressions suivantes pour $x=4$.
+%Calculer les expressions suivantes pour $x=0$.
 %
 %\begin{tasks}[counter-format = {tsk[1].},label-format={\bfseries}](3)
-%	\task $-6 x$ 
+%	\task $0 x$ 
 %	\task $x^2$
-%	\task $9x -2 $
-%	\task $ -9 (-9 x -9)$
-%	\task $ -2  +9 x$
+%	\task $0x  $
+%	\task $ 0 (0 x )$
+%	\task $ 0   x$
 %	\task $x^3$
 %\end{tasks}
 
@@ -408,7 +419,7 @@ Pour compléter cette pyramide, le nombre situé dans une case est la somme des 
 
 \begin{enumerate}
 	\item Compléter cette pyramide en mettant un nombre au choix dans la case grise.
-	\item Benjamin affirme : \og{} Quel que soit le nombre que je place dans la case grise, je trouve toujours 16 dans la case la plus haute. \fg{}. Est-ce vrai ou faux ? Démontrer le.
+	\item Benjamin affirme : \og{} Quel que soit le nombre que je place dans la case grise, je trouve toujours 24 dans la case la plus haute. \fg{}. Est-ce vrai ou faux ? Démontrer le.
 \end{enumerate}
 \end{minipage}
 
@@ -514,7 +525,7 @@ Pour compléter cette pyramide, le nombre situé dans une case est la somme des 
 %$C=(7 +9)\times x = 16  x$\\
 %$D=7 \times 9\times x^2 = 63\times x^2$\\
 %$E=2 \times x -3\times (-9) +5 x$\\
-%$F=7 \times (y\times (-5) -9 \times 4)$\\
+%$F=7 \times (y\times (-5) -9 \times 0)$\\
 %$G=2 a\times  a+a\times 2+a\times 1$\\
 %$H= 3\times x -6$
 %\end{multicols}

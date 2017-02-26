@@ -1,14 +1,3 @@
-\renewcommand{\headrulewidth}{1pt}
-\fancyhead[C]{\textbf{Entraînement -- Calcul littéral niveau 1 version \no <<version>>}} 
-\fancyhead[L]{}
-\fancyhead[R]{Cycle 4}
-
-\renewcommand{\footrulewidth}{1pt}
-\fancyfoot[C]{} 
-\fancyfoot[L]{}
-\fancyfoot[R]{Calcul littéral niveau 1}
-
-
 
 
 \begin{multicols}{2}
@@ -77,7 +66,7 @@ $B=x\times <<facteur(mZ[2+i])>> \times x$\\
 $C=<<nZ[7+i]>>\times x <<terme(nZ[8+i])>>\times x$\\
 $D=<<nZ[7+i]>>\times x\times <<facteur(nZ[8+i])>>\times x$\\
 $E=<<nZ[9+i]>> \times x<<terme(nZ[10+i])>>\times <<facteur(nZ[11+i])>> <<terme(nZ[12+i])>> x$\\
-$F=<<nZ[13+i]>> \times (<<facteur(nZ[14+i])>>y <<terme(nZ[15+i])>>)$\\
+$F=<<nZ[13+i]>> \times (<<nZ[14+i]>>y <<terme(nZ[15+i])>>)$\\
 $G=<<N2[1+i]>> a\times  a+a\times <<N2[2+i]>>+a\times <<N3[1+i]>>$\\
 $H= <<nZ[17+i]>>\times x <<terme(nZ[18+i])>>x$
 \end{multicols}
@@ -113,8 +102,6 @@ $D= <<mZ[6+i]>>  t(  <<mZ[5+i]>> t <<terme(mZ[4+i])>>)$
 %% endfor
 
 %% for i in range(0,61,20) 
-
-
 \exo{ - Version <<i / 20 +1>>}
 
 Factoriser les expressions suivantes.
@@ -156,7 +143,7 @@ Pour compléter cette pyramide, le nombre situé dans une case est la somme des 
 
 \begin{enumerate}
 	\item Compléter cette pyramide en mettant un nombre au choix dans la case grise.
-	\item Benjamin affirme : \og{} Quel que soit le nombre que je place dans la case grise, je trouve toujours <<mZ[3] + mZ[2] + 2*mZ[1]>> dans la case la plus haute. \fg{}. Est-ce vrai ou faux ? Démontrer le.
+	\item Benjamin affirme : \og{} Quel que soit le nombre que je place dans la case grise, je trouve toujours <<mZ[3] + mZ[2] + 3*mZ[1]>> dans la case la plus haute. \fg{}. Est-ce vrai ou faux ? Démontrer le.
 \end{enumerate}
 \end{minipage}
 
