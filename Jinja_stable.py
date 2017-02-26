@@ -456,18 +456,23 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
             lignesVariables= fvar.read().splitlines()
             print("Récupération du jeu de variables enregistré pour ", len(lignesVariables)," versions.")
             #print(lignesVariables)
-            fvar.close() # fermeture du fichier contenant les variables (inutile avec le with)
+            fvar.close()
+    # Affichage plus succint des jeux de variables utilisés
+    if nombre_de_versions <= len(lignesVariables):
+        print("Utilisation des jeux de variables n°1 à n°", nombre_de_versions)
+    else :
+        print("Génération de nouveaux jeux de variables pour les versions n°",len(lignesVariables)+1 , " à n°", nombre_de_versions)
     # RENDU DES VERSIONS DEMANDEES
     for version in range(1,nombre_de_versions+1) :
         # utilisation des variables standards aléatoires si enregistrés dans un fichier txt du même nom
         if len(lignesVariables) < version :
-            print("Génération d'un nouveau jeu de variables pour la version ",version)
+            #print("Génération d'un nouveau jeu de variables pour la version ",version)
             dictVariables = variables(version, nomFichierVariables)
         else :
-            print("Utilisation du jeu de variables n°", version)
-            #print(lignesVariables[version - 1])
+            #print("Utilisation du jeu de variables n°", version)
             dictVariables = eval(lignesVariables[version - 1])
             dictVariables.update(globals())
+        
         # mise à jour du dictionnaire de variables afin de disposer de tout.
         dictVariables.update(dictLocals)
         # cas spécifique de la variable classes
