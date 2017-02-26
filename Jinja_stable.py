@@ -94,6 +94,24 @@ def variables(version,fichier) :
 
     # Pour créer des variables dans le modèle .tex
     var={}
+    def alea(a,b,nom='nepasmemoriser') : # Avec <<var[nom]>> on pourra récupérer la valeur d'un entier aléatoire entre a et b
+        if nom=='nepasmemoriser':
+            return randint(a,b)
+        else:
+            var[nom] = randint(a,b)
+            return var[nom]
+
+    def aleadecimal(nom) : # Un nombre décimal dont la partie entière a 1 à 3 chiffres et la partie décimale a 1 à 3 chiffres
+        var[nom] = Decimal(str(randint(1,10**randint(1,3)))+'.'+str(randint(1,10**randint(1,3))))
+        return var[str(nom)]
+
+    def affectealeadecimal(nom):
+        aleadecimal(nom)
+        return ''
+
+    def affecte(valeur,nom) :
+        var[nom] = valeur
+        return ''
 
     retour = locals()
     # on enregistre les variables locals() créées dans le fichier fvar
@@ -103,27 +121,6 @@ def variables(version,fichier) :
     # => utilisables dans la fonction traiter(...)
     retour.update(globals())
     return retour
-
-# Fonctions pour créer des variables dans le modèle tex
-def alea(a,b,nom='nepasmemoriser') : # Avec <<var[nom]>> on pourra récupérer la valeur d'un entier aléatoire entre a et b
-    if nom=='nepasmemoriser':
-        return randint(a,b)
-    else:
-        var[nom] = randint(a,b)
-        return var[nom]
-
-def aleadecimal(nom) : # Un nombre décimal dont la partie entière a 1 à 3 chiffres et la partie décimale a 1 à 3 chiffres
-    var[nom] = Decimal(str(randint(1,10**randint(1,3)))+'.'+str(randint(1,10**randint(1,3))))
-    return var[str(nom)]
-
-def affectealeadecimal(nom):
-    aleadecimal(nom)
-    return ''
-
-def affecte(valeur,nom) :
-    var[nom] = valeur
-    return ''
-# Fin des fonctions pour créer des varaibles dans le modèle tex
 
 
 # Fonctions de formatage des résultats
