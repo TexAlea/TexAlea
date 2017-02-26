@@ -25,7 +25,12 @@ def variables(version) :
     N = [randint(1,9) for i in range(100)]
     M = [randint(1,9) for i in range(100)]
     n = [randint(2,9) for i in range(100)]
-    m = [randint(2,9) for i in range(100)]
+    m=['' for i in range(100)]
+    for i in range(100):
+        m[i]=randint(2,9)
+        while m[i]==n[i]:
+            m[i]=randint(2,9)    
+    #m = [randint(2,9) for i in range(100)]
     nZ = [choice([-1,1])*randint(2,9) for i in range(100)]
     mZ = [choice([-1,1])*randint(2,9) for i in range(100)]
     N2 = [randint(1,2) for i in range(100)]
