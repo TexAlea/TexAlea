@@ -68,16 +68,16 @@ def variables(version,fichier) :
     L7=[]
     L8=[]
     L = [choice(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']) for i in range(100)]
-    for i in range(100):
-        Quatrelettres=sample(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],8)
-        L1.append(Quatrelettres[0])
-        L2.append(Quatrelettres[1])
-        L3.append(Quatrelettres[2])
-        L4.append(Quatrelettres[3])
-        L5.append(Quatrelettres[4])
-        L6.append(Quatrelettres[5])
-        L7.append(Quatrelettres[6])
-        L8.append(Quatrelettres[7])
+    for i in range(10):
+        Huitlettres=sample(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],8)
+        L1.append(Huitlettres[0])
+        L2.append(Huitlettres[1])
+        L3.append(Huitlettres[2])
+        L4.append(Huitlettres[3])
+        L5.append(Huitlettres[4])
+        L6.append(Huitlettres[5])
+        L7.append(Huitlettres[6])
+        L8.append(Huitlettres[7])
     NNvNN = [round(randint(1,9999)/100,2) for i in range(100)]
     NNvNO = [round(randint(1,999)/10,2) for i in range(100)]
     NvNN = [round(randint(1,999)/100,2) for i in range(100)]
