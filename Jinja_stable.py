@@ -335,7 +335,7 @@ def listeFichierTexProposes(dossier, indiceInitial) :
         retour = listeFichierTexProposes(os.path.join(dossier,sousDossier), j)
         if retour != [] : # si le sousDossier a des fichiers intéressants.
             fichList = fichList + retour
-            j = j + 1
+        j = j + 1
     return fichList
 
 #dossier = "docs"

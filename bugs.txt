@@ -1,0 +1,9 @@
+Bugs constatés au 09/03/17
+
+- <<version>> n'est plus définie dans jinja.
+
+- fermeture des fichiers tex ouverts dans jinja-stable.py à sécuriser en cas d'exception.
+
+- numéro de jinja-stable.py non corrects quand il y a des sous-dossiers de dossiers.
+
+- lors de l'utilisation de jeux de variables déjà définis, des jeux semblent ajoutés au fichier memo-var.txt (le fichier grossit...)

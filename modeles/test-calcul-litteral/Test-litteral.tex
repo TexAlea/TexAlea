@@ -1,0 +1,111 @@
+\documentclass[a4paper,11pt,fleqn]{article}		% Présentation générale et mise en page
+\input{preambule}
+\setlength{\columnsep}{1cm}
+\setlength{\columnseprule}{.5pt}
+
+
+\renewcommand{\headrulewidth}{1pt}
+\fancyhead[C]{\textbf{Test -- Calcul littéral - version <<version>>}} 
+\fancyhead[L]{Nom:\\ Prénom : }
+\fancyhead[R]{Cycle 4}
+
+\renewcommand{\footrulewidth}{1pt}
+\fancyfoot[C]{} 
+\fancyfoot[L]{}
+\fancyfoot[R]{2 mars 2017}
+
+\begin{document}
+
+\vfill
+
+{}\hfill {}
+\begin{tabular}{|c|c|c|}
+\hline 
+B20 & Transformer une phrase en expression littérale & \hspace{1cm} \\ 
+\hline 
+E30 & Réduire une expression littérale &  \\ 
+\hline 
+E31 & Développer des expressions littérales &  \\
+\hline 
+E32 & Factoriser des expressions littérales &  \\
+\hline 
+\end{tabular} 
+{}\hfill {}
+
+\vfill
+
+	
+\exo{}
+Quel résultat donne chacun de ces 2 programmes de calculs lorsqu'on prend $x$ comme nombre de départ ?	
+
+\begin{center}
+\fcolorbox{black}{gray!30}{
+\begin{minipage}{0.7\linewidth}
+Programme 1 : 
+\begin{itemize}
+	\item Ajouter <<nZ[3]>>
+	\item Diviser par <<nZ[4]>>
+\end{itemize}
+\end{minipage}
+}
+
+\medskip
+\fcolorbox{black}{gray!30}{
+\begin{minipage}{0.7\linewidth}
+Programme 2 : 
+\begin{itemize}
+	\item Prendre le double
+	\item Soustraire <<nZ[6]>>
+	\item Multiplier par <<nZ[5]>>
+\end{itemize}
+\end{minipage}
+}
+\end{center}
+
+\exo{}
+
+Simplifier les expressions suivantes.
+
+\begin{multicols}{2}
+$B=x\times <<facteur(mZ[2])>> \times x$\\
+$A=<<n[1]>> x <<terme(m[1])>> x$\\
+
+$D=<<nZ[7]>>\times x\times <<facteur(nZ[8])>>\times x$\\
+$C=<<nZ[7]>>\times x <<terme(nZ[8])>>\times x$\\
+
+$E=<<nZ[9]>> \times x<<terme(nZ[10])>>\times <<facteur(nZ[11])>> <<terme(nZ[12])>> x$\\
+%$F=<<nZ[13]>> \times (<<nZ[14]>>y <<terme(nZ[15])>>)$\\
+$G=a\times <<N2[2]>>+a\times <<N3[1]>>+<<N2[1]>> a\times  a$\\
+%$H= <<nZ[17]>>\times x <<terme(nZ[18])>> \times x$
+\end{multicols}
+
+
+\exo{}
+
+Développer et réduire les expressions suivantes.
+
+\begin{multicols}{2}
+$A=  <<mZ[12]>> (x  <<terme(mZ[13])>>)$\\
+$B= <<mZ[11]>> ( <<mZ[10]>> x    <<terme(mZ[9])>>)$\\
+$C=( <<mZ[7]>>  <<terme(mZ[8])>> y) y$\\
+$D= <<mZ[6]>>  t(  <<mZ[5]>> t <<terme(mZ[4])>>)$
+\end{multicols}
+
+\exo{ }
+
+Factoriser les expressions suivantes.
+
+\begin{multicols}{2}
+$E=  <<N[5] * n[1]>> x  <<terme(S[1] * n[1])>>$\\
+$F=  <<S[6] *n[6] * n[2]>> x  <<terme(S[2] * n[2])>> x$\\
+$G=  <<S[7] *N[7] * n[3]>> x  <<terme(S[3] * n[3])>> x^2$\\
+$H=  <<S[8] *n[8] >> x^2  <<terme(S[4] *n[4] )>> x^2$
+\end{multicols}
+
+
+
+\raggedcolumns
+\end{multicols}
+
+
+\end{document}
