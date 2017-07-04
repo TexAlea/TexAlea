@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 __author__ = "Angot Rémi, Lacroix Olivier"
 __license__ = "CC-BY-SA"
-__version__ = "0.0.0.0.2"
+__version__ = "0.0.0.0.3"
 __status__ = "Production"
 
 import jinja2, math, os
@@ -307,14 +307,14 @@ def eleve(classe, version):
 
 # fonctions python utiles à ce présent script
 def finDeVersion(fichier, version, nombre_de_versions) :
-    """Ecriture dans le fichier LaTeX généré des fins de versions"""
+    """Ecriture dans le fichier LaTeX aléatoirisé généré des fins de versions"""
     if version!=nombre_de_versions :
         fichierChgtVersion = "changement-version.tex"
         if os.path.exists(fichierChgtVersion) :
             file = open(fichierChgtVersion, "r",encoding="utf8")
             chgtVersionPersonnalise = file.read()
             file.close()
-            fcor.write(chgtVersionPersonnalise)
+            fichier.write(chgtVersionPersonnalise)
         else :
             fichier.write('\n')
             fichier.write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n')
@@ -324,32 +324,21 @@ def finDeVersion(fichier, version, nombre_de_versions) :
         fichier.write('\n')
         fichier.write('\\end{document}')
 
-def listeFichierTexProposes(dossier, indiceInitial) :
-    """ affiche et retourne la liste des fichiers .tex du dossier passé en argument (et de ses sous-dossiers) en excluant :
+def listeFichierTexProposes(dossier) :
+    """ retourne la liste des fichiers .tex du dossier passé en argument (et de ses sous-dossiers) en excluant :
             - les fichiers cachés commençant par un point
             - les fichiers dont le nom se termine par "cor"
             - les fichiers dont le nom se termine par "aleatoirise"
+            - les fichiers dont le nom se termine par "preambule" (prise en compte des préambules par fichier modèle).
     """
-    fichList = [ os.path.join(dossier,f) for f in os.listdir(dossier) if os.path.isfile(os.path.join(dossier, f)) and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[0][0] != "." and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[0][-3:] != "cor" and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[0][-11:] != "aleatoirise" and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[1] == ".tex"]
+    fichList = [ os.path.join(dossier,f) for f in os.listdir(dossier) if os.path.isfile(os.path.join(dossier, f)) and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[0][0] != "." and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[0][-3:] != "cor" and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[0][-9:] != "preambule" and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[0][-11:] != "aleatoirise" and os.path.splitext(os.path.basename(os.path.join(dossier, f)))[1] == ".tex"]
     dirList = [ d for d in os.listdir(dossier) if os.path.isdir(os.path.join(dossier,d)) and d != ".git" ]
-    #print(fichList, dirList)
-    j = indiceInitial
-    for fichier in fichList :
-        print(str(j) + " - " + fichier[8:])
-        j = j + 1
     for sousDossier in dirList :
-        #print("appel de : listeFichierTexProposes(", os.path.join(dossier,sousDossier) , "," ,j)
-        retour = listeFichierTexProposes(os.path.join(dossier,sousDossier), j)
+        retour = listeFichierTexProposes(os.path.join(dossier,sousDossier))
         if retour != [] : # si le sousDossier a des fichiers intéressants.
             fichList = fichList + retour
-        j = j + 1
     return fichList
 
-#dossier = "docs"
-#print(os.listdir(dossier))
-#print([ d for d in os.listdir(dossier) if os.path.isdir(os.path.join(dossier,d) )])
-#listeFichierTexProposes(".", 0)
-#input("est ce que c bon?")
 
 def choixFichier(dossier) :
     """ propose les fichiers .tex du dossier fourni pour les aléatoiriser
@@ -357,8 +346,12 @@ def choixFichier(dossier) :
     """
     ReposeLaQuestion = True
     while ReposeLaQuestion :
-        listeProposee = listeFichierTexProposes(dossier,0)
-        #print(listeProposee)
+        listeProposee = listeFichierTexProposes(dossier)
+        print(listeProposee)
+        j=0
+        for fichier in listeProposee :
+            print(str(j) + " - " + fichier[len(dossier)+1:])
+            j = j + 1
         nom_fichier_modele=input("Nom du fichier modèle (sans extension) ou numéro de celui-ci :")
         try :
             # teste si un entier correct est fourni :
@@ -534,10 +527,12 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
         if len(lignesVariables) < version :
             print("Génération d'un nouveau jeu de variables pour la version ",version)
             dictVariables = variables(version, nomFichierVariables)
+            nouveauJeuDeVariables = True
         else :
             print("Utilisation du jeu de variables n°", version)
             dictVariables = eval(lignesVariables[version - 1])
             dictVariables.update(globals())
+            nouveauJeuDeVariables = False
 
         # ajout de versions au dictionnaire transmis
         dictVariables['version']=version
@@ -549,7 +544,8 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
         # création du rendu
         f.write(template.render(**dictVariables))
         # enregistrement du jeu de variables générés dans python et jinja.
-        enregistrerVariables(nomFichierVariables, dictVariables)
+        if nouveauJeuDeVariables :
+            enregistrerVariables(nomFichierVariables, dictVariables)
         # fin de version générée
         finDeVersion(f, version, nombre_de_versions)
         if presenceDuCorrige :

@@ -1,0 +1,7 @@
+EVOLUTIONS ET BUGS CORRIGES :
+
+Version 0.0.0.0.3 :
+- FAIT le 04/07/17 : numérotation des fichiers modèles incorrecte avec l'utilisation de jinja-stable.py quand il y a des sous-dossiers de dossiers de modèles.
+- FAIT LE 04/07:17 : lors de la génération des documents aléatoirisés, il serait souhaitable d'inclure des commandes issues d'un fichier personnalisé pour permettre de remettre les numéros d'exercices à 1 (en plus de \newpage et \setcounter{section}{0}), déjà ajoutés'
+- FAIT le 04/07/17 : lors de l'utilisation de jeux de variables déjà définis, des jeux étaient ajoutés au fichier memo-var.txt (le fichier grossissait...)
+

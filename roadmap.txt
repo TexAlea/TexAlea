@@ -1,0 +1,5 @@
+Fonctionnalités manquantes :
+
+- fermeture des fichiers tex ouverts dans jinja-stable.py à sécuriser en cas d'exception.
+
+- A compléter...
