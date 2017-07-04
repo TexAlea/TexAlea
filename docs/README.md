@@ -38,6 +38,18 @@ Il ne faut pas écrire `\begin{document}` (ni `\end{document}`), le script va au
 
 Lorsqu'on souhaite personnaliser le fichier LaTeX, on peut écrire, dans le même dossier, un fichier `preambule-perso.tex` qui sera utilisé comme préambule de tous les documents du dossier. On peut aussi créer un préambule personnalisé pour chaque modèle de fichier .tex en ajoutant "-preambule" au nom du fichier. Exemple : pour un fichier modèle "DS.tex", le fichier préambule "DS-preambule.tex" sera utilisé en priorité sur le préambule `preambule-perso.tex` commun au dossier, lui même prioritaire sur le préambule par défaut. 
 
+### Changement de version.
+
+Entre deux versions du document aléatoirisé, sont insérées les lignes suivantes :
+
+```
+\newpage
+\setcounter{section}{0}
+```
+
+Cela peut s'avérer insuffisant dans le cas d'utilisation de commandes personnalisées pour gérer correctement les numéros d'exercices. Dans ce cas, il est possible de créer un fichier "changement-version.tex" dans le même dossier que jinja-stable.py. C'est alors celui-ci qui sera utilisé pour les changements de versions de documents.
+
+
 ### Question
 Pour générer des questions aléatoires, on peut commencer par utiliser des variables prédéfinies n et m (voir ci-dessous) dans le document exemple.tex :
 

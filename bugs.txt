@@ -8,6 +8,8 @@ Bugs constatés au 09/03/17
 
 - lors de l'utilisation de jeux de variables déjà définis, des jeux semblent ajoutés au fichier memo-var.txt (le fichier grossit...)
 
-- lors de la génération des documents aléatoirisés, il serait souhaitable d'inclure des commandes issues d'un fichier personnalisé pour permettre de remettre les numéros d'exercices à 1 (en plus de \newpage et
-\setcounter{section}{0}), déjà ajoutés'
+
+Fonctionnalités manquantes :
+
+- FAIT LE 04/07 : lors de la génération des documents aléatoirisés, il serait souhaitable d'inclure des commandes issues d'un fichier personnalisé pour permettre de remettre les numéros d'exercices à 1 (en plus de \newpage et \setcounter{section}{0}), déjà ajoutés'
 

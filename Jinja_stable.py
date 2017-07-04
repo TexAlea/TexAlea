@@ -309,10 +309,17 @@ def eleve(classe, version):
 def finDeVersion(fichier, version, nombre_de_versions) :
     """Ecriture dans le fichier LaTeX généré des fins de versions"""
     if version!=nombre_de_versions :
-        fichier.write('\n')
-        fichier.write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n')
-        fichier.write('\\newpage\n')
-        fichier.write('\\setcounter{section}{0}\n')
+        fichierChgtVersion = "changement-version.tex"
+        if os.path.exists(fichierChgtVersion) :
+            file = open(fichierChgtVersion, "r",encoding="utf8")
+            chgtVersionPersonnalise = file.read()
+            file.close()
+            fcor.write(chgtVersionPersonnalise)
+        else :
+            fichier.write('\n')
+            fichier.write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n')
+            fichier.write('\\newpage\n')
+            fichier.write('\\setcounter{section}{0}\n')
     else :
         fichier.write('\n')
         fichier.write('\\end{document}')
