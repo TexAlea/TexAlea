@@ -1,0 +1,614 @@
+\documentclass[12pt]{article}
+
+\input{preambule-axes-gradues}
+\input{preambule}
+
+\pagestyle{fancy}                      
+ \fancyhead[L]{Version <<version>>}               	% en-tête gauche 
+ \fancyhead[C]{\textsc{\Large{Représenter des nombres sur un axe gradué...}}}	% en-tête centre
+ \fancyhead[R]{6\ieme{}}					% en-tête droite 
+ \renewcommand\headrulewidth{2pt}       	% filet horizontal sous l'en-tête
+ \renewcommand\footrulewidth{1pt}      	% filet horizontal sur le pied de page
+\fancyfoot[R]{Page \thepage/\pageref{LastPage}}	% pied de page droit
+\fancyfoot[C]{}	
+
+
+%%%% AXES GRADUES BIS
+
+
+\newcommand{\axesZoomBis}[5]{
+% Usage : #1 des commandes Tikz à passer en plus afin de mettre plus de points sur la figure...
+%				#2 est un nombre positif à deux décimales
+% 				#3 est le nom du point à placer.
+% 				#4 est la valeur Xmin de l'axe
+%				#5 booléen : true s'il faut afficher le point sur chaque axe , false sinon.
+% 				#6 booléen : true s'il faut afficher les nombres correspondant aux graduations sur les axes.
+{} \hfill 
+\begin{tikzpicture}
+	\def\XA{#1} % nombre (positif pour l'instant) à placer (avec deux décimales)
+	\def\Nom{#2} % nom du point à placer. Laisser vide si vous ne souhaitez pas voir le point
+	\def\Xmin{#3} % première valeur de x entière sur l'axe
+	\setboolean{affichePointilles}{true}  % affiche les pointillés indiquant le grossissement
+	\setboolean{affichePoint}{#4} % Est ce que le point doit apparaître sur la construction. 
+	\setboolean{afficheGraduations}{#5} % Est ce que l'on gradue tous les axes ou seulement \Xmin et \Xmax sur le premier axe (si false)
+	\setboolean{demiDroite}{true} %Par défaut, on construit des demi-droites pour les 6èmes, si Xmin=0 ou si une des décimales l'exige.
+	
+	%%% FIN DE LA PERSONNALISATION
+	% non fonctionnel parfaitement.
+	
+	% Si on est en 6ème et que Xmin vaut 0 alors il ne doit y avoir aucun débordement à gauche des axes.
+	\ifthenelse{\boolean{demiDroite}}
+	{
+		\def\DebordementAGauche{0} % mettre 0 pour une demi-droite graduée partant de l'origine
+	}
+	{
+		\def\DebordementAGauche{0.5} % mettre 0.5 dans les autres cas.
+	}	
+	
+% non configurable pour l'instant. Le reste du code n'est pas correctement adapté.
+	\pgfmathparse{int(\Xmin+10)}\let\Xmax\pgfmathresult; % Xmax vaut toujours Xmin+10
+		
+	% Chiffres du nombre :lles calculs effectués semblent très imprécis d'où l'utilisation de int(round(calcul)) pour contourner le problème...
+	\pgfmathparse{int(\XA)}\let\Unites\pgfmathresult;
+	\pgfmathparse{int((\XA-\Unites)*10)}\let\Dixiemes\pgfmathresult;
+	\pgfmathparse{int(round((\XA-\Unites.\Dixiemes)*100))}\let\Centiemes\pgfmathresult;	
+
+	% Calcul du chiffre majorant immédiatement les unités, etc... (unites+1, dixièmes+1, centièmes+1)...
+	\pgfmathparse{int(\Unites+1)}\let\UnitesMaj\pgfmathresult;
+	\pgfmathparse{int(\Dixiemes+1)}\let\DixiemesMaj\pgfmathresult;
+	\pgfmathparse{int(\Centiemes+1)}\let\CentiemesMaj\pgfmathresult;				
+
+	% Xfleche de l'axe
+	\pgfmathparse{\Xmax+1}\let\Xfleche\pgfmathresult;
+	% début du segment représentant l'axe numéro 1
+	\ifthenelse{\equal{\Xmin}{0}}
+	{
+		\def\Xorigine{\Xmin} 	
+	}
+	{
+		\pgfmathparse{\Xmin-0.5}\let\Xorigine\pgfmathresult;	
+	}
+
+	% Xmax - 1
+	\pgfmathparse{int(\Xmax-1)}\let\XmaxMoinsUn\pgfmathresult;
+	% Xmin + 1
+	\pgfmathparse{int(\Xmin+1)}\let\XminPlusUn\pgfmathresult;
+		
+% tests de valeurs de variables pour débug
+	%\draw (0,-6) node[below] {Dixiemes \Dixiemes  et CentiemesMaj \CentiemesMaj};	
+	
+	% construction de la 1ère demi-droite ou droite
+	\draw[->,>=latex] (\Xorigine,0) -- (\Xfleche,0);
+	\foreach \x in {\XminPlusUn,...,\XmaxMoinsUn}{
+		\ifthenelse{\boolean{afficheGraduations}}
+		{
+			\draw (\x,-.1) -- (\x,.1) node[above] {\x};
+		}
+		{
+			\draw (\x,-.1) -- (\x,.1);
+		}
+	};
+	\foreach \x in {1,...,9}{
+		\draw (\Unites.\x,-.05) -- (\Unites.\x,.05);
+	}
+	% on dessine toujours xmin et xmax
+	\draw (\Xmin,-.1) -- (\Xmin,.1) node[above] {\Xmin};
+	\draw (\Xmax,-.1) -- (\Xmax,.1) node[above] {\Xmax};
+	%%% construction de la 2ère demi-droite ou droite
+	% calcul si un débordement est nécessaire
+	\ifthenelse{\not\equal{\Unites}{0}}
+	{
+		\pgfmathparse{\Xmin-0.5}\let\Xorigine\pgfmathresult;		
+	}{}
+	% construction effective de la 2ème
+	\draw[->,>=latex] (\Xorigine,-2) -- (\Xfleche,-2);
+	\foreach \x in {1,...,9}{
+		\pgfmathparse{int(\Xmin+\x)}\let\X\pgfmathresult;
+		\ifthenelse{\boolean{afficheGraduations}}
+		{
+			\draw (\X,-2.1) -- (\X,-1.9) node[above] {\Unites,\x};
+		}
+		{
+			\draw (\X,-2.1) -- (\X,-1.9);
+		}		
+		\pgfmathparse{int(\Dixiemes+\Xmin)+\x/10}\let\Xtirets\pgfmathresult;
+		\draw (\Xtirets,-2.05) -- (\Xtirets,-1.95);
+	};
+	
+	\ifthenelse{\boolean{afficheGraduations}}
+	{	
+		\draw (\Xmax,-2.1) -- (\Xmax,-1.9) node[above] {\UnitesMaj};
+		\draw (\Xmin,-2.1) -- (\Xmin,-1.9) node[above] {\Unites};
+	}
+	{
+		\draw (\Xmax,-2.1) -- (\Xmax,-1.9) ;
+		\draw (\Xmin,-2.1) -- (\Xmin,-1.9) ;		
+	}
+	
+	\pgfmathparse{int(\Dixiemes+\Xmin)}\let\XGaucheAxeBis\pgfmathresult;
+	\pgfmathparse{int(\XGaucheAxeBis+1)}\let\XDroitAxeBis\pgfmathresult;
+
+	% Affichage des pointillés si besoin.
+	\ifthenelse{\boolean{affichePointilles}}
+	{
+	\draw[dashed] (\Unites,0) -- (\Xmin,-2);
+	\draw[dashed] (\UnitesMaj,0) -- (\Xmax,-2);
+	\draw[dashed] (\XGaucheAxeBis,-2) -- (\Xmin,-4);
+	\draw[dashed] (\XDroitAxeBis,-2) -- (\Xmax,-4);
+	}{}
+	
+	%%% construction de la 3ème demi-droite ou droite
+	% calcul si un débordement est nécessaire
+	\ifthenelse{\not\equal{\Dixiemes}{0}}
+	{
+		\pgfmathparse{\Xmin-0.5}\let\Xorigine\pgfmathresult;		
+	}{}
+	% construction effective de la 3ème
+	\draw[->,>=latex] (\Xorigine,-4) -- (\Xfleche,-4);
+	\foreach \x in {1,...,9}{
+		\pgfmathparse{int(\Xmin+\x)}\let\X\pgfmathresult;
+		\ifthenelse{\boolean{afficheGraduations}}
+			{
+			\draw (\X,-4.1) -- (\X,-3.9) node[above] {\Unites,\Dixiemes\x};
+			}
+			{
+			\draw (\X,-4.1) -- (\X,-3.9) ;
+			}
+		};
+
+	
+	% écriture correcte du nombre de droite sur le troisième axe.
+\ifthenelse{\boolean{afficheGraduations}}
+	{
+	\ifthenelse{\equal{\Dixiemes}{9}}
+		{
+		\draw (\Xmax,-4.1) -- (\Xmax,-3.9) node[above] {\UnitesMaj};		
+		}	
+		{
+		\draw (\Xmax,-4.1) -- (\Xmax,-3.9) node[above] {\Unites,\DixiemesMaj};
+		}	
+	
+	% écriture correcte du premier nombre sur le troisième axe.
+	\ifthenelse{\equal{\Dixiemes}{0}}
+		{
+		\draw (\Xmin,-4.1) -- (\Xmin,-3.9) node[above] {\Unites};
+		}
+		{
+		\draw (\Xmin,-4.1) -- (\Xmin,-3.9) node[above] {\Unites,\Dixiemes};	
+		}
+	}
+	{
+	\ifthenelse{\equal{\Dixiemes}{9}}
+		{
+		\draw (\Xmax,-4.1) -- (\Xmax,-3.9);		
+		}	
+		{
+		\draw (\Xmax,-4.1) -- (\Xmax,-3.9) ;
+		}	
+	
+	% écriture correcte du premier nombre sur le troisième axe.
+	\ifthenelse{\equal{\Dixiemes}{0}}
+		{
+		\draw (\Xmin,-4.1) -- (\Xmin,-3.9) ;
+		}
+		{
+		\draw (\Xmin,-4.1) -- (\Xmin,-3.9) ;	
+		}
+	% Remarque : si les graduations ont été effacées, c'est pour demander l'abscisse du point situé sur le 3ème axe, on l'écrit d'office :
+	\pgfmathparse{int(\Centiemes+\Xmin)}\let\XGaucheAxeTer\pgfmathresult;
+	\draw (\XGaucheAxeTer,-4.1) node[below] {\Nom};
+	}
+	
+	% on place le point demandé sur chaque axe si demandé
+	\ifthenelse{\boolean{affichePoint}}
+	{
+		\draw (\XA,0) node[below] {\Nom};
+		\draw (\XGaucheAxeBis.\Centiemes,-2.1) node[below] {\Nom};
+	}{}
+	
+	%%% AJOUT de deux points
+	\draw (7,0) node[below] {$D$};
+	\draw (6,-2.1) node[below] {$E$};
+\end{tikzpicture}
+}
+%%% AXES GRADUES BIS FIN
+
+%%% AXES GRADUES TER DEBUT
+\newcommand{\axesZoomTer}[5]{
+% Usage : #1 des commandes Tikz à passer en plus afin de mettre plus de points sur la figure...
+%				#2 est un nombre positif à deux décimales
+% 				#3 est le nom du point à placer.
+% 				#4 est la valeur Xmin de l'axe
+%				#5 booléen : true s'il faut afficher le point sur chaque axe , false sinon.
+% 				#6 booléen : true s'il faut afficher les nombres correspondant aux graduations sur les axes.
+{} \hfill 
+\begin{tikzpicture}
+	\def\XA{#1} % nombre (positif pour l'instant) à placer (avec deux décimales)
+	\def\Nom{#2} % nom du point à placer. Laisser vide si vous ne souhaitez pas voir le point
+	\def\Xmin{#3} % première valeur de x entière sur l'axe
+	\setboolean{affichePointilles}{true}  % affiche les pointillés indiquant le grossissement
+	\setboolean{affichePoint}{#4} % Est ce que le point doit apparaître sur la construction. 
+	\setboolean{afficheGraduations}{#5} % Est ce que l'on gradue tous les axes ou seulement \Xmin et \Xmax sur le premier axe (si false)
+	\setboolean{demiDroite}{true} %Par défaut, on construit des demi-droites pour les 6èmes, si Xmin=0 ou si une des décimales l'exige.
+	
+	%%% FIN DE LA PERSONNALISATION
+	% non fonctionnel parfaitement.
+	
+	% Si on est en 6ème et que Xmin vaut 0 alors il ne doit y avoir aucun débordement à gauche des axes.
+	\ifthenelse{\boolean{demiDroite}}
+	{
+		\def\DebordementAGauche{0} % mettre 0 pour une demi-droite graduée partant de l'origine
+	}
+	{
+		\def\DebordementAGauche{0.5} % mettre 0.5 dans les autres cas.
+	}	
+	
+% non configurable pour l'instant. Le reste du code n'est pas correctement adapté.
+	\pgfmathparse{int(\Xmin+10)}\let\Xmax\pgfmathresult; % Xmax vaut toujours Xmin+10
+		
+	% Chiffres du nombre :lles calculs effectués semblent très imprécis d'où l'utilisation de int(round(calcul)) pour contourner le problème...
+	\pgfmathparse{int(\XA)}\let\Unites\pgfmathresult;
+	\pgfmathparse{int((\XA-\Unites)*10)}\let\Dixiemes\pgfmathresult;
+	\pgfmathparse{int(round((\XA-\Unites.\Dixiemes)*100))}\let\Centiemes\pgfmathresult;	
+
+	% Calcul du chiffre majorant immédiatement les unités, etc... (unites+1, dixièmes+1, centièmes+1)...
+	\pgfmathparse{int(\Unites+1)}\let\UnitesMaj\pgfmathresult;
+	\pgfmathparse{int(\Dixiemes+1)}\let\DixiemesMaj\pgfmathresult;
+	\pgfmathparse{int(\Centiemes+1)}\let\CentiemesMaj\pgfmathresult;				
+
+	% Xfleche de l'axe
+	\pgfmathparse{\Xmax+1}\let\Xfleche\pgfmathresult;
+	% début du segment représentant l'axe numéro 1
+	\ifthenelse{\equal{\Xmin}{0}}
+	{
+		\def\Xorigine{\Xmin} 	
+	}
+	{
+		\pgfmathparse{\Xmin-0.5}\let\Xorigine\pgfmathresult;	
+	}
+
+	% Xmax - 1
+	\pgfmathparse{int(\Xmax-1)}\let\XmaxMoinsUn\pgfmathresult;
+	% Xmin + 1
+	\pgfmathparse{int(\Xmin+1)}\let\XminPlusUn\pgfmathresult;
+		
+% tests de valeurs de variables pour débug
+	%\draw (0,-6) node[below] {Dixiemes \Dixiemes  et CentiemesMaj \CentiemesMaj};	
+	
+	% construction de la 1ère demi-droite ou droite
+	\draw[->,>=latex] (\Xorigine,0) -- (\Xfleche,0);
+	\foreach \x in {\XminPlusUn,...,\XmaxMoinsUn}{
+		\ifthenelse{\boolean{afficheGraduations}}
+		{
+			\draw (\x,-.1) -- (\x,.1) node[above] {\x};
+		}
+		{
+			\draw (\x,-.1) -- (\x,.1);
+		}
+	};
+	\foreach \x in {1,...,9}{
+		\draw (\Unites.\x,-.05) -- (\Unites.\x,.05);
+	}
+	% on dessine toujours xmin et xmax
+	\draw (\Xmin,-.1) -- (\Xmin,.1) node[above] {\Xmin};
+	\draw (\Xmax,-.1) -- (\Xmax,.1) node[above] {\Xmax};
+	%%% construction de la 2ère demi-droite ou droite
+	% calcul si un débordement est nécessaire
+	\ifthenelse{\not\equal{\Unites}{0}}
+	{
+		\pgfmathparse{\Xmin-0.5}\let\Xorigine\pgfmathresult;		
+	}{}
+	% construction effective de la 2ème
+	\draw[->,>=latex] (\Xorigine,-2) -- (\Xfleche,-2);
+	\foreach \x in {1,...,9}{
+		\pgfmathparse{int(\Xmin+\x)}\let\X\pgfmathresult;
+		\ifthenelse{\boolean{afficheGraduations}}
+		{
+			\draw (\X,-2.1) -- (\X,-1.9) node[above] {\Unites,\x};
+		}
+		{
+			\draw (\X,-2.1) -- (\X,-1.9);
+		}		
+		\pgfmathparse{int(\Dixiemes+\Xmin)+\x/10}\let\Xtirets\pgfmathresult;
+		\draw (\Xtirets,-2.05) -- (\Xtirets,-1.95);
+	};
+	
+	\ifthenelse{\boolean{afficheGraduations}}
+	{	
+		\draw (\Xmax,-2.1) -- (\Xmax,-1.9) node[above] {\UnitesMaj};
+		\draw (\Xmin,-2.1) -- (\Xmin,-1.9) node[above] {\Unites};
+	}
+	{
+		\draw (\Xmax,-2.1) -- (\Xmax,-1.9) ;
+		\draw (\Xmin,-2.1) -- (\Xmin,-1.9) ;		
+	}
+	
+	\pgfmathparse{int(\Dixiemes+\Xmin)}\let\XGaucheAxeBis\pgfmathresult;
+	\pgfmathparse{int(\XGaucheAxeBis+1)}\let\XDroitAxeBis\pgfmathresult;
+
+	% Affichage des pointillés si besoin.
+	\ifthenelse{\boolean{affichePointilles}}
+	{
+	\draw[dashed] (\Unites,0) -- (\Xmin,-2);
+	\draw[dashed] (\UnitesMaj,0) -- (\Xmax,-2);
+	\draw[dashed] (\XGaucheAxeBis,-2) -- (\Xmin,-4);
+	\draw[dashed] (\XDroitAxeBis,-2) -- (\Xmax,-4);
+	}{}
+	
+	%%% construction de la 3ème demi-droite ou droite
+	% calcul si un débordement est nécessaire
+	\ifthenelse{\not\equal{\Dixiemes}{0}}
+	{
+		\pgfmathparse{\Xmin-0.5}\let\Xorigine\pgfmathresult;		
+	}{}
+	% construction effective de la 3ème
+	\draw[->,>=latex] (\Xorigine,-4) -- (\Xfleche,-4);
+	\foreach \x in {1,...,9}{
+		\pgfmathparse{int(\Xmin+\x)}\let\X\pgfmathresult;
+		\ifthenelse{\boolean{afficheGraduations}}
+			{
+			\draw (\X,-4.1) -- (\X,-3.9) node[above] {\Unites,\Dixiemes\x};
+			}
+			{
+			\draw (\X,-4.1) -- (\X,-3.9) ;
+			}
+		};
+
+	
+	% écriture correcte du nombre de droite sur le troisième axe.
+\ifthenelse{\boolean{afficheGraduations}}
+	{
+	\ifthenelse{\equal{\Dixiemes}{9}}
+		{
+		\draw (\Xmax,-4.1) -- (\Xmax,-3.9) node[above] {\UnitesMaj};		
+		}	
+		{
+		\draw (\Xmax,-4.1) -- (\Xmax,-3.9) node[above] {\Unites,\DixiemesMaj};
+		}	
+	
+	% écriture correcte du premier nombre sur le troisième axe.
+	\ifthenelse{\equal{\Dixiemes}{0}}
+		{
+		\draw (\Xmin,-4.1) -- (\Xmin,-3.9) node[above] {\Unites};
+		}
+		{
+		\draw (\Xmin,-4.1) -- (\Xmin,-3.9) node[above] {\Unites,\Dixiemes};	
+		}
+	}
+	{
+	\ifthenelse{\equal{\Dixiemes}{9}}
+		{
+		\draw (\Xmax,-4.1) -- (\Xmax,-3.9);		
+		}	
+		{
+		\draw (\Xmax,-4.1) -- (\Xmax,-3.9) ;
+		}	
+	
+	% écriture correcte du premier nombre sur le troisième axe.
+	\ifthenelse{\equal{\Dixiemes}{0}}
+		{
+		\draw (\Xmin,-4.1) -- (\Xmin,-3.9) ;
+		}
+		{
+		\draw (\Xmin,-4.1) -- (\Xmin,-3.9) ;	
+		}
+	% Remarque : si les graduations ont été effacées, c'est pour demander l'abscisse du point situé sur le 3ème axe, on l'écrit d'office :
+	\pgfmathparse{int(\Centiemes+\Xmin)}\let\XGaucheAxeTer\pgfmathresult;
+	\draw (\XGaucheAxeTer,-4.1) node[below] {\Nom};
+	}
+	
+	% on place le point demandé sur chaque axe si demandé
+	\ifthenelse{\boolean{affichePoint}}
+	{
+		\draw (\XA,0) node[below] {\Nom};
+		\draw (\XGaucheAxeBis.\Centiemes,-2.1) node[below] {\Nom};
+	}{}
+	
+	%%% AJOUT de deux points
+	\draw (10,0) node[below] {$G$};
+	\draw (5,-2.1) node[below] {$H$};
+	\draw (11,-4.1) node[below] {$I$};
+\end{tikzpicture}
+}
+%%%% AXES GRADUES TER FIN
+
+%%% AXES GRADUES TER BIS DEBUT
+\newcommand{\axesZoomTerBis}[5]{
+% Usage : #1 des commandes Tikz à passer en plus afin de mettre plus de points sur la figure...
+%				#2 est un nombre positif à deux décimales
+% 				#3 est le nom du point à placer.
+% 				#4 est la valeur Xmin de l'axe
+%				#5 booléen : true s'il faut afficher le point sur chaque axe , false sinon.
+% 				#6 booléen : true s'il faut afficher les nombres correspondant aux graduations sur les axes.
+{} \hfill 
+\begin{tikzpicture}
+	\def\XA{#1} % nombre (positif pour l'instant) à placer (avec deux décimales)
+	\def\Nom{#2} % nom du point à placer. Laisser vide si vous ne souhaitez pas voir le point
+	\def\Xmin{#3} % première valeur de x entière sur l'axe
+	\setboolean{affichePointilles}{true}  % affiche les pointillés indiquant le grossissement
+	\setboolean{affichePoint}{#4} % Est ce que le point doit apparaître sur la construction. 
+	\setboolean{afficheGraduations}{#5} % Est ce que l'on gradue tous les axes ou seulement \Xmin et \Xmax sur le premier axe (si false)
+	\setboolean{demiDroite}{true} %Par défaut, on construit des demi-droites pour les 6èmes, si Xmin=0 ou si une des décimales l'exige.
+	
+	%%% FIN DE LA PERSONNALISATION
+	% non fonctionnel parfaitement.
+	
+	% Si on est en 6ème et que Xmin vaut 0 alors il ne doit y avoir aucun débordement à gauche des axes.
+	\ifthenelse{\boolean{demiDroite}}
+	{
+		\def\DebordementAGauche{0} % mettre 0 pour une demi-droite graduée partant de l'origine
+	}
+	{
+		\def\DebordementAGauche{0.5} % mettre 0.5 dans les autres cas.
+	}	
+	
+% non configurable pour l'instant. Le reste du code n'est pas correctement adapté.
+	\pgfmathparse{int(\Xmin+10)}\let\Xmax\pgfmathresult; % Xmax vaut toujours Xmin+10
+		
+	% Chiffres du nombre :lles calculs effectués semblent très imprécis d'où l'utilisation de int(round(calcul)) pour contourner le problème...
+	\pgfmathparse{int(\XA)}\let\Unites\pgfmathresult;
+	\pgfmathparse{int((\XA-\Unites)*10)}\let\Dixiemes\pgfmathresult;
+	\pgfmathparse{int(round((\XA-\Unites.\Dixiemes)*100))}\let\Centiemes\pgfmathresult;	
+
+	% Calcul du chiffre majorant immédiatement les unités, etc... (unites+1, dixièmes+1, centièmes+1)...
+	\pgfmathparse{int(\Unites+1)}\let\UnitesMaj\pgfmathresult;
+	\pgfmathparse{int(\Dixiemes+1)}\let\DixiemesMaj\pgfmathresult;
+	\pgfmathparse{int(\Centiemes+1)}\let\CentiemesMaj\pgfmathresult;				
+
+	% Xfleche de l'axe
+	\pgfmathparse{\Xmax+1}\let\Xfleche\pgfmathresult;
+	% début du segment représentant l'axe numéro 1
+	\ifthenelse{\equal{\Xmin}{0}}
+	{
+		\def\Xorigine{\Xmin} 	
+	}
+	{
+		\pgfmathparse{\Xmin-0.5}\let\Xorigine\pgfmathresult;	
+	}
+
+	% Xmax - 1
+	\pgfmathparse{int(\Xmax-1)}\let\XmaxMoinsUn\pgfmathresult;
+	% Xmin + 1
+	\pgfmathparse{int(\Xmin+1)}\let\XminPlusUn\pgfmathresult;
+		
+% tests de valeurs de variables pour débug
+	%\draw (0,-6) node[below] {Dixiemes \Dixiemes  et CentiemesMaj \CentiemesMaj};	
+	
+	% construction de la 1ère demi-droite ou droite
+	\draw[->,>=latex] (\Xorigine,0) -- (\Xfleche,0);
+	\foreach \x in {\XminPlusUn,...,\XmaxMoinsUn}{
+		\ifthenelse{\boolean{afficheGraduations}}
+		{
+			\draw (\x,-.1) -- (\x,.1) node[above] {\x};
+		}
+		{
+			\draw (\x,-.1) -- (\x,.1);
+		}
+	};
+	\foreach \x in {1,...,9}{
+		\draw (\Unites.\x,-.05) -- (\Unites.\x,.05);
+	}
+	% on dessine toujours xmin et xmax
+	\draw (\Xmin,-.1) -- (\Xmin,.1) node[above] {\Xmin};
+	\draw (\Xmax,-.1) -- (\Xmax,.1) node[above] {\Xmax};
+	%%% construction de la 2ère demi-droite ou droite
+	% calcul si un débordement est nécessaire
+	\ifthenelse{\not\equal{\Unites}{0}}
+	{
+		\pgfmathparse{\Xmin-0.5}\let\Xorigine\pgfmathresult;		
+	}{}
+	% construction effective de la 2ème
+	\draw[->,>=latex] (\Xorigine,-2) -- (\Xfleche,-2);
+	\foreach \x in {1,...,9}{
+		\pgfmathparse{int(\Xmin+\x)}\let\X\pgfmathresult;
+		\ifthenelse{\boolean{afficheGraduations}}
+		{
+			\draw (\X,-2.1) -- (\X,-1.9) node[above] {\Unites,\x};
+		}
+		{
+			\draw (\X,-2.1) -- (\X,-1.9);
+		}		
+		\pgfmathparse{int(\Dixiemes+\Xmin)+\x/10}\let\Xtirets\pgfmathresult;
+		\draw (\Xtirets,-2.05) -- (\Xtirets,-1.95);
+	};
+	
+	\ifthenelse{\boolean{afficheGraduations}}
+	{	
+		\draw (\Xmax,-2.1) -- (\Xmax,-1.9) node[above] {\UnitesMaj};
+		\draw (\Xmin,-2.1) -- (\Xmin,-1.9) node[above] {\Unites};
+	}
+	{
+		\draw (\Xmax,-2.1) -- (\Xmax,-1.9) ;
+		\draw (\Xmin,-2.1) -- (\Xmin,-1.9) ;		
+	}
+	
+	\pgfmathparse{int(\Dixiemes+\Xmin)}\let\XGaucheAxeBis\pgfmathresult;
+	\pgfmathparse{int(\XGaucheAxeBis+1)}\let\XDroitAxeBis\pgfmathresult;
+
+	% Affichage des pointillés si besoin.
+	\ifthenelse{\boolean{affichePointilles}}
+	{
+	\draw[dashed] (\Unites,0) -- (\Xmin,-2);
+	\draw[dashed] (\UnitesMaj,0) -- (\Xmax,-2);
+	\draw[dashed] (\XGaucheAxeBis,-2) -- (\Xmin,-4);
+	\draw[dashed] (\XDroitAxeBis,-2) -- (\Xmax,-4);
+	}{}
+	
+	%%% construction de la 3ème demi-droite ou droite
+	% calcul si un débordement est nécessaire
+	\ifthenelse{\not\equal{\Dixiemes}{0}}
+	{
+		\pgfmathparse{\Xmin-0.5}\let\Xorigine\pgfmathresult;		
+	}{}
+	% construction effective de la 3ème
+	\draw[->,>=latex] (\Xorigine,-4) -- (\Xfleche,-4);
+	\foreach \x in {1,...,9}{
+		\pgfmathparse{int(\Xmin+\x)}\let\X\pgfmathresult;
+		\ifthenelse{\boolean{afficheGraduations}}
+			{
+			\draw (\X,-4.1) -- (\X,-3.9) node[above] {\Unites,\Dixiemes\x};
+			}
+			{
+			\draw (\X,-4.1) -- (\X,-3.9) ;
+			}
+		};
+
+	
+	% écriture correcte du nombre de droite sur le troisième axe.
+\ifthenelse{\boolean{afficheGraduations}}
+	{
+	\ifthenelse{\equal{\Dixiemes}{9}}
+		{
+		\draw (\Xmax,-4.1) -- (\Xmax,-3.9) node[above] {\UnitesMaj};		
+		}	
+		{
+		\draw (\Xmax,-4.1) -- (\Xmax,-3.9) node[above] {\Unites,\DixiemesMaj};
+		}	
+	
+	% écriture correcte du premier nombre sur le troisième axe.
+	\ifthenelse{\equal{\Dixiemes}{0}}
+		{
+		\draw (\Xmin,-4.1) -- (\Xmin,-3.9) node[above] {\Unites};
+		}
+		{
+		\draw (\Xmin,-4.1) -- (\Xmin,-3.9) node[above] {\Unites,\Dixiemes};	
+		}
+	}
+	{
+	\ifthenelse{\equal{\Dixiemes}{9}}
+		{
+		\draw (\Xmax,-4.1) -- (\Xmax,-3.9);		
+		}	
+		{
+		\draw (\Xmax,-4.1) -- (\Xmax,-3.9) ;
+		}	
+	
+	% écriture correcte du premier nombre sur le troisième axe.
+	\ifthenelse{\equal{\Dixiemes}{0}}
+		{
+		\draw (\Xmin,-4.1) -- (\Xmin,-3.9) ;
+		}
+		{
+		\draw (\Xmin,-4.1) -- (\Xmin,-3.9) ;	
+		}
+	% Remarque : si les graduations ont été effacées, c'est pour demander l'abscisse du point situé sur le 3ème axe, on l'écrit d'office :
+	\pgfmathparse{int(\Centiemes+\Xmin)}\let\XGaucheAxeTer\pgfmathresult;
+	\draw (\XGaucheAxeTer,-4.1) node[below] {\Nom};
+	}
+	
+	% on place le point demandé sur chaque axe si demandé
+	\ifthenelse{\boolean{affichePoint}}
+	{
+		\draw (\XA,0) node[below] {\Nom};
+		\draw (\XGaucheAxeBis.\Centiemes,-2.1) node[below] {\Nom};
+	}{}
+	
+	%%% AJOUT de deux points
+	\draw (25,0) node[below] {$L$};
+	\draw (18,-2.1) node[below] {$M$};
+	\draw (24,-4.1) node[below] {$N$};
+\end{tikzpicture}
+}
+%%%% AXES GRADUES TER BIS FIN
+
+\begin{document}
