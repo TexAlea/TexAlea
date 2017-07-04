@@ -1,16 +1,20 @@
-\documentclass[12pt]{article}
+\documentclass[a4paper,10pt,fleqn,twocolumn,landscape]{article}	
 
 \input{preambule-axes-gradues}
 \input{preambule}
 
-\pagestyle{fancy}                      
- \fancyhead[L]{Version <<version>>}               	% en-tête gauche 
- \fancyhead[C]{\textsc{\Large{Représenter des nombres sur un axe gradué...}}}	% en-tête centre
- \fancyhead[R]{6\ieme{}}					% en-tête droite 
- \renewcommand\headrulewidth{2pt}       	% filet horizontal sous l'en-tête
- \renewcommand\footrulewidth{1pt}      	% filet horizontal sur le pied de page
-\fancyfoot[R]{Page \thepage/\pageref{LastPage}}	% pied de page droit
-\fancyfoot[C]{}	
+\geometry{top=0.75cm, bottom=0.75cm,left=1cm, right=1cm}
+
+\pagestyle{fancy}      
+\pagestyle{empty}
+                
+% \fancyhead[L]{Version <<version>>}               	% en-tête gauche 
+% \fancyhead[C]{\textsc{\Large{Représenter des nombres sur un axe gradué...}}}	% en-tête centre
+% \fancyhead[R]{6\ieme{}}					% en-tête droite 
+% \renewcommand\headrulewidth{2pt}       	% filet horizontal sous l'en-tête
+% \renewcommand\footrulewidth{1pt}      	% filet horizontal sur le pied de page
+%\fancyfoot[R]{Page \thepage/\pageref{LastPage}}	% pied de page droit
+%\fancyfoot[C]{}	
 
 
 %%%% AXES GRADUES BIS
@@ -612,11 +616,20 @@
 %%%% AXES GRADUES TER BIS FIN
 
 \begin{document}
-%\large
 
-{}
+\begin{minipage}{0.15\linewidth}
+Version 1
+\end{minipage}\hfill
+\begin{minipage}{0.75\linewidth}
+\begin{center}
+	\textsc{\Large{Représenter des nombres\\ sur un axe gradué...}}
+\end{center}
+\end{minipage}\hfill
+\begin{minipage}{0.1\linewidth}
+{} \hfill 6$^e$
+\end{minipage}
 
-\vspace{-0.8cm}
+\medskip
 
 \textit{Dans toute cette fiche, sur chaque première demi-droite graduée, on a effectué deux zooms successifs qui sont représentés juste en dessous.}
 
@@ -626,78 +639,89 @@
 
 
 
-\textbf{1.} Place, le plus précisément possible, le point $G$ d'abscisse $0.11$ \textbf{sur chacun des trois axes} ci-dessous.
+\textbf{1.} Place, le plus précisément possible, le point $E$ d'abscisse $8.14$ \textbf{sur chacun des trois axes} ci-dessous.
 
 \vfill
 
 {} \hfill 
-\axesZoom{0.11}{G}{0}{false}{true}
+\axesZoom{8.14}{E}{0}{false}{true}
 \hfill {}
 
 \vfill
 
-\textbf{2.} Place, le plus précisément possible, le point $J (8.35)$ \textbf{sur chacun des trois axes} ci-dessous.
+\textbf{2.} Place, le plus précisément possible, le point $N (4.12)$ \textbf{sur chacun des trois axes} ci-dessous.
 
 \vfill
 
 {} \hfill 
-\axesZoom{8.35}{J}{0}{false}{true}
+\axesZoom{4.12}{N}{0}{false}{true}
 \hfill {}
 
 \vfill
 
-\textbf{3.} Place, le plus précisément possible, le point $S$ tel que $x_{S}=7.6$ sur chacun des axes ci-dessous.
+\textbf{3.} Place, le plus précisément possible, le point $I$ tel que $x_{I}=7.87$ sur chacun des axes ci-dessous.
 
 \vfill
 
 {} \hfill 
-\axesZoom{7.6}{S}{0}{false}{true}
+\axesZoom{7.87}{I}{0}{false}{true}
 \hfill {}
 
 \vfill
 
+% La suite ne peut être aléatoirisée qu'à condition d'améliorer les commandes \axesZoom afin de les rendre plus génériques...
 
-\exon{(Déterminer l'abscisse d'un point \quad \textbf{C14})}
-
-
-Détermine l'abscisse des points $D$, $E$ et $F$ ci-dessous.
-
-
-{} \hfill 
-\axesZoomBis{1.52}{$F$}{0}{false}{false}
-\hfill {}
+%\exon{(Déterminer l'abscisse d'un point \quad \textbf{C14})}
+%
+%
+%Détermine l'abscisse des points $U$, $G$ et $P$ ci-dessous.
+%
+%
+%{} \hfill 
+%\axesZoomBis{1.52}{$P$}{0}{false}{false}
+%\hfill {}
+%
+%\vfill
+%
+%\hrule
+%
+%\vfill
+%
+%\textbf{Pour les plus rapides :}  détermine les abscisses des points $G$, $H$, $I$, $K$, $L$, $M$, $N$, $P$.
+%
+%{} \hfill 
+%\axesZoomTer{10.31}{$K$}{3}{false}{false}
+%\hfill {}
+%
+%\vfill
+%
+%{}
+%
+%\vfill
+%
+%{} \hfill 
+%\axesZoomTerBis{19.99}{$P$}{17}{false}{false}
+%\hfill {}
 
 \vfill
-
-\hrule
-
-\vfill
-
-\textbf{Pour les plus rapides :}  détermine les abscisses des points $G$, $H$, $I$, $K$, $L$, $M$, $N$, $P$.
-
-{} \hfill 
-\axesZoomTer{10.31}{$K$}{3}{false}{false}
-\hfill {}
-
-\vfill
-
-{}
-
-\vfill
-
-{} \hfill 
-\axesZoomTerBis{19.99}{$P$}{17}{false}{false}
-\hfill {}
-
-\vfill
- \newpage
+ %%%%%%%%%%%%
+\newpage
 \setcounter{section}{0}
+\setcounter{exo}{0}   	
 
-%% coucou %%%\large
+\begin{minipage}{0.15\linewidth}
+Version 2
+\end{minipage}\hfill
+\begin{minipage}{0.75\linewidth}
+\begin{center}
+	\textsc{\Large{Représenter des nombres\\ sur un axe gradué...}}
+\end{center}
+\end{minipage}\hfill
+\begin{minipage}{0.1\linewidth}
+{} \hfill 6$^e$
+\end{minipage}
 
-{}
-
-\vspace{-0.8cm}
+\medskip
 
 \textit{Dans toute cette fiche, sur chaque première demi-droite graduée, on a effectué deux zooms successifs qui sont représentés juste en dessous.}
 
@@ -707,78 +731,89 @@ Détermine l'abscisse des points $D$, $E$ et $F$ ci-dessous.
 
 
 
-\textbf{1.} Place, le plus précisément possible, le point $G$ d'abscisse $0.11$ \textbf{sur chacun des trois axes} ci-dessous.
+\textbf{1.} Place, le plus précisément possible, le point $L$ d'abscisse $6.92$ \textbf{sur chacun des trois axes} ci-dessous.
 
 \vfill
 
 {} \hfill 
-\axesZoom{0.11}{G}{0}{false}{true}
+\axesZoom{6.92}{L}{0}{false}{true}
 \hfill {}
 
 \vfill
 
-\textbf{2.} Place, le plus précisément possible, le point $J (8.35)$ \textbf{sur chacun des trois axes} ci-dessous.
+\textbf{2.} Place, le plus précisément possible, le point $E (5.86)$ \textbf{sur chacun des trois axes} ci-dessous.
 
 \vfill
 
 {} \hfill 
-\axesZoom{8.35}{J}{0}{false}{true}
+\axesZoom{5.86}{E}{0}{false}{true}
 \hfill {}
 
 \vfill
 
-\textbf{3.} Place, le plus précisément possible, le point $S$ tel que $x_{S}=7.6$ sur chacun des axes ci-dessous.
+\textbf{3.} Place, le plus précisément possible, le point $U$ tel que $x_{U}=3.11$ sur chacun des axes ci-dessous.
 
 \vfill
 
 {} \hfill 
-\axesZoom{7.6}{S}{0}{false}{true}
+\axesZoom{3.11}{U}{0}{false}{true}
 \hfill {}
 
 \vfill
 
+% La suite ne peut être aléatoirisée qu'à condition d'améliorer les commandes \axesZoom afin de les rendre plus génériques...
 
-\exon{(Déterminer l'abscisse d'un point \quad \textbf{C14})}
-
-
-Détermine l'abscisse des points $D$, $E$ et $F$ ci-dessous.
-
-
-{} \hfill 
-\axesZoomBis{1.52}{$F$}{0}{false}{false}
-\hfill {}
+%\exon{(Déterminer l'abscisse d'un point \quad \textbf{C14})}
+%
+%
+%Détermine l'abscisse des points $R$, $M$ et $J$ ci-dessous.
+%
+%
+%{} \hfill 
+%\axesZoomBis{1.52}{$J$}{0}{false}{false}
+%\hfill {}
+%
+%\vfill
+%
+%\hrule
+%
+%\vfill
+%
+%\textbf{Pour les plus rapides :}  détermine les abscisses des points $G$, $H$, $I$, $K$, $L$, $M$, $N$, $P$.
+%
+%{} \hfill 
+%\axesZoomTer{10.31}{$K$}{3}{false}{false}
+%\hfill {}
+%
+%\vfill
+%
+%{}
+%
+%\vfill
+%
+%{} \hfill 
+%\axesZoomTerBis{19.99}{$P$}{17}{false}{false}
+%\hfill {}
 
 \vfill
-
-\hrule
-
-\vfill
-
-\textbf{Pour les plus rapides :}  détermine les abscisses des points $G$, $H$, $I$, $K$, $L$, $M$, $N$, $P$.
-
-{} \hfill 
-\axesZoomTer{10.31}{$K$}{3}{false}{false}
-\hfill {}
-
-\vfill
-
-{}
-
-\vfill
-
-{} \hfill 
-\axesZoomTerBis{19.99}{$P$}{17}{false}{false}
-\hfill {}
-
-\vfill
- \newpage
+ %%%%%%%%%%%%
+\newpage
 \setcounter{section}{0}
+\setcounter{exo}{0}   	
 
-%% coucou %%%\large
+\begin{minipage}{0.15\linewidth}
+Version 3
+\end{minipage}\hfill
+\begin{minipage}{0.75\linewidth}
+\begin{center}
+	\textsc{\Large{Représenter des nombres\\ sur un axe gradué...}}
+\end{center}
+\end{minipage}\hfill
+\begin{minipage}{0.1\linewidth}
+{} \hfill 6$^e$
+\end{minipage}
 
-{}
-
-\vspace{-0.8cm}
+\medskip
 
 \textit{Dans toute cette fiche, sur chaque première demi-droite graduée, on a effectué deux zooms successifs qui sont représentés juste en dessous.}
 
@@ -788,159 +823,89 @@ Détermine l'abscisse des points $D$, $E$ et $F$ ci-dessous.
 
 
 
-\textbf{1.} Place, le plus précisément possible, le point $G$ d'abscisse $0.11$ \textbf{sur chacun des trois axes} ci-dessous.
+\textbf{1.} Place, le plus précisément possible, le point $S$ d'abscisse $7.27$ \textbf{sur chacun des trois axes} ci-dessous.
 
 \vfill
 
 {} \hfill 
-\axesZoom{0.11}{G}{0}{false}{true}
+\axesZoom{7.27}{S}{0}{false}{true}
 \hfill {}
 
 \vfill
 
-\textbf{2.} Place, le plus précisément possible, le point $J (8.35)$ \textbf{sur chacun des trois axes} ci-dessous.
+\textbf{2.} Place, le plus précisément possible, le point $J (3.65)$ \textbf{sur chacun des trois axes} ci-dessous.
 
 \vfill
 
 {} \hfill 
-\axesZoom{8.35}{J}{0}{false}{true}
+\axesZoom{3.65}{J}{0}{false}{true}
 \hfill {}
 
 \vfill
 
-\textbf{3.} Place, le plus précisément possible, le point $S$ tel que $x_{S}=7.6$ sur chacun des axes ci-dessous.
+\textbf{3.} Place, le plus précisément possible, le point $I$ tel que $x_{I}=5.66$ sur chacun des axes ci-dessous.
 
 \vfill
 
 {} \hfill 
-\axesZoom{7.6}{S}{0}{false}{true}
+\axesZoom{5.66}{I}{0}{false}{true}
 \hfill {}
 
 \vfill
 
+% La suite ne peut être aléatoirisée qu'à condition d'améliorer les commandes \axesZoom afin de les rendre plus génériques...
 
-\exon{(Déterminer l'abscisse d'un point \quad \textbf{C14})}
-
-
-Détermine l'abscisse des points $D$, $E$ et $F$ ci-dessous.
-
-
-{} \hfill 
-\axesZoomBis{1.52}{$F$}{0}{false}{false}
-\hfill {}
+%\exon{(Déterminer l'abscisse d'un point \quad \textbf{C14})}
+%
+%
+%Détermine l'abscisse des points $E$, $T$ et $P$ ci-dessous.
+%
+%
+%{} \hfill 
+%\axesZoomBis{1.52}{$P$}{0}{false}{false}
+%\hfill {}
+%
+%\vfill
+%
+%\hrule
+%
+%\vfill
+%
+%\textbf{Pour les plus rapides :}  détermine les abscisses des points $G$, $H$, $I$, $K$, $L$, $M$, $N$, $P$.
+%
+%{} \hfill 
+%\axesZoomTer{10.31}{$K$}{3}{false}{false}
+%\hfill {}
+%
+%\vfill
+%
+%{}
+%
+%\vfill
+%
+%{} \hfill 
+%\axesZoomTerBis{19.99}{$P$}{17}{false}{false}
+%\hfill {}
 
 \vfill
-
-\hrule
-
-\vfill
-
-\textbf{Pour les plus rapides :}  détermine les abscisses des points $G$, $H$, $I$, $K$, $L$, $M$, $N$, $P$.
-
-{} \hfill 
-\axesZoomTer{10.31}{$K$}{3}{false}{false}
-\hfill {}
-
-\vfill
-
-{}
-
-\vfill
-
-{} \hfill 
-\axesZoomTerBis{19.99}{$P$}{17}{false}{false}
-\hfill {}
-
-\vfill
- \newpage
+ %%%%%%%%%%%%
+\newpage
 \setcounter{section}{0}
+\setcounter{exo}{0}   	
 
-%% coucou %%%\large
+\begin{minipage}{0.15\linewidth}
+Version 4
+\end{minipage}\hfill
+\begin{minipage}{0.75\linewidth}
+\begin{center}
+	\textsc{\Large{Représenter des nombres\\ sur un axe gradué...}}
+\end{center}
+\end{minipage}\hfill
+\begin{minipage}{0.1\linewidth}
+{} \hfill 6$^e$
+\end{minipage}
 
-{}
-
-\vspace{-0.8cm}
-
-\textit{Dans toute cette fiche, sur chaque première demi-droite graduée, on a effectué deux zooms successifs qui sont représentés juste en dessous.}
-
-\vfill
-
-\exon{(Représenter un nombre décimal \quad \textbf{C14})}
-
-
-
-\textbf{1.} Place, le plus précisément possible, le point $G$ d'abscisse $0.11$ \textbf{sur chacun des trois axes} ci-dessous.
-
-\vfill
-
-{} \hfill 
-\axesZoom{0.11}{G}{0}{false}{true}
-\hfill {}
-
-\vfill
-
-\textbf{2.} Place, le plus précisément possible, le point $J (8.35)$ \textbf{sur chacun des trois axes} ci-dessous.
-
-\vfill
-
-{} \hfill 
-\axesZoom{8.35}{J}{0}{false}{true}
-\hfill {}
-
-\vfill
-
-\textbf{3.} Place, le plus précisément possible, le point $S$ tel que $x_{S}=7.6$ sur chacun des axes ci-dessous.
-
-\vfill
-
-{} \hfill 
-\axesZoom{7.6}{S}{0}{false}{true}
-\hfill {}
-
-\vfill
-
-
-\exon{(Déterminer l'abscisse d'un point \quad \textbf{C14})}
-
-
-Détermine l'abscisse des points $D$, $E$ et $F$ ci-dessous.
-
-
-{} \hfill 
-\axesZoomBis{1.52}{$F$}{0}{false}{false}
-\hfill {}
-
-\vfill
-
-\hrule
-
-\vfill
-
-\textbf{Pour les plus rapides :}  détermine les abscisses des points $G$, $H$, $I$, $K$, $L$, $M$, $N$, $P$.
-
-{} \hfill 
-\axesZoomTer{10.31}{$K$}{3}{false}{false}
-\hfill {}
-
-\vfill
-
-{}
-
-\vfill
-
-{} \hfill 
-\axesZoomTerBis{19.99}{$P$}{17}{false}{false}
-\hfill {}
-
-\vfill
- \newpage
-\setcounter{section}{0}
-
-%% coucou %%%\large
-
-{}
-
-\vspace{-0.8cm}
+\medskip
 
 \textit{Dans toute cette fiche, sur chaque première demi-droite graduée, on a effectué deux zooms successifs qui sont représentés juste en dessous.}
 
@@ -950,311 +915,69 @@ Détermine l'abscisse des points $D$, $E$ et $F$ ci-dessous.
 
 
 
-\textbf{1.} Place, le plus précisément possible, le point $J$ d'abscisse $5.72$ \textbf{sur chacun des trois axes} ci-dessous.
+\textbf{1.} Place, le plus précisément possible, le point $Z$ d'abscisse $3.31$ \textbf{sur chacun des trois axes} ci-dessous.
 
 \vfill
 
 {} \hfill 
-\axesZoom{5.72}{J}{0}{false}{true}
+\axesZoom{3.31}{Z}{0}{false}{true}
 \hfill {}
 
 \vfill
 
-\textbf{2.} Place, le plus précisément possible, le point $G (5.47)$ \textbf{sur chacun des trois axes} ci-dessous.
+\textbf{2.} Place, le plus précisément possible, le point $F (2.79)$ \textbf{sur chacun des trois axes} ci-dessous.
 
 \vfill
 
 {} \hfill 
-\axesZoom{5.47}{G}{0}{false}{true}
+\axesZoom{2.79}{F}{0}{false}{true}
 \hfill {}
 
 \vfill
 
-\textbf{3.} Place, le plus précisément possible, le point $M$ tel que $x_{M}=2.83$ sur chacun des axes ci-dessous.
+\textbf{3.} Place, le plus précisément possible, le point $T$ tel que $x_{T}=5.37$ sur chacun des axes ci-dessous.
 
 \vfill
 
 {} \hfill 
-\axesZoom{2.83}{M}{0}{false}{true}
+\axesZoom{5.37}{T}{0}{false}{true}
 \hfill {}
 
 \vfill
 
-
-\exon{(Déterminer l'abscisse d'un point \quad \textbf{C14})}
-
-
-Détermine l'abscisse des points $D$, $E$ et $F$ ci-dessous.
-
-
-{} \hfill 
-\axesZoomBis{1.52}{$F$}{0}{false}{false}
-\hfill {}
-
-\vfill
-
-\hrule
-
-\vfill
-
-\textbf{Pour les plus rapides :}  détermine les abscisses des points $G$, $H$, $I$, $K$, $L$, $M$, $N$, $P$.
-
-{} \hfill 
-\axesZoomTer{10.31}{$K$}{3}{false}{false}
-\hfill {}
-
-\vfill
-
-{}
-
-\vfill
-
-{} \hfill 
-\axesZoomTerBis{19.99}{$P$}{17}{false}{false}
-\hfill {}
-
-\vfill
- \newpage
-\setcounter{section}{0}
-
-%% coucou %%%\large
-
-{}
-
-\vspace{-0.8cm}
-
-\textit{Dans toute cette fiche, sur chaque première demi-droite graduée, on a effectué deux zooms successifs qui sont représentés juste en dessous.}
-
-\vfill
-
-\exon{(Représenter un nombre décimal \quad \textbf{C14})}
-
-
-
-\textbf{1.} Place, le plus précisément possible, le point $G$ d'abscisse $0.11$ \textbf{sur chacun des trois axes} ci-dessous.
-
-\vfill
-
-{} \hfill 
-\axesZoom{0.11}{G}{0}{false}{true}
-\hfill {}
-
-\vfill
-
-\textbf{2.} Place, le plus précisément possible, le point $J (8.35)$ \textbf{sur chacun des trois axes} ci-dessous.
-
-\vfill
-
-{} \hfill 
-\axesZoom{8.35}{J}{0}{false}{true}
-\hfill {}
-
-\vfill
-
-\textbf{3.} Place, le plus précisément possible, le point $S$ tel que $x_{S}=7.6$ sur chacun des axes ci-dessous.
-
-\vfill
-
-{} \hfill 
-\axesZoom{7.6}{S}{0}{false}{true}
-\hfill {}
-
-\vfill
-
-
-\exon{(Déterminer l'abscisse d'un point \quad \textbf{C14})}
-
-
-Détermine l'abscisse des points $D$, $E$ et $F$ ci-dessous.
-
-
-{} \hfill 
-\axesZoomBis{1.52}{$F$}{0}{false}{false}
-\hfill {}
-
-\vfill
-
-\hrule
-
-\vfill
-
-\textbf{Pour les plus rapides :}  détermine les abscisses des points $G$, $H$, $I$, $K$, $L$, $M$, $N$, $P$.
-
-{} \hfill 
-\axesZoomTer{10.31}{$K$}{3}{false}{false}
-\hfill {}
-
-\vfill
-
-{}
-
-\vfill
-
-{} \hfill 
-\axesZoomTerBis{19.99}{$P$}{17}{false}{false}
-\hfill {}
-
-\vfill
- \newpage
-\setcounter{section}{0}
-
-%% coucou %%%\large
-
-{}
-
-\vspace{-0.8cm}
-
-\textit{Dans toute cette fiche, sur chaque première demi-droite graduée, on a effectué deux zooms successifs qui sont représentés juste en dessous.}
-
-\vfill
-
-\exon{(Représenter un nombre décimal \quad \textbf{C14})}
-
-
-
-\textbf{1.} Place, le plus précisément possible, le point $D$ d'abscisse $4.47$ \textbf{sur chacun des trois axes} ci-dessous.
-
-\vfill
-
-{} \hfill 
-\axesZoom{4.47}{D}{0}{false}{true}
-\hfill {}
-
-\vfill
-
-\textbf{2.} Place, le plus précisément possible, le point $Y (4.08)$ \textbf{sur chacun des trois axes} ci-dessous.
-
-\vfill
-
-{} \hfill 
-\axesZoom{4.08}{Y}{0}{false}{true}
-\hfill {}
-
-\vfill
-
-\textbf{3.} Place, le plus précisément possible, le point $Z$ tel que $x_{Z}=8.48$ sur chacun des axes ci-dessous.
-
-\vfill
-
-{} \hfill 
-\axesZoom{8.48}{Z}{0}{false}{true}
-\hfill {}
-
-\vfill
-
-
-\exon{(Déterminer l'abscisse d'un point \quad \textbf{C14})}
-
-
-Détermine l'abscisse des points $D$, $E$ et $F$ ci-dessous.
-
-
-{} \hfill 
-\axesZoomBis{1.52}{$F$}{0}{false}{false}
-\hfill {}
-
-\vfill
-
-\hrule
-
-\vfill
-
-\textbf{Pour les plus rapides :}  détermine les abscisses des points $G$, $H$, $I$, $K$, $L$, $M$, $N$, $P$.
-
-{} \hfill 
-\axesZoomTer{10.31}{$K$}{3}{false}{false}
-\hfill {}
-
-\vfill
-
-{}
-
-\vfill
-
-{} \hfill 
-\axesZoomTerBis{19.99}{$P$}{17}{false}{false}
-\hfill {}
-
-\vfill
- \newpage
-\setcounter{section}{0}
-
-%% coucou %%%\large
-
-{}
-
-\vspace{-0.8cm}
-
-\textit{Dans toute cette fiche, sur chaque première demi-droite graduée, on a effectué deux zooms successifs qui sont représentés juste en dessous.}
-
-\vfill
-
-\exon{(Représenter un nombre décimal \quad \textbf{C14})}
-
-
-
-\textbf{1.} Place, le plus précisément possible, le point $W$ d'abscisse $3.28$ \textbf{sur chacun des trois axes} ci-dessous.
-
-\vfill
-
-{} \hfill 
-\axesZoom{3.28}{W}{0}{false}{true}
-\hfill {}
-
-\vfill
-
-\textbf{2.} Place, le plus précisément possible, le point $U (9.59)$ \textbf{sur chacun des trois axes} ci-dessous.
-
-\vfill
-
-{} \hfill 
-\axesZoom{9.59}{U}{0}{false}{true}
-\hfill {}
-
-\vfill
-
-\textbf{3.} Place, le plus précisément possible, le point $V$ tel que $x_{V}=0.83$ sur chacun des axes ci-dessous.
-
-\vfill
-
-{} \hfill 
-\axesZoom{0.83}{V}{0}{false}{true}
-\hfill {}
-
-\vfill
-
-
-\exon{(Déterminer l'abscisse d'un point \quad \textbf{C14})}
-
-
-Détermine l'abscisse des points $D$, $E$ et $F$ ci-dessous.
-
-
-{} \hfill 
-\axesZoomBis{1.52}{$F$}{0}{false}{false}
-\hfill {}
-
-\vfill
-
-\hrule
-
-\vfill
-
-\textbf{Pour les plus rapides :}  détermine les abscisses des points $G$, $H$, $I$, $K$, $L$, $M$, $N$, $P$.
-
-{} \hfill 
-\axesZoomTer{10.31}{$K$}{3}{false}{false}
-\hfill {}
-
-\vfill
-
-{}
-
-\vfill
-
-{} \hfill 
-\axesZoomTerBis{19.99}{$P$}{17}{false}{false}
-\hfill {}
+% La suite ne peut être aléatoirisée qu'à condition d'améliorer les commandes \axesZoom afin de les rendre plus génériques...
+
+%\exon{(Déterminer l'abscisse d'un point \quad \textbf{C14})}
+%
+%
+%Détermine l'abscisse des points $Y$, $K$ et $J$ ci-dessous.
+%
+%
+%{} \hfill 
+%\axesZoomBis{1.52}{$J$}{0}{false}{false}
+%\hfill {}
+%
+%\vfill
+%
+%\hrule
+%
+%\vfill
+%
+%\textbf{Pour les plus rapides :}  détermine les abscisses des points $G$, $H$, $I$, $K$, $L$, $M$, $N$, $P$.
+%
+%{} \hfill 
+%\axesZoomTer{10.31}{$K$}{3}{false}{false}
+%\hfill {}
+%
+%\vfill
+%
+%{}
+%
+%\vfill
+%
+%{} \hfill 
+%\axesZoomTerBis{19.99}{$P$}{17}{false}{false}
+%\hfill {}
 
 \vfill
  

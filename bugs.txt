@@ -1,3 +1,2 @@
 Bugs en cours :
 
-- <<version>> n'est plus définie dans jinja.

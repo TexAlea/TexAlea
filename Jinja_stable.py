@@ -539,7 +539,8 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
         # mise à jour du dictionnaire de variables afin de disposer de tout.
         dictVariables.update(dictLocals)
         # cas spécifique de la variable classes
-        classes = dictLocals["classes"]
+        if "classes" in dictLocals :
+            classes = dictLocals["classes"]
         #print(dictVariables)
         # création du rendu
         f.write(template.render(**dictVariables))
