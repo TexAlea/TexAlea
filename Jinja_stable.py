@@ -473,14 +473,21 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
     else :
         f = open(os.path.join(chemin,nomfichier), "w",encoding="utf8")
     # prise en compte d'un éventuel préambule personnalisé dans le dossier.
-    nom_fichier_preambule = "preambule-perso.tex"
+    nom_fichier_preambule = nom_fichier_modele + "-preambule.tex"
     if os.path.exists(os.path.join(chemin, nom_fichier_preambule)) :
-        retour = "Prise en compte du preambule-perso.tex. "
+        retour = "Prise en compte du " + nom_fichier_preambule + ". "
         file = open(os.path.join(chemin , nom_fichier_preambule), "r",encoding="utf8")
         preambule_personnalise = file.read()
         file.close()
     else :
-        preambule_personnalise = '\\documentclass[a4paper,11pt,fleqn]{article}\n\\input{preambule}\n\\begin{document}\n\\pagestyle{empty}\n\n\n'
+        nom_fichier_preambule = "preambule-perso.tex"
+        if os.path.exists(os.path.join(chemin, nom_fichier_preambule)) :
+            retour = "Prise en compte du " + nom_fichier_preambule + ". "
+            file = open(os.path.join(chemin , nom_fichier_preambule), "r",encoding="utf8")
+            preambule_personnalise = file.read()
+            file.close()
+        else :
+            preambule_personnalise = '\\documentclass[a4paper,11pt,fleqn]{article}\n\\input{preambule}\n\\begin{document}\n\\pagestyle{empty}\n\n\n'
     f.write(preambule_personnalise)
     # fin prise en compte du préambule personnalisé.
     # prise en compte optionnelle du corrigé personnalisé.

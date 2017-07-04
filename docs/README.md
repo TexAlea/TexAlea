@@ -36,7 +36,7 @@ Il ne faut pas écrire `\begin{document}` (ni `\end{document}`), le script va au
 \pagestyle{empty}
 ```
 
-Lorsqu'on souhaite personnaliser le fichier LaTeX, on peut écrire un fichier `preambule-perso.tex` qui sera inséré au début du document.
+Lorsqu'on souhaite personnaliser le fichier LaTeX, on peut écrire, dans le même dossier, un fichier `preambule-perso.tex` qui sera utilisé comme préambule de tous les documents du dossier. On peut aussi créer un préambule personnalisé pour chaque modèle de fichier .tex en ajoutant "-preambule" au nom du fichier. Exemple : pour un fichier modèle "DS.tex", le fichier préambule "DS-preambule.tex" sera utilisé en priorité sur le préambule `preambule-perso.tex` commun au dossier, lui même prioritaire sur le préambule par défaut. 
 
 ### Question
 Pour générer des questions aléatoires, on peut commencer par utiliser des variables prédéfinies n et m (voir ci-dessous) dans le document exemple.tex :
@@ -156,8 +156,8 @@ L'utilisation de la version graphique du script python est recommandée pour uti
 
 ### terme(a)
 
-* `terme(0)` => `0`
-* `terme(3)` => `3`
+* `terme(0)` => `+0`
+* `terme(3)` => `+3`
 * `terme(-4)` => `-4`
 
 Exemple d'utilisation dans des calculs sur les relatifs :
