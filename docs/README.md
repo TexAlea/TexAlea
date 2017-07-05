@@ -36,18 +36,9 @@ Il ne faut pas écrire `\begin{document}` (ni `\end{document}`), le script va au
 \pagestyle{empty}
 ```
 
-Lorsqu'on souhaite personnaliser le fichier LaTeX, on peut écrire, dans le même dossier, un fichier `preambule-perso.tex` qui sera utilisé comme préambule de tous les documents du dossier. On peut aussi créer un préambule personnalisé pour chaque modèle de fichier .tex en ajoutant "-preambule" au nom du fichier. Exemple : pour un fichier modèle "DS.tex", le fichier préambule "DS-preambule.tex" sera utilisé en priorité sur le préambule `preambule-perso.tex` commun au dossier, lui même prioritaire sur le préambule par défaut. 
-
-### Changement de version.
-
-Entre deux versions du document aléatoirisé, sont insérées les lignes suivantes :
-
-```
-\newpage
-\setcounter{section}{0}
-```
-
-Cela peut s'avérer insuffisant dans le cas d'utilisation de commandes personnalisées pour gérer correctement les numéros d'exercices. Dans ce cas, il est possible de créer un fichier "changement-version.tex" dans le même dossier que jinja-stable.py. C'est alors celui-ci qui sera utilisé pour les changements de versions de documents.
+Lorsqu'on souhaite personnaliser le fichier LaTeX, on peut écrire, dans le même dossier, un fichier `preambule-perso.tex` qui sera utilisé comme préambule de tous les documents du dossier. On peut aussi créer un préambule personnalisé pour chaque modèle de fichier .tex en ajoutant "-preambule" au nom du fichier. Exemple : pour un fichier modèle "DS.tex", le fichier préambule "DS-preambule.tex" sera utilisé en priorité sur le préambule `preambule-perso.tex` commun au dossier, lui même prioritaire sur le préambule par défaut.
+ 
+Remarque : si un fichier corrigé est généré, il prend en compte le même préambule que le fichier d'origine (inutile de dupliquer celui-ci).
 
 
 ### Question
@@ -101,6 +92,23 @@ Le corrigé est alors adapté en conséquence :
 %% set titre = 'Mon Titre'
 ```
 
+### Changement de version.
+
+Entre deux versions du document aléatoirisé, sont insérées les lignes suivantes :
+
+```
+\newpage
+\setcounter{section}{0}
+```
+
+Cela peut s'avérer insuffisant dans le cas d'utilisation de commandes personnalisées pour gérer correctement les numéros d'exercices. Dans ce cas, il est possible de créer un fichier "changement-version.tex" dans le même dossier que jinja-stable.py. C'est alors celui-ci qui sera utilisé pour les changements de versions de documents.
+
+
+### Corrigé des documents générés
+
+Si un modèle se nomme "exemple.tex", la présence dans le même dossier d'un "exemple-cor.tex" sera détectée automatiquement. Le même jeu de variables sera utilisé, ce qui permet de créer un corrigé pour le document en question. La syntaxe du corrigé est la même que celle du document principal.
+
+
 ### [Documentation Jinja2](http://jinja.pocoo.org/docs/2.9/templates/)
 
 
@@ -122,6 +130,7 @@ Il s'agit systématiquement de tableaux de 100 nombres (indice de 0 à 99) qui d
 * N7 : 1 à 7
 * N8 : 1 à 8
 * N9 : 1 à 9
+* N10 : 1 à 10
 * Z : relatif entre -10 et 10
 * Z2 : relatif entre -10 et 10
 * ZE : relatif non nul entre -10 et 10
@@ -214,3 +223,17 @@ Attention, le résultat est de type string
 Affiche la durée en mode mathématique au format HMS.
 
 `HMS(2,31,15)` => `$2~\text{h}~31~\text{min}~15~\text{s}$`
+
+
+### ecriture_decimale(a)
+
+Formate un nombre décimal obtenu aléatoirement pour un affichage correct dans le document.
+
+Exemple : `<<NN[1]/10>>` est un nombre décimal compris entre 0,1 et 9,9 par incréments de 0,1. Le séparateur décimal est un point. Si ce nombre est entier, il est affiché sous la forme `x.y` (`3.0` par exemple). `<<ecriture_decimale(NN[1]/10)>>` générera comme séparateur  décimal la virgule et supprime la partie décimale, si elle est nulle.
+
+Des options existent (le deuxième argument peut être 1 (par défaut), 2 ou 3 :
+
+* `<<ecriture_decimale(12.345,2)>>`=> écrit le nombre sous forme d'une fraction décimale.
+* `<<ecriture_decimale(12.345,3)>>`=> écrit le nombre sous forme de la somme de la partie entière et d'une fraction décimale correspondant à la partie décimale.
+
+

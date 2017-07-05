@@ -44,6 +44,7 @@ def variables(version,fichier) :
     N7 = [randint(1,7) for i in range(100)]
     N8 = [randint(1,8) for i in range(100)]
     N9 = [randint(1,9) for i in range(100)]
+    N10 = [randint(1,10) for i in range(100)]
     Z = [randint(-10,10) for i in range(100)]
     Z2 = [randint(-10,10) for i in range(100)]
     ZE = [choice([-1,1])*randint(1,9) for i in range(100)]
