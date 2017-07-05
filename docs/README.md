@@ -146,7 +146,7 @@ Il s'agit systématiquement de tableaux de 100 nombres (indice de 0 à 99) qui d
 * H : entier entre 1 et 24
 * min : entier entre 1 et 60
 * s : entier entre 1 et 60
-* L1, L2, L3 et L4 : 4 lettres majuscules différentes
+* L1, L2, L3, L4, ..., L9 : des lettres majuscules différentes
 * prenom : un prénom au hasard
 * garcon : un prénom de garçon au hasard
 * fille : un prénom de fille au hasard

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 __author__ = "Angot Rémi, Lacroix Olivier"
 __license__ = "CC-BY-SA"
-__version__ = "0.0.0.0.3"
+__version__ = "0.0.0.0.4"
 __status__ = "Production"
 
 import jinja2, math, os
@@ -68,9 +68,10 @@ def variables(version,fichier) :
     L6=[]
     L7=[]
     L8=[]
+    L9=[]
     L = [choice(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']) for i in range(100)]
     for i in range(10):
-        Huitlettres=sample(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],8)
+        Huitlettres=sample(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],9)
         L1.append(Huitlettres[0])
         L2.append(Huitlettres[1])
         L3.append(Huitlettres[2])
@@ -79,6 +80,7 @@ def variables(version,fichier) :
         L6.append(Huitlettres[5])
         L7.append(Huitlettres[6])
         L8.append(Huitlettres[7])
+        L9.append(Huitlettres[8])
     NNvNN = [round(randint(1,9999)/100,2) for i in range(100)]
     NNvNO = [round(randint(1,999)/10,2) for i in range(100)]
     NvNN = [round(randint(1,999)/100,2) for i in range(100)]
