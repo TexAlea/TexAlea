@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 __author__ = "Angot Rémi, Lacroix Olivier"
 __license__ = "CC-BY-SA"
-__version__ = "0.0.0.0.4"
+__version__ = "0.0.0.0.5"
 __status__ = "Production"
 
 import jinja2, math, os
@@ -12,6 +12,28 @@ from decimal import *
 ## personnalisation
 dossierModeles = "modeles"
 memoiredesordres=[]
+
+
+class listeAleatoire(list) :
+    """Classe définissant un objet list étendu par une méthode _remplir pour un remplissage aléatoire de nombres lors de l'instanciation.
+    Les nombres ajoutés à la liste sont compris entre a et b entiers, avec un incrément à préciser.
+    Facultatif : des valeurs à supprimer (par exemple 0), la longueur de la liste à générer.
+    """
+    def __init__(self,a,b,increment=1,listeASupprimer=[],nbreValeursSouhaitees=100) :
+        nombreDeValeurs = int((b-a)/increment+1)
+        if nombreDeValeurs >= 2 : # en dessous de deux valeurs, on ne remplit pas.
+            if nombreDeValeurs == 2 : # s'il n'y a que deux valeurs, on utilise un alea réel
+                for i in range(nbreValeursSouhaitees) :
+                    super().append(choice([a,b]))
+            else :
+                while len(self) < nbreValeursSouhaitees :
+                    L = []
+                    for i in range(a,b+1,increment) :
+                        L.append(i)
+                    shuffle(L)
+                    super().extend(L)
+        else :
+            print("Nombre de valeurs incorrect : ", nombreDeValeurs)
 
 
 # Variables à regrouper ici quand cela fonctionnera : plus facile à modifier.
@@ -27,8 +49,8 @@ def variables(version,fichier) :
     # on génère de nouvelles variables car aucune existante.
     N = [randint(1,9) for i in range(100)]
     M = [randint(1,9) for i in range(100)]
-    n = [randint(2,9) for i in range(100)]
-    #m = [randint(2,9) for i in range(100)]
+    n = listeAleatoire(2,9)
+    m = listeAleatoire(2,9)
     m=['' for i in range(100)]
     for i in range(100):
         m[i]=randint(2,9)

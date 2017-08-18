@@ -1,5 +1,13 @@
 EVOLUTIONS ET BUGS CORRIGES :
 
+
+Version 0.0.0.0.4 du 18/08/17 :
+- ajout d'une classe héritée de list permettant de générer des listes de nombres aléatoires distincts
+- modification des variables initialement créées avec les anciennes fonctions.
+
+Remarque : les variables préalablement mémorisées pour des documents antérieures peuvent rester en doublon. Supprimer le fichier ???_var_memo.txt pour regénérer le jeu de variables d'un document.
+
+
 Version 0.0.0.0.4 du 05/07/17 :
 - ajout d'une neuvième lettre différente des autres,
 - ajout d'une variable N10.
