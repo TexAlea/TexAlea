@@ -13,7 +13,6 @@ from decimal import *
 dossierModeles = "modeles"
 memoiredesordres=[]
 
-1
 class listeAleatoire(list) :
     """Classe définissant un objet list étendu par un remplissage aléatoire de nombres lors de l'instanciation.
     Les nombres ajoutés à la liste sont compris entre a et b entiers, avec un incrément à préciser.
@@ -41,8 +40,43 @@ class listeAleatoire(list) :
         else :
             print("Nombre de valeurs incorrect : ", nombreDeValeurs)
                     
+# position d'un point tikz à partir d'une valeur d'angle
+def pointPosition(angleFourni) :
+    """ retourne une position tikz valide en fonction de l'angle fourni, en degrés."""
+    angle = angleFourni%360
+    if angle < 22.5 :
+        return "right"
+    elif angle < 90 - 22.5 :
+        return "above right"
+    elif angle < 135 - 22.5 :
+        return "above"
+    elif angle < 180 - 22.5 :
+        return "above left"
+    elif angle < 225 - 22.5 :
+        return "left"
+    elif angle < 270 - 22.5 :
+        return "below left"
+    elif angle < 315 - 22.5 :
+        return "below"
+    elif angle < 360 - 22.5 :
+        return "below right"
+    else :
+        return "right"
 
-
+# nature de l'angle
+def natureAngle(angle) :
+    """retourne une chaine de caractère correspondant à la nature de l'angle compris entre 0 et 180 degrés fourni"""
+    if angle == 0 :
+        return "nul"
+    elif angle < 90 :
+        return "aïgu"
+    elif angle == 90 :
+        return "droit"
+    elif angle < 180 :
+        return "obtus"
+    else :
+        return "plat"
+    
 # Variables à regrouper ici quand cela fonctionnera : plus facile à modifier.
 def variables(version,fichier) :
     """crée toutes les variables aléatoires utiles et retourne un dictionnaire contenant :
