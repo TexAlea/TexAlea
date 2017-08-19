@@ -15,7 +15,7 @@ memoiredesordres=[]
 
 
 class listeAleatoire(list) :
-    """Classe définissant un objet list étendu par une méthode _remplir pour un remplissage aléatoire de nombres lors de l'instanciation.
+    """Classe définissant un objet list étendu par un remplissage aléatoire de nombres lors de l'instanciation.
     Les nombres ajoutés à la liste sont compris entre a et b entiers, avec un incrément à préciser.
     Facultatif : une liste de valeurs à supprimer (par exemple [0]), la longueur de la liste à générer (par défaut 100).
     """
