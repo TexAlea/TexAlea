@@ -13,7 +13,7 @@ from decimal import *
 dossierModeles = "modeles"
 memoiredesordres=[]
 
-
+1
 class listeAleatoire(list) :
     """Classe définissant un objet list étendu par un remplissage aléatoire de nombres lors de l'instanciation.
     Les nombres ajoutés à la liste sont compris entre a et b entiers, avec un incrément à préciser.
@@ -459,7 +459,7 @@ def enregistrerVariables(fichier, dictionnaire) :
     """
     dictionnaireTraite = {}
     for element in dictionnaire.keys() :
-        if type(dictionnaire.get(element)) == list or element == "var" :
+        if isinstance(dictionnaire.get(element),list) or element == "var" :
             dictionnaireTraite[element] = dictionnaire.get(element)
     #print(dictionnaireTraite)
 ##    try :
