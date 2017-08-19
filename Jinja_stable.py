@@ -17,9 +17,11 @@ memoiredesordres=[]
 class listeAleatoire(list) :
     """Classe définissant un objet list étendu par une méthode _remplir pour un remplissage aléatoire de nombres lors de l'instanciation.
     Les nombres ajoutés à la liste sont compris entre a et b entiers, avec un incrément à préciser.
-    Facultatif : des valeurs à supprimer (par exemple 0), la longueur de la liste à générer.
+    Facultatif : une liste de valeurs à supprimer (par exemple [0]), la longueur de la liste à générer (par défaut 100).
     """
     def __init__(self,a,b,increment=1,listeASupprimer=[],nbreValeursSouhaitees=100) :
+        #list.__init__(self)
+        #self.append(10)
         nombreDeValeurs = int((b-a)/increment+1)
         if nombreDeValeurs >= 2 : # en dessous de deux valeurs, on ne remplit pas.
             if nombreDeValeurs == 2 : # s'il n'y a que deux valeurs, on utilise un alea réel
@@ -30,10 +32,15 @@ class listeAleatoire(list) :
                     L = []
                     for i in range(a,b+1,increment) :
                         L.append(i)
+                    for aEliminer in listeASupprimer :
+                        if aEliminer in L :
+                            L.remove(aEliminer)
                     shuffle(L)
+                    del L[101:]
                     super().extend(L)
         else :
             print("Nombre de valeurs incorrect : ", nombreDeValeurs)
+                    
 
 
 # Variables à regrouper ici quand cela fonctionnera : plus facile à modifier.
@@ -47,41 +54,42 @@ def variables(version,fichier) :
     """
     global classes, dictLocals
     # on génère de nouvelles variables car aucune existante.
-    N = [randint(1,9) for i in range(100)]
-    M = [randint(1,9) for i in range(100)]
+    N = listeAleatoire(1,9)
+    M = listeAleatoire(1,9)
     n = listeAleatoire(2,9)
     m = listeAleatoire(2,9)
-    m=['' for i in range(100)]
-    for i in range(100):
-        m[i]=randint(2,9)
-        while m[i]==n[i]:
-            m[i]=randint(2,9)   
-    nZ = [choice([-1,1])*randint(2,9) for i in range(100)]
-    mZ = [choice([-1,1])*randint(2,9) for i in range(100)]
-    N2 = [randint(1,2) for i in range(100)]
-    N3 = [randint(1,3) for i in range(100)]
-    N4 = [randint(1,4) for i in range(100)]
-    N5 = [randint(1,3) for i in range(100)]
-    N6 = [randint(1,6) for i in range(100)]
-    N7 = [randint(1,7) for i in range(100)]
-    N8 = [randint(1,8) for i in range(100)]
-    N9 = [randint(1,9) for i in range(100)]
-    N10 = [randint(1,10) for i in range(100)]
-    Z = [randint(-10,10) for i in range(100)]
-    Z2 = [randint(-10,10) for i in range(100)]
-    ZE = [choice([-1,1])*randint(1,9) for i in range(100)]
-    ZE2 = [choice([-1,1])*randint(1,9) for i in range(100)]
+##  m[i] différent de n[i] commenté...    
+##    m=['' for i in range(100)]
+##    for i in range(100):
+##        m[i]=randint(2,9)
+##        while m[i]==n[i]:
+##            m[i]=randint(2,9)   
+    nZ = listeAleatoire(-9,9,1,[0])
+    mZ = listeAleatoire(-9,9,1,[0])
+    N2 = listeAleatoire(1,2)
+    N3 = listeAleatoire(1,3)
+    N4 = listeAleatoire(1,4)
+    N5 = listeAleatoire(1,5)
+    N6 = listeAleatoire(1,6)
+    N7 = listeAleatoire(1,7)
+    N8 = listeAleatoire(1,8)
+    N9 = listeAleatoire(1,9)
+    N10 = listeAleatoire(1,10)
+    Z = listeAleatoire(-10,10)
+    Z2 = listeAleatoire(-10,10)
+    ZE = listeAleatoire(-10,10,1,[0])
+    ZE2 = listeAleatoire(-10,10,1,[0])
     DCM = [choice([10,100,1000]) for i in range(100)]
     DCM2 = [choice([10,100,1000]) for i in range(100)]
-    D = [10*randint(1,9) for i in range(100)]
-    S = [choice([-1,1]) for i in range(100)]
-    NN = [randint(1,99) for i in range(100)]
-    NNN = [randint(1,999) for i in range(100)]
-    NNO = [10*randint(1,99) for i in range(100)]
-    h = [randint(1,12) for i in range(100)]
-    H = [randint(1,24) for i in range(100)]
-    min = [randint(1,60) for i in range(100)]
-    s = [randint(1,60) for i in range(100)]
+    D = listeAleatoire(10,90,10)
+    S = listeAleatoire(-1,1,1,[0])
+    NN = listeAleatoire(1,99)
+    NNN = listeAleatoire(1,999)
+    NNO = listeAleatoire(10,990,10)
+    h = listeAleatoire(1,12)
+    H = listeAleatoire(1,24)
+    min = listeAleatoire(1,60)
+    s = listeAleatoire(1,60)
     L1=[]
     L2=[]
     L3=[]
@@ -103,10 +111,10 @@ def variables(version,fichier) :
         L7.append(Huitlettres[6])
         L8.append(Huitlettres[7])
         L9.append(Huitlettres[8])
-    NNvNN = [round(randint(1,9999)/100,2) for i in range(100)]
-    NNvNO = [round(randint(1,999)/10,2) for i in range(100)]
-    NvNN = [round(randint(1,999)/100,2) for i in range(100)]
-    NvNO = [round(randint(1,99)/10,2) for i in range(100)]
+    NNvNN = [round(i/100,2) for i in listeAleatoire(1,9999)]
+    NNvNO = [round(i/10,2) for i in listeAleatoire(1,999)]
+    NvNN = [round(i/100,2) for i in listeAleatoire(1,999)]
+    NvNO = [round(i/10,2) for i in listeAleatoire(1,99)]
     prenom=[]
     garcon=[]
     fille=[]
