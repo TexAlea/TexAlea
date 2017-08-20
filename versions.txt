@@ -1,9 +1,10 @@
 EVOLUTIONS ET BUGS CORRIGES :
 
 
-Version 0.0.0.0.4 du 18/08/17 :
+Version 0.0.0.0.5 du 20/08/17 :
 - ajout d'une classe héritée de list permettant de générer des listes de nombres aléatoires distincts
 - modification des variables initialement créées avec les anciennes fonctions.
+- possibilité sur MacOS X, d'une compilation avec xelatex dans la foulée et ouverture du pdf automatique.
 
 Remarque : les variables préalablement mémorisées pour des documents antérieures peuvent rester en doublon. Supprimer le fichier ???_var_memo.txt pour regénérer le jeu de variables d'un document.
 
@@ -11,6 +12,7 @@ Remarque : les variables préalablement mémorisées pour des documents antérie
 Version 0.0.0.0.4 du 05/07/17 :
 - ajout d'une neuvième lettre différente des autres,
 - ajout d'une variable N10.
+
 
 Version 0.0.0.0.3 du 04/07/17 :
 - numérotation des fichiers modèles incorrecte avec l'utilisation de jinja-stable.py quand il y a des sous-dossiers de dossiers de modèles.

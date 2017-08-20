@@ -77,7 +77,7 @@ def natureAngle(angle) :
     else :
         return "plat"
     
-# Variables à regrouper ici quand cela fonctionnera : plus facile à modifier.
+# Variables à regrouper ici
 def variables(version,fichier) :
     """crée toutes les variables aléatoires utiles et retourne un dictionnaire contenant :
         - les variables globales (autres fonctions de ce module, utiles dans jinja, comme terme(), facteur()...),
@@ -504,7 +504,24 @@ def enregistrerVariables(fichier, dictionnaire) :
     with open(fichier, "a",encoding="utf8") as fvar:
         fvar.write(str(dictionnaireTraite)+"\n") # une ligne par version
         fvar.close()
-    
+
+def choixCompilationImmediate(fichierAleatoirise,chemin) :
+    """ propose de compiler immédiatement avec xelatex par défaut, si trouvé sur le système
+    Remarque : adapté pour texlive sur macosX en attendant de trouver les chemins sur les autres OS
+    """
+    if os.path.exists("/Library/TeX/texbin/xelatex") :
+        reponse = input("Compiler avec xelatex ? (laisser vide pour ne pas compiler)")
+        if reponse != "" :
+            #print(chemin, "-", fichierAleatoirise)
+            fichierACompiler = os.path.join(chemin, fichierAleatoirise)
+            os.system("/Library/TeX/texbin/xelatex -synctex=1 -interaction=nonstopmode -output-directory=" + chemin + " " + fichierACompiler)
+            #print("/Library/TeX/texbin/xelatex -synctex=1 -interaction=nonstopmode -output-directory=" + chemin + " " + fichierACompiler)
+            print("open " + fichierACompiler[:-4] + ".pdf")
+            os.system("open " + fichierACompiler[:-4] + ".pdf")
+            retour = "Compilation avec xelatex du fichier alétoirisé effectuée."
+        else :
+            retour = ""
+        return retour
 
 def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
     """ Traitement par Jinja du fichier modèle.
@@ -642,5 +659,6 @@ if __name__ == "__main__":
         (filepath, filename) = os.path.split(nomFichierModele)
         #print(filename, "/", filepath, "/" , nombreVersions)
         print(traiter(filename, filepath, nombreVersions))
+        print(choixCompilationImmediate(filename + "_aleatoirise.tex","fichiers-aleatoirises"))
     else :
         print("Pas de dossier 'modeles' dans le dossier courant du script.")
