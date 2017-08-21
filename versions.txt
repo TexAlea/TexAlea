@@ -1,10 +1,10 @@
 EVOLUTIONS ET BUGS CORRIGES :
 
 
-Version 0.0.0.0.5 du 20/08/17 :
+Version 0.0.0.0.5 du 21/08/17 :
+- possibilité sur MacOS X, d'une compilation avec xelatex dans la foulée et ouverture du pdf automatique et suppression des fichiers de compilation en fin d'opération.
 - ajout d'une classe héritée de list permettant de générer des listes de nombres aléatoires distincts
 - modification des variables initialement créées avec les anciennes fonctions.
-- possibilité sur MacOS X, d'une compilation avec xelatex dans la foulée et ouverture du pdf automatique.
 
 Remarque : les variables préalablement mémorisées pour des documents antérieures peuvent rester en doublon. Supprimer le fichier ???_var_memo.txt pour regénérer le jeu de variables d'un document.
 

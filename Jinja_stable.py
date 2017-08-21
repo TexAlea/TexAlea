@@ -176,13 +176,20 @@ def variables(version,fichier) :
     #enregistrerVariables(fichier, retour)
     return retour
 
-def alea(a,b,nom='nepasmemoriser') : # Avec <<var[nom]>> on pourra récupérer la valeur d'un entier aléatoire entre a et b
+def alea(a,b,nom='nepasmemoriser') : 
+    """Avec <<var[nom]>> on pourra récupérer la valeur d'un entier aléatoire entre a et b"""
     global alea
     if nom=='nepasmemoriser':
         return randint(a,b)
     else:
         var[nom] = randint(a,b)
         return var[nom]
+    # Début de travail pour """ générer de nouvelles variables (des listes autres que celles prédéfinies) directement dans le document LaTeX"""
+    # def alea(nom,a,b,increment=1,listeASupprimer=[],nbreValeursSouhaitees=100)  :
+    #global varCreee
+    #exec(nom + "=listeAleatoire(" + str(a) + "," + str(b) + "," + str(increment) + "," + str(listeASupprimer) + "," + str(nbreValeursSouhaitees) + ")")
+    #print(locals())
+    #globals().update(locals())
 
 def aleadecimal(nom) : # Un nombre décimal dont la partie entière a 1 à 3 chiffres et la partie décimale a 1 à 3 chiffres
     global alea
@@ -512,11 +519,17 @@ def choixCompilationImmediate(fichierAleatoirise,chemin) :
     if os.path.exists("/Library/TeX/texbin/xelatex") :
         reponse = input("Compiler avec xelatex ? (laisser vide pour ne pas compiler)")
         if reponse != "" :
-            #print(chemin, "-", fichierAleatoirise)
+            if reponse == "2" : # en cas de réponse 2, on procède à une double compilation pour que tout apparaisse correctement.
+                nombre = 2
+            else :
+                nombre = 1
             fichierACompiler = os.path.join(chemin, fichierAleatoirise)
-            os.system("/Library/TeX/texbin/xelatex -synctex=1 -interaction=nonstopmode -output-directory=" + chemin + " " + fichierACompiler)
-            #print("/Library/TeX/texbin/xelatex -synctex=1 -interaction=nonstopmode -output-directory=" + chemin + " " + fichierACompiler)
-            print("open " + fichierACompiler[:-4] + ".pdf")
+            for i in range(nombre) :
+                os.system("/Library/TeX/texbin/xelatex -synctex=1 -interaction=nonstopmode -output-directory=" + chemin + " " + fichierACompiler)
+            # suppression des fichiers de compilation.
+            aSupprimer = fichierACompiler[:-4] + ".aux "  + fichierACompiler[:-4] + ".log " + fichierACompiler[:-4] + ".out " + fichierACompiler[:-4] + ".synctex.gz "
+            os.system("rm "+aSupprimer)
+            # affichage dans le lecteur de pdf par défaut.
             os.system("open " + fichierACompiler[:-4] + ".pdf")
             retour = "Compilation avec xelatex du fichier alétoirisé effectuée."
         else :
@@ -617,7 +630,6 @@ def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
             dictVariables = eval(lignesVariables[version - 1])
             dictVariables.update(globals())
             nouveauJeuDeVariables = False
-
         # ajout de versions au dictionnaire transmis
         dictVariables['version']=version
         # mise à jour du dictionnaire de variables afin de disposer de tout.
