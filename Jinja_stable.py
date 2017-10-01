@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 __author__ = "Angot Rémi, Lacroix Olivier"
 __license__ = "CC-BY-SA"
-__version__ = "0.0.0.0.5"
+__version__ = "0.0.0.0.6"
 __status__ = "Production"
 
 import jinja2, math, os
@@ -216,21 +216,21 @@ def terme(a):
     if a == 0 :
         retour = ""
     elif a > 0 :
-        retour = "+" + str(a)
+        retour = "+" + ecriture_decimale(a)
     else :
-        retour = a
-    return retour # vive le type dynamique de python !!
+        retour = ecriture_decimale(a)
+    return retour
 
 def facteur(a):
     """Formatage correct de nombre d'un produit.
     Exemple 1 : facteur(2) retourne "2"
     Exemple 2 : facteur(-4) retourne "(-4)"
     """
-    if a < 0 :
-        retour = "(" + str(a) + ")"
+    if float(a) < 0 :
+        retour = "(" + ecriture_decimale(a) + ")"
     else :
-        retour = a
-    return retour # vive le type dynamique de python !!
+        retour = ecriture_decimale(a)
+    return retour
 
 def prix(a) :
     """Formatage correct d'un prix sous forme d'un nombre décimal avec deux chiffres après la virgule ou sous forme d'un entier si c'est le cas.
@@ -516,25 +516,51 @@ def choixCompilationImmediate(fichierAleatoirise,chemin) :
     """ propose de compiler immédiatement avec xelatex par défaut, si trouvé sur le système
     Remarque : adapté pour texlive sur macosX en attendant de trouver les chemins sur les autres OS
     """
+    xelatex = 0
+    pdflatex = 0
     if os.path.exists("/Library/TeX/texbin/xelatex") :
-        reponse = input("Compiler avec xelatex ? (laisser vide pour ne pas compiler)")
+        xelatex = 1
+        print("Choix possibles :")
+        print("- x pour xelatex")
+    if os.path.exists("/Library/TeX/texbin/pdflatex") :
+        if xelatex == 0 :
+            print("Choix possibles :")
+        print("- p pour pdflatex")
+        pdflatex = 1
+    if xelatex == 1 or pdflatex == 1 :
+        reponse = input("Compiler avec latex ? (laisser vide pour ne pas compiler)")
         if reponse != "" :
-            if reponse == "2" : # en cas de réponse 2, on procède à une double compilation pour que tout apparaisse correctement.
+            if reponse[0] == "x" :
+                compilateur = "/Library/TeX/texbin/xelatex"
+            else :
+                compilateur = "/Library/TeX/texbin/pdflatex"
+            if len(reponse) >1 and reponse[1] == "2" : # en cas de réponse x2 ou p2, on procède à une double compilation pour que tout apparaisse correctement.
                 nombre = 2
             else :
                 nombre = 1
             fichierACompiler = os.path.join(chemin, fichierAleatoirise)
-            for i in range(nombre) :
-                os.system("/Library/TeX/texbin/xelatex -synctex=1 -interaction=nonstopmode -output-directory=" + chemin + " " + fichierACompiler)
-            # suppression des fichiers de compilation.
-            aSupprimer = fichierACompiler[:-4] + ".aux "  + fichierACompiler[:-4] + ".log " + fichierACompiler[:-4] + ".out " + fichierACompiler[:-4] + ".synctex.gz "
-            os.system("rm "+aSupprimer)
-            # affichage dans le lecteur de pdf par défaut.
-            os.system("open " + fichierACompiler[:-4] + ".pdf")
-            retour = "Compilation avec xelatex du fichier alétoirisé effectuée."
+            retour = compiler(compilateur, chemin, fichierACompiler, nombre)
+            # idem pour le corrigé s'il existe
+            fichierACompiler = os.path.join(chemin, fichierAleatoirise[:-4]+"-cor.tex")
+            if os.path.exists(fichierACompiler) :
+                compiler(compilateur, chemin, fichierACompiler, nombre)
+                retour = retour + " + corrigé"
         else :
             retour = ""
         return retour
+
+def compiler(compilateur, chemin, fichierACompiler, nombre) :
+    """ compilation latex avec le compilateur de son choix et suppression des fichiers de compilation"""
+    for i in range(nombre) :
+        os.system(compilateur + " -synctex=1 -interaction=nonstopmode -output-directory=" + chemin + " " + fichierACompiler)
+    # suppression des fichiers de compilation.
+    aSupprimer = fichierACompiler[:-4] + ".aux "  + fichierACompiler[:-4] + ".log " + fichierACompiler[:-4] + ".out " + fichierACompiler[:-4] + ".synctex.gz "
+    os.system("rm "+aSupprimer)
+    # affichage dans le lecteur de pdf par défaut.
+    os.system("open " + fichierACompiler[:-4] + ".pdf")
+    retour = "Compilation avec " + compilateur + " du fichier alétoirisé effectuée."
+    return retour
+
 
 def traiter(nom_fichier_modele , chemin, nombre_de_versions) :
     """ Traitement par Jinja du fichier modèle.
